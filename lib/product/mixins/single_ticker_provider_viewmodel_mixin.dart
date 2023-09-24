@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:liman/core/base/viewmodel/base_viewmodel.dart';
 
-/// FLUTTER'S DEFAULT SINGLETICKERPROVIDER SUITABLE FOR VIEWMODEL
+/// FLUTTER'S DEFAULT SINGLETICKERPROVIDER SUITABLE FOR VIEWMODEL'S EXTEND FROM BASEVIEWMODEL
 @optionalTypeArgs
 base mixin SingleTickerProviderViewModelMixin on BaseViewModel implements TickerProvider {
   Ticker? _ticker;
