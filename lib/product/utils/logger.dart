@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart';
 
+/// Enumerations of color codes for ease of use
 enum LogColors { black, red, green, yellow, blue, magenta, cyan, white }
 
+/// A UTILITY FOR PRINTING COLORFUL LOGS FOR DEBUG AND PROFILE MODE
 abstract class Logger {
   Logger._();
 
+  /// Prints colorful log with given message only form Debug and Profile mode
   static void logMsg({required String msg, LogColors color = LogColors.green}) {
     if (kDebugMode || kProfileMode) {
       switch (color) {
