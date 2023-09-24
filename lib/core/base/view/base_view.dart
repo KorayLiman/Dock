@@ -36,8 +36,12 @@ class _BaseViewState extends State<BaseView> {
   @override
   void dispose() {
     widget.viewModel.onDispose();
-    Locator.unregister(instance: widget.viewModel);
-    Logger.logMsg(msg: "'${widget.viewModel.runtimeType}' Unregistered", color: LogColors.red);
+    if (Locator.isRegistered(instance: widget.viewModel)) {
+      Locator.unregister(instance: widget.viewModel);
+      Logger.logMsg(msg: "'${widget.viewModel.runtimeType}' Unregistered", color: LogColors.red);
+    } else {
+      Logger.logMsg(msg: "Page disposed. No registered '${widget.viewModel.runtimeType}' found", color: LogColors.white);
+    }
     super.dispose();
   }
 
