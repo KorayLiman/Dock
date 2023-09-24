@@ -1,5 +1,5 @@
 name: liman
-description: A new Flutter plugin project.
+description: A software kit for developing Flutter apps easy and super fast.
 version: 0.0.1
 homepage:
 
@@ -13,11 +13,14 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  get_it: ^7.6.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  very_good_analysis: ^5.1.0
+  auto_route_generator: ^7.3.1
+  build_runner: ^2.4.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,63 +1,30 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:liman/core/locator/locator.dart';
+import 'package:liman_example/core/navigation/app_router/app_router.dart';
+import 'package:liman_example/core/navigation/navigation_observer/navigation_observer.dart';
+import 'package:liman_example/product/constants/app_constants.dart';
 
-import 'package:flutter/services.dart';
-import 'package:liman/liman.dart';
+void main() => runApp(const MyApp());
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _limanPlugin = Liman();
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _limanPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
+    final appRouter = Locator.isRegistered<AppRouter>()
+        ? Locator.get<AppRouter>()
+        : Locator.register<AppRouter>(
+            AppRouter(),
+          );
+    return MaterialApp.router(
+      routerConfig: appRouter.config(
+        navigatorObservers: () => [
+          Locator.register<CustomNavigationObserver>(
+            CustomNavigationObserver(),
+          ),
+        ],
       ),
+      theme: AppConstants.themeConstants.lightTheme,
     );
   }
 }
