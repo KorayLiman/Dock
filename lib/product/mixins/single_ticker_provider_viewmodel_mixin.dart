@@ -5,7 +5,7 @@ import 'package:liman/core/base/viewmodel/base_viewmodel.dart';
 
 /// FLUTTER'S DEFAULT SINGLETICKERPROVIDER SUITABLE FOR VIEWMODEL'S EXTEND FROM BASEVIEWMODEL
 @optionalTypeArgs
-base mixin SingleTickerProviderViewModelMixin on BaseViewModel implements TickerProvider {
+base mixin SingleTickerProviderViewModelMixin<T extends BaseViewModel> on BaseViewModel<T> implements TickerProvider {
   Ticker? _ticker;
 
   BuildContext get stateContext;

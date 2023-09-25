@@ -3,7 +3,7 @@ import 'package:liman/core/base/viewmodel/base_viewmodel.dart';
 import 'package:liman/core/locator/locator.dart';
 import 'package:liman/product/mixins/single_ticker_provider_viewmodel_mixin.dart';
 
-final class HomeViewModel extends BaseViewModel with SingleTickerProviderViewModelMixin {
+final class HomeViewModel extends BaseViewModel<HomeViewModel> with SingleTickerProviderViewModelMixin {
   static HomeViewModel get get => Locator.get<HomeViewModel>();
   static HomeViewModel? get tryGet => Locator.tryGet<HomeViewModel>();
   late final BuildContext _stateContext;

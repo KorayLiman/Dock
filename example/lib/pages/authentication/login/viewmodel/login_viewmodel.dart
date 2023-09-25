@@ -6,7 +6,7 @@ import 'package:liman/product/extensions/extensions.dart';
 import 'package:liman_example/core/navigation/app_router/app_router.gr.dart';
 import 'package:liman_example/product/utils/loader_manager/loader_manager.dart';
 
-final class LoginViewModel extends BaseViewModel {
+final class LoginViewModel extends BaseViewModel<LoginViewModel> {
   static LoginViewModel get get => Locator.get<LoginViewModel>();
   static LoginViewModel? get tryGet => Locator.tryGet<LoginViewModel>();
 
