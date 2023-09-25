@@ -1,27 +1,14 @@
 import 'package:flutter/material.dart';
 
+part '../mixin/base_viewmodel_mixin.dart';
+
+/// VIEW STATES
 enum PageState { success, loading, empty, error, offline }
 
-/// AN ABSTRACT BASE VIEWMODEL CLASS FOR CONTROLLING UI AND STORING VARIABLES.
-/// AIM OF THIS CLASS IS LEAVING VIEW RELATED THINGS TO VIEW AND PUTTING EVERYTHING OTHER HERE.
+/// AN ABSTRACT BASE VIEWMODEL CLASS FOR CONTROLLING VIEW.
+/// AIM OF THIS CLASS IS LEAVING UI THINGS TO VIEW AND PUTTING ALL THE METHODS HERE.
 /// YOU WILL HAVE FULL CONTROL OVER VIEW STATE
-abstract base class BaseViewModel {
-  /// Route arguments
-  late final dynamic arguments;
-
-  /// View State notifier
-  final _pageState = ValueNotifier(PageState.success);
-
-  /// Getter of pageStateNotifier
-  ValueNotifier<PageState> get getPageStateNotifier => _pageState;
-
-  /// Gives current view state (success, loading, empty, error, offline)
-  PageState get pageState => _pageState.value;
-
-  /// Sets view state (success, loading, empty, error, offline)
-  //ignore: use_setters_to_change_properties
-  void setPageState(PageState newPageState) => _pageState.value = newPageState;
-
+abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin {
   /// Called when View is created
   @mustCallSuper
   void onInit(BuildContext stateContext) {}
