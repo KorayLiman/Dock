@@ -17,7 +17,7 @@ class CustomNavigationObserver extends AutoRouterObserver {
     super.didPop(route, previousRoute);
     _setOverlayStateOnPop(route, previousRoute);
     if (!_isDialogOrModalBottomSheetRoute(route)) {
-      Logger.logMsg(msg: '<--- Popped To:  (${previousRoute?.data?.name})  &  Previous: (${route.data?.name})', color: LogColors.cyan);
+      Logger.logMsg(msg: '<--- Popped To: (${previousRoute?.data?.name})  &  Previous: (${route.data?.name})', color: LogColors.cyan);
     }
   }
 
@@ -25,19 +25,19 @@ class CustomNavigationObserver extends AutoRouterObserver {
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didRemove(route, previousRoute);
     _setOverlayStateOnRemove(route, previousRoute);
-    Logger.logMsg(msg: 'Removed Route:  ${route.data?.name}', color: LogColors.red);
+    Logger.logMsg(msg: 'Removed Route: ${route.data?.name}', color: LogColors.red);
   }
 
   @override
   void didChangeTabRoute(TabPageRoute route, TabPageRoute previousRoute) {
     super.didChangeTabRoute(route, previousRoute);
-    Logger.logMsg(msg: 'Tab Changed:  Previous: ${previousRoute.name}  ~  Current: ${route.name}', color: LogColors.magenta);
+    Logger.logMsg(msg: 'Tab Changed: Current: ${route.name}  ~  Previous: ${previousRoute.name}', color: LogColors.magenta);
   }
 
   @override
   void didInitTabRoute(TabPageRoute route, TabPageRoute? previousRoute) {
     super.didInitTabRoute(route, previousRoute);
-    Logger.logMsg(msg: 'Init Tab Route: ${route.name}', color: LogColors.magenta);
+    Logger.logMsg(msg: 'Initialized Tab Route: ${route.name}', color: LogColors.magenta);
   }
 
   void _setOverlayStateOnPush(Route<dynamic> route, Route<dynamic>? previousRoute) {

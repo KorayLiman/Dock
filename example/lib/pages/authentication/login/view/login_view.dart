@@ -1,20 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:liman/core/base/view/base_view.dart';
-import 'package:liman/core/widget/access_widget/access_widget.dart';
-import 'package:liman/core/widget/registrar_widget/registrar_widget.dart';
+import 'package:liman/core/widget/liman_access_widget/liman_access_widget.dart';
+import 'package:liman/core/widget/liman_manager/liman_manager.dart';
 import 'package:liman_example/pages/authentication/login/viewmodel/login_viewmodel.dart';
 import 'package:liman_example/product/components/appbars/appbars.dart';
 import 'package:liman_example/product/enums/route_paths.dart';
-import 'package:liman_example/product/extensions/route_names_extensions/route_names_extension.dart';
+import 'package:liman_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 
 @RoutePage()
-final class LoginView extends RegistrarWidget<LoginViewModel> {
+final class LoginView extends BaseView<LoginViewModel> {
   LoginView({super.arguments}) : super(viewModel: LoginViewModel(), key: ValueKey<String>(RoutePaths.login.rawValue));
 
   @override
   Widget build(BuildContext context) {
-    return BaseView(
+    return LimanManager(
       viewModel: viewModel,
       onSuccess: () => const Scaffold(
         appBar: DefaultAppBar(
@@ -27,7 +27,7 @@ final class LoginView extends RegistrarWidget<LoginViewModel> {
   }
 }
 
-class _LoginViewFloatingActionButton extends AccessWidget<LoginViewModel> {
+class _LoginViewFloatingActionButton extends LimanAccess<LoginViewModel> {
   const _LoginViewFloatingActionButton();
 
   @override
@@ -40,7 +40,7 @@ class _LoginViewFloatingActionButton extends AccessWidget<LoginViewModel> {
   }
 }
 
-class _LoginViewBody extends AccessWidget<LoginViewModel> {
+class _LoginViewBody extends LimanAccess<LoginViewModel> {
   const _LoginViewBody();
 
   @override

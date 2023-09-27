@@ -1,19 +1,19 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:liman/core/base/view/base_view.dart';
-import 'package:liman/core/widget/registrar_widget/registrar_widget.dart';
+import 'package:liman/core/widget/liman_manager/liman_manager.dart';
 import 'package:liman_example/pages/launch/splash/viewmodel/splash_viewmodel.dart';
 import 'package:liman_example/product/components/appbars/appbars.dart';
 import 'package:liman_example/product/enums/route_paths.dart';
-import 'package:liman_example/product/extensions/route_names_extensions/route_names_extension.dart';
+import 'package:liman_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 
 @RoutePage()
-final class SplashView extends RegistrarWidget<SplashViewModel> {
+final class SplashView extends BaseView<SplashViewModel> {
   SplashView({super.arguments}) : super(viewModel: SplashViewModel(), key: ValueKey<String>(RoutePaths.splash.rawValue));
 
   @override
   Widget build(BuildContext context) {
-    return BaseView(
+    return LimanManager(
       viewModel: viewModel,
       onSuccess: () => _onSuccess(context: context),
     );

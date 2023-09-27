@@ -6,6 +6,7 @@ import 'package:liman_example/core/navigation/app_router/app_router.gr.dart';
 
 final class SplashViewModel extends BaseViewModel<SplashViewModel> {
   static SplashViewModel get get => Locator.get<SplashViewModel>();
+
   static SplashViewModel? get tryGet => Locator.tryGet<SplashViewModel>();
 
   Future<void> goToNextPage({required BuildContext context}) async {
