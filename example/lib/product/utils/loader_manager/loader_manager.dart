@@ -5,7 +5,7 @@ import 'package:liman/product/utils/logger.dart';
 import 'package:liman_example/core/navigation/app_router/app_router.dart';
 import 'package:liman_example/core/navigation/app_router/app_router.gr.dart';
 import 'package:liman_example/product/enums/route_paths.dart';
-import 'package:liman_example/product/extensions/route_names_extensions/route_names_extension.dart';
+import 'package:liman_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 
 abstract class LoaderManager {
   static List<Key>? _widgetKeys;
@@ -14,7 +14,7 @@ abstract class LoaderManager {
     final keyParam = key ?? UniqueKey();
     _widgetKeys ??= <Key>[];
     _widgetKeys!.add(keyParam);
-    AppRouter.find.push(LoaderOverlayRoute(key: key));
+    AppRouter.find.push(LoaderOverlayRoute(key: keyParam));
   }
 
   static void hide({Key? key}) {

@@ -19,9 +19,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: appRouter.config(
         navigatorObservers: () => [
-          Locator.register<CustomNavigationObserver>(
-            CustomNavigationObserver(),
-          ),
+          if (Locator.isRegistered<CustomNavigationObserver>())
+            Locator.get<CustomNavigationObserver>()
+          else
+            Locator.register<CustomNavigationObserver>(
+              CustomNavigationObserver(),
+            ),
         ],
       ),
       theme: AppConstants.themeConstants.lightTheme,

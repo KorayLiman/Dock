@@ -4,7 +4,7 @@ import 'package:liman/core/locator/locator.dart';
 import 'package:liman_example/core/navigation/app_router/app_router.gr.dart';
 import 'package:liman_example/core/navigation/navigation_observer/navigation_observer.dart';
 import 'package:liman_example/product/enums/route_paths.dart';
-import 'package:liman_example/product/extensions/route_names_extensions/route_names_extension.dart';
+import 'package:liman_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'View,Route')
 class AppRouter extends $AppRouter {
@@ -25,6 +25,20 @@ class AppRouter extends $AppRouter {
         AutoRoute(
           page: HomeRoute.page,
           path: RoutePaths.home.rawValue,
+          children: [
+            AutoRoute(
+              page: HomeMainChildRoute.page,
+              path: RoutePaths.homeMainChild.rawValue,
+            ),
+            AutoRoute(
+              page: HomeListChildRoute.page,
+              path: RoutePaths.homeListChild.rawValue,
+            ),
+            AutoRoute(
+              page: HomeSettingsChildRoute.page,
+              path: RoutePaths.homeSettingsChild.rawValue,
+            ),
+          ],
         ),
         // DIALOGS
         CustomRoute(
@@ -39,6 +53,7 @@ class AppRouter extends $AppRouter {
 
   /// Locates AppRouter
   static AppRouter get find => Locator.get<AppRouter>();
+
   CustomNavigationObserver get _navigationObserver => Locator.get<CustomNavigationObserver>();
 
   ///////// UTILS ////////////

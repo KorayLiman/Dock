@@ -11,11 +11,17 @@ enum PageState { success, loading, empty, error, offline }
 abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin {
   /// Called when View is created
   @mustCallSuper
-  void onInit(BuildContext stateContext) {}
+  void onInit(BuildContext stateContext) {
+    WidgetsBinding.instance.addPostFrameCallback(onNextFrame);
+  }
 
   /// Called after onInit. Handle network requests, navigation etc. here
   @mustCallSuper
   void onReady() {}
+
+  /// Called after the first frame in other words when the page is drawn
+  @mustCallSuper
+  void onNextFrame(Duration timeStamp) {}
 
   /// Called when view is getting disposed
   @mustCallSuper

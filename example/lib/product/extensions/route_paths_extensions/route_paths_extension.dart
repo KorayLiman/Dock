@@ -1,10 +1,13 @@
 import 'package:liman_example/product/enums/route_paths.dart';
 
-extension RouteNamesExtension on RoutePaths {
+extension RoutePathsExtension on RoutePaths {
   String get rawValue => switch (this) {
         RoutePaths.splash => '/splash',
         RoutePaths.login => '/login',
         RoutePaths.loaderDialog => '/loaderOverlay',
         RoutePaths.home => '/home',
+        RoutePaths.homeMainChild => 'homeMainChild',
+        RoutePaths.homeListChild => 'homeMainList',
+        RoutePaths.homeSettingsChild => 'homeMainSettings',
       };
 }
