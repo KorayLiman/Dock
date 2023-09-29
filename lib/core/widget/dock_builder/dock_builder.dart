@@ -6,8 +6,9 @@ import 'package:liman/product/utils/logger.dart';
 
 typedef WidgetCallback = Widget Function();
 
-final class LimanManager extends StatefulWidget {
-  const LimanManager({required this.viewModel, required this.onSuccess, super.key, this.onEmpty, this.onError, this.onLoading, this.onOffline});
+/// A SMART AND EASY WIDGET FOR MANAGING STATE OF THE PAGE
+final class DockBuilder extends StatefulWidget {
+  const DockBuilder({required this.viewModel, required this.onSuccess, super.key, this.onEmpty, this.onError, this.onLoading, this.onOffline});
 
   final BaseViewModel viewModel;
   final WidgetCallback onSuccess;
@@ -17,12 +18,13 @@ final class LimanManager extends StatefulWidget {
   final WidgetCallback? onOffline;
 
   @override
-  State<LimanManager> createState() => _BaseViewState();
+  State<DockBuilder> createState() => _BaseViewState();
 }
 
-class _BaseViewState extends State<LimanManager> {
+class _BaseViewState extends State<DockBuilder> {
   @override
   void initState() {
+    widget.viewModel.markDockBuilderAsInitialized(widget);
     widget.viewModel.onInit(context);
     super.initState();
   }
@@ -58,6 +60,7 @@ class _BaseViewState extends State<LimanManager> {
     );
   }
 
+  /// Builds page according to PageState
   Widget buildPage(BuildContext context) {
     return switch (widget.viewModel.pageState) {
       PageState.success => widget.onSuccess(),
