@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:liman/product/state/reactive/notifier/notifier.dart';
+import 'package:liman/product/state/reactive/notifier/notify_data.dart';
 
-mixin StatelessObserverElementMixin on StatelessElement {
-  List<VoidCallback>? _disposers;
+typedef Disposer = void Function();
+
+mixin ObserverStatelessElementMixin on StatelessElement {
+  List<Disposer>? _disposers;
 
   @override
   void mount(Element? parent, Object? newSlot) {
@@ -36,7 +39,7 @@ mixin StatelessObserverElementMixin on StatelessElement {
 
   @override
   Widget build() {
-    return Notifier.instance.append(
+    return Notifier.instance.createElement(
       NotifyData(updater: updateElement, disposers: _disposers!),
       super.build,
     );

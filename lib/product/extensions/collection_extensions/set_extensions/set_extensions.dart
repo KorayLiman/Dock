@@ -1,5 +1,5 @@
 /// SET EXTENSION
-extension SetExtension on Set<dynamic>? {
+extension SetExtension<T> on Set<T>? {
   /// Returns true if set is null or empty
   bool get isNullOrEmpty => this == null || this!.isEmpty;
 
