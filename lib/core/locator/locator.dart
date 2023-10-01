@@ -22,6 +22,7 @@ abstract class Locator {
   }
 
   /// Tries to get registered object with Type T
+  ///
   /// Returns null if couldn't
   static T? tryGet<T extends Object>() {
     return isRegistered<T>() ? _locator.get<T>() : null;

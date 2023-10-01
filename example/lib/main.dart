@@ -4,7 +4,10 @@ import 'package:liman_example/core/navigation/app_router/app_router.dart';
 import 'package:liman_example/core/navigation/navigation_observer/navigation_observer.dart';
 import 'package:liman_example/product/constants/app_constants.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

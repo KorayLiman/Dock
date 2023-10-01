@@ -1,3 +1,5 @@
+import 'package:liman/product/state/reactive/observable/observable.dart';
+
 /// INTEGER EXTENSION
 extension IntExtension on int {
   /// Converts to duration object to microseconds of value
@@ -17,4 +19,7 @@ extension IntExtension on int {
 
   /// Converts to duration object to days of value
   Duration get days => Duration(days: this);
+
+  /// Converts to Observable<int>
+  Observable<int> get observable => Observable<int>(this);
 }
