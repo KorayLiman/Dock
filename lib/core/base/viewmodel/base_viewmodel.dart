@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:liman/core/dock/dock.dart';
 import 'package:liman/core/widget/dock_builder/dock_builder.dart';
+import 'package:liman/product/extensions/extensions.dart';
 
 part '../mixins/base_viewmodel_mixin.dart';
 
@@ -44,6 +45,5 @@ abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin {
   @mustCallSuper
   void onDispose() {
     _assertDockBuilderInitialized();
-    _pageState.dispose();
   }
 }

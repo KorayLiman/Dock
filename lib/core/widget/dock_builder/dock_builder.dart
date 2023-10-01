@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:liman/core/base/viewmodel/base_viewmodel.dart';
 import 'package:liman/core/locator/locator.dart';
 import 'package:liman/product/extensions/extensions.dart';
+import 'package:liman/product/state/reactive/observer/observer.dart';
 import 'package:liman/product/utils/logger.dart';
 
 typedef WidgetCallback = Widget Function();
@@ -51,11 +52,8 @@ class _BaseViewState extends State<DockBuilder> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: context.turnOffKeyboard,
-      child: ValueListenableBuilder<PageState>(
-        valueListenable: widget.viewModel.getPageStateNotifier,
-        builder: (context, pageState, child) {
-          return buildPage(context);
-        },
+      child: Observer(
+        builder: () => buildPage(context),
       ),
     );
   }
