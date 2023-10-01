@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:liman/core/base/view/base_view.dart';
 import 'package:liman/core/widget/dock_builder/dock_builder.dart';
-import 'package:liman_example/core/navigation/app_router/app_router.gr.dart';
+import 'package:liman/product/state/reactive/observer/observer.dart';
 import 'package:liman_example/pages/general/home/home_main_child/viewmodel/home_main_child_viewmodel.dart';
 
 @RoutePage()
@@ -20,13 +20,19 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
   Widget _onSuccess({required BuildContext context}) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.navigateTo(HomeListChildRoute());
-          },
-          child: const Text('Navigate to list'),
+        child: Observer(
+          builder: () => Text('Count: ${viewModel.count.value}'),
         ),
       ),
+      floatingActionButton: _homeMainFloatingActionButton(context: context, viewModel: viewModel),
+    );
+  }
+
+  FloatingActionButton _homeMainFloatingActionButton({required BuildContext context, required HomeMainChildViewModel viewModel}) {
+    return FloatingActionButton.extended(
+      onPressed: viewModel.incrementCounter,
+      label: const Text('Increment counter'),
+      icon: const Icon(Icons.add),
     );
   }
 }

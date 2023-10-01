@@ -1,52 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:liman/product/state/reactive/listener/dock_listenable.dart';
+import 'package:liman/product/state/reactive/listenable/dock_listenable.dart';
+import 'package:liman/product/state/reactive/notifier/notify_data.dart';
+import 'package:liman/product/state/reactive/observer/observer_error.dart';
+
+typedef WidgetCallback = Widget Function();
+typedef Disposer = void Function();
 
 class Notifier {
   Notifier._();
 
   static Notifier? _instance;
 
+  // ignore: prefer_constructors_over_static_methods
   static Notifier get instance => _instance ??= Notifier._();
 
   NotifyData? _notifyData;
 
-  void add(VoidCallback listener) {
-    _notifyData?.disposers.add(listener);
+  void addDisposer(Disposer disposer) {
+    _notifyData?.disposers.add(disposer);
   }
 
-  void read(DockListenable listenable) {
-    final listener = _notifyData?.updater;
-    if (listener != null && !listenable.containsListener(listener: listener)) {
-      listenable.addListener(listener);
-      add(() => listenable.removeListener(listener));
+  void notifyRead(DockListenable listenable) {
+    final updater = _notifyData?.updater;
+    if (updater != null && !listenable.containsUpdater(updater: updater)) {
+      listenable.addUpdater(updater);
+      void disposer() {
+        listenable.removeUpdater(updater);
+      }
+
+      addDisposer(disposer);
     }
   }
 
-  T append<T>(NotifyData data, T Function() builder) {
+  Widget createElement(NotifyData data, WidgetCallback builder) {
     _notifyData = data;
     final result = builder();
-    if (data.disposers.isEmpty && data.throwException) {
+    if (data.disposers.isEmpty) {
       throw const ObserverError();
     }
     _notifyData = null;
     return result;
-  }
-}
-
-class NotifyData {
-  const NotifyData({required this.updater, required this.disposers, this.throwException = true});
-
-  final VoidCallback updater;
-  final List<VoidCallback> disposers;
-  final bool throwException;
-}
-
-class ObserverError implements Exception {
-  const ObserverError();
-  @override
-  String toString() {
-    return '''
-      You did not insert any observables in Observer
-      ''';
   }
 }
