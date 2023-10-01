@@ -5,13 +5,10 @@ base mixin _BaseViewModelMixin {
   /// Route arguments
   late final dynamic arguments;
 
-  /// View State notifier
-  final _pageState = ValueNotifier(PageState.success);
+  /// View state observable
+  final _pageState = PageState.success.observable;
 
-  /// Getter of pageStateNotifier
-  ValueNotifier<PageState> get getPageStateNotifier => _pageState;
-
-  /// Gives current view state (success, loading, empty, error, offline)
+  /// Gives current state of view (success, loading, empty, error, offline)
   PageState get pageState => _pageState.value;
 
   /// Sets view state (success, loading, empty, error, offline)
