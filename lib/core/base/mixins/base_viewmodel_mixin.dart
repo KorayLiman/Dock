@@ -1,30 +1,30 @@
 part of '../viewmodel/base_viewmodel.dart';
 
-/// A MIXIN FOR HOLDING VARIABLES OF BASEVIEWMODEL
+/// A MIXIN HOLDS VARIABLES OF [BaseViewModel]
 base mixin _BaseViewModelMixin {
-  /// Route arguments
+  /// Route [arguments]
   late final dynamic arguments;
 
-  /// View state observable
+  /// [PageState] observable
   final _pageState = PageState.success.observable;
 
-  /// Gives current state of view (success, loading, empty, error, offline)
+  /// Gives current state of [PageState]
   PageState get pageState => _pageState.value;
 
-  /// Sets view state (success, loading, empty, error, offline)
+  /// Sets [PageState]
   //ignore: use_setters_to_change_properties
   void setPageState(PageState newPageState) => _pageState.value = newPageState;
 
-  /// Holds the initialization state of any DockBuild associated with this viewmodel
+  /// Holds the initialization state of any [DockBuilder] associated with this viewmodel
   bool _isDockBuilderInitialized = false;
 
-  /// Sets the initialization state of created DockBuilder associated with this viewmodel
-  void markDockBuilderAsInitialized(DockBuilder dockBuilder) {
+  /// Sets the initialization state of created [DockBuilder] associated with this viewmodel
+  void markDockBuilderInitialized(DockBuilder dockBuilder) {
     _isDockBuilderInitialized = true;
   }
 
   /// If any widget lifecycle method is called by user manually(which shouldn't happen) and
-  /// no DockBuilder created associated with this viewmodel warn user
+  /// no [DockBuilder] created associated with this viewmodel warn user
   void _assertDockBuilderInitialized() {
     assert(
       _isDockBuilderInitialized,

@@ -1,4 +1,4 @@
-/// OBJECT EXTENSION
+/// [Object] EXTENSION
 extension ObjectExtension on Object? {
   /// Returns true if object is null
   bool get isNull => this == null;

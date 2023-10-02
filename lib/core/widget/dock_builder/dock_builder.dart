@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:liman/core/base/viewmodel/base_viewmodel.dart';
+import 'package:liman/core/dock/dock.dart';
 import 'package:liman/core/locator/locator.dart';
 import 'package:liman/product/extensions/extensions.dart';
 import 'package:liman/product/state/reactive/observer/observer.dart';
 import 'package:liman/product/utils/logger.dart';
 
+part '../default_appbar/default_appbar.dart';
+part 'dock_builder_mixin.dart';
+
 typedef WidgetCallback = Widget Function();
 
-/// A SMART AND EASY WIDGET FOR MANAGING STATE OF THE PAGE
+/// A SMART AND EASY [Widget] FOR MANAGING [PageState]
 final class DockBuilder extends StatefulWidget {
   const DockBuilder({required this.viewModel, required this.onSuccess, super.key, this.onEmpty, this.onError, this.onLoading, this.onOffline});
 
@@ -19,134 +23,17 @@ final class DockBuilder extends StatefulWidget {
   final WidgetCallback? onOffline;
 
   @override
-  State<DockBuilder> createState() => _BaseViewState();
+  State<DockBuilder> createState() => _DockBuilderState();
 }
 
-class _BaseViewState extends State<DockBuilder> {
-  @override
-  void initState() {
-    widget.viewModel.markDockBuilderAsInitialized(widget);
-    widget.viewModel.onInit(context);
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    widget.viewModel.onReady();
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    widget.viewModel.onDispose();
-    if (Locator.isRegistered(instance: widget.viewModel)) {
-      Locator.unregister(instance: widget.viewModel);
-      Logger.logMsg(msg: "'${widget.viewModel.runtimeType}' Unregistered", color: LogColors.red);
-    } else {
-      Logger.logMsg(msg: "Page disposed. No registered '${widget.viewModel.runtimeType}' found", color: LogColors.white);
-    }
-    super.dispose();
-  }
-
+class _DockBuilderState extends State<DockBuilder> with DockBuilderMixin {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: context.turnOffKeyboard,
+      onTap: context.closeKeyboard,
       child: Observer(
-        builder: () => buildPage(context),
+        builder: _buildPage,
       ),
     );
-  }
-
-  /// Builds page according to PageState
-  Widget buildPage(BuildContext context) {
-    return switch (widget.viewModel.pageState) {
-      PageState.success => widget.onSuccess(),
-      PageState.loading => widget.onLoading != null
-          ? widget.onLoading!()
-          : Scaffold(
-              // appBar: CustomAppBars.appBarTitleOnly(context: context, title: ""),
-              body: Center(
-                  child: CircularProgressIndicator(
-                      // color: AppConstants.appColors.yellowCommon,
-                      )),
-            ),
-      PageState.empty => widget.onEmpty != null
-          ? widget.onEmpty!()
-          : Scaffold(
-              // appBar: CustomAppBars.appBarTitleOnly(
-              //   context: context,
-              //   title: LocaleKeys.errors_sorry.tr(),
-              // ),
-              body: Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.error_outline_rounded,
-                    size: 48,
-                    // color: AppConstants.appColors.yellowCommon,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  // Text(
-                  //   LocaleKeys.page_state_errors_no_data.tr(),
-                  //   style: CustomStyles.basierRegularWhite(fontSize: 14),
-                  // ),
-                ],
-              )),
-            ),
-      PageState.error => widget.onError != null
-          ? widget.onError!()
-          : Scaffold(
-              // appBar: CustomAppBars.appBarTitleOnly(
-              //   context: context,
-              //   title: LocaleKeys.errors_sorry.tr(),
-              // ),
-              body: Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.error_outline_rounded,
-                    size: 48,
-                    // color: AppConstants.appColors.yellowCommon,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  // Text(
-                  //   LocaleKeys.page_state_errors_data_retrieve_error.tr(),
-                  //   style: CustomStyles.basierRegularWhite(fontSize: 14),
-                  // ),
-                ],
-              )),
-            ),
-      PageState.offline => widget.onOffline != null
-          ? widget.onOffline!()
-          : Scaffold(
-              // appBar: CustomAppBars.appBarLeadingTitle(context: context, title: LocaleKeys.errors_sorry.tr(), callback: viewModel.back),
-              body: Center(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.error_outline_rounded,
-                    size: 48,
-                    // color: AppConstants.appColors.yellowCommon,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  // Text(
-                  //   LocaleKeys.page_state_errors_connection_error.tr(),
-                  //   style: CustomStyles.basierRegularWhite(fontSize: 14),
-                  // ),
-                ],
-              )),
-            ),
-    };
   }
 }

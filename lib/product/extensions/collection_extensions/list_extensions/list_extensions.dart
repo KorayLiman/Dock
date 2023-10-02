@@ -1,4 +1,4 @@
-/// LIST EXTENSION
+/// [List] EXTENSION
 extension ListExtension<T> on List<T>? {
   /// Returns true if list is null or empty
   bool get isNullOrEmpty => this == null || this!.isEmpty;

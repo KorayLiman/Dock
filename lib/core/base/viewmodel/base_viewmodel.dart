@@ -5,14 +5,14 @@ import 'package:liman/product/extensions/extensions.dart';
 
 part '../mixins/base_viewmodel_mixin.dart';
 
-/// VIEW STATES
+/// [PageState]
 enum PageState { success, loading, empty, error, offline }
 
-/// AN ABSTRACT BASE VIEWMODEL CLASS FOR CONTROLLING VIEW.
+/// AN ABSTRACT [BaseViewModel] CLASS FOR CONTROLLING VIEW.
 ///
 /// AIM OF THIS CLASS IS LEAVING UI THINGS TO VIEW AND PUTTING ALL THE METHODS HERE.
 ///
-/// YOU WILL HAVE FULL CONTROL OVER VIEW STATE
+/// YOU WILL HAVE FULL CONTROL OVER STATE OF VIEW
 abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin {
   /// Called when View is created
   @mustCallSuper
