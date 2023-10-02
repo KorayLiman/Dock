@@ -1,4 +1,4 @@
-/// INTEGER EXTENSION
+/// [int] EXTENSION
 extension IntExtension on int {
   /// Converts to duration object to microseconds of value
   Duration get microseconds => Duration(microseconds: this);

@@ -2,11 +2,11 @@ import 'package:liman/core/base/dock_base/dock_base.dart';
 
 typedef FrameCallback = void Function(Duration timeStamp);
 
-/// GLOBAL INSTANCE OF _DOCK CLASS
+/// GLOBAL INSTANCE OF [_Dock] CLASS
 // ignore: non_constant_identifier_names
 final Dock = _Dock();
 
-/// CHILD CLASS OF DOCKBASE
+/// CHILD CLASS OF [DockBase]
 final class _Dock extends DockBase {
   /// Cause the entire application to redraw
   ///

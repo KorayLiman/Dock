@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// CONTEXT EXTENSION
+/// [BuildContext] EXTENSION
 extension ContextExtension on BuildContext {
   /// Equivalent to MediaQuery.sizeOf(this)
   Size get mediaQuerySize => MediaQuery.sizeOf(this);
@@ -56,8 +56,8 @@ extension ContextExtension on BuildContext {
   /// Equivalent to MediaQuery.sizeOf(this).shortestSide >=  600
   bool get isTablet => mediaQueryShortestSide >= 600;
 
-  /// Turns of keyboard if open
-  void turnOffKeyboard() {
+  /// Close keyboard if open
+  void closeKeyboard() {
     if (FocusManager.instance.primaryFocus?.hasFocus ?? false || mediaQueryViewInsets.bottom > 0) {
       FocusManager.instance.primaryFocus?.unfocus();
     }

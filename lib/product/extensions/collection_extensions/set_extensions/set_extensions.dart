@@ -1,4 +1,4 @@
-/// SET EXTENSION
+/// [Set] EXTENSION
 extension SetExtension<T> on Set<T>? {
   /// Returns true if set is null or empty
   bool get isNullOrEmpty => this == null || this!.isEmpty;
