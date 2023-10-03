@@ -56,9 +56,10 @@ extension ContextExtension on BuildContext {
   /// Equivalent to MediaQuery.sizeOf(this).shortestSide >=  600
   bool get isTablet => mediaQueryShortestSide >= 600;
 
+  // Todo  requires detailed test
   /// Close keyboard if open
   void closeKeyboard() {
-    if (FocusManager.instance.primaryFocus?.hasFocus ?? false || mediaQueryViewInsets.bottom > 0) {
+    if (FocusManager.instance.primaryFocus?.hasFocus ?? false || View.of(this).viewInsets.bottom > 0.0) {
       FocusManager.instance.primaryFocus?.unfocus();
     }
   }

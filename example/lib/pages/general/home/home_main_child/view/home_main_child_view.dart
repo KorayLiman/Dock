@@ -20,19 +20,41 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
   Widget _onSuccess({required BuildContext context}) {
     return Scaffold(
       body: Center(
-        child: Observer(
-          builder: () => Text('Count: ${viewModel.count.value}'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Observer(
+              builder: () => Text('Count: ${viewModel.count.value}'),
+            ),
+            Observer(
+              builder: () => Text('Weight: ${viewModel.weight.value}'),
+            ),
+          ],
         ),
       ),
       floatingActionButton: _homeMainFloatingActionButton(context: context, viewModel: viewModel),
     );
   }
 
-  FloatingActionButton _homeMainFloatingActionButton({required BuildContext context, required HomeMainChildViewModel viewModel}) {
-    return FloatingActionButton.extended(
-      onPressed: viewModel.incrementCounter,
-      label: const Text('Increment counter'),
-      icon: const Icon(Icons.add),
+  Widget _homeMainFloatingActionButton({required BuildContext context, required HomeMainChildViewModel viewModel}) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        FloatingActionButton.extended(
+          onPressed: viewModel.incrementCounter,
+          label: const Text('Increment counter'),
+          icon: const Icon(Icons.add),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        FloatingActionButton.extended(
+          onPressed: viewModel.incrementWeight,
+          label: const Text('Increment weight'),
+          icon: const Icon(Icons.add),
+        ),
+      ],
     );
   }
 }
