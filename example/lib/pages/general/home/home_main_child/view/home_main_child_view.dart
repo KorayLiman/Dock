@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:liman/core/base/view/base_view.dart';
 import 'package:liman/core/widget/dock_builder/dock_builder.dart';
+import 'package:liman/product/state/primitive/docker/docker.dart';
 import 'package:liman/product/state/reactive/observer/observer.dart';
 import 'package:liman_example/pages/general/home/home_main_child/viewmodel/home_main_child_viewmodel.dart';
 
@@ -29,6 +30,11 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
             Observer(
               builder: () => Text('Weight: ${viewModel.weight.value}'),
             ),
+            Docker(
+              id: '0',
+              viewModel: viewModel,
+              builder: (viewModel) => Text(viewModel.age.toString()),
+            ),
           ],
         ),
       ),
@@ -52,6 +58,11 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
         FloatingActionButton.extended(
           onPressed: viewModel.incrementWeight,
           label: const Text('Increment weight'),
+          icon: const Icon(Icons.add),
+        ),
+        FloatingActionButton.extended(
+          onPressed: viewModel.incrementAge,
+          label: const Text('Increment age'),
           icon: const Icon(Icons.add),
         ),
       ],

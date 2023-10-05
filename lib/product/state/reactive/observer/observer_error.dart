@@ -1,4 +1,4 @@
-class ObserverError implements Exception {
+final class ObserverError implements Exception {
   const ObserverError();
   @override
   String toString() {
