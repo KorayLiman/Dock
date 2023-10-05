@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:liman/product/state/reactive/listenable/dock_listenable.dart';
-import 'package:liman/product/state/reactive/notifier/notify_data.dart';
-import 'package:liman/product/state/reactive/observer/observer_error.dart';
+part of '../observable/observable.dart';
 
 typedef WidgetCallback = Widget Function();
 typedef Disposer = void Function();
 
-class Notifier {
+final class Notifier {
   Notifier._();
 
   static Notifier? _instance;
@@ -20,12 +17,12 @@ class Notifier {
     _notifyData?.disposers.add(disposer);
   }
 
-  void notifyRead(DockListenable listenable) {
+  void notifyRead<T>(Observable<T> observable) {
     final updater = _notifyData?.updater;
-    if (updater != null && !listenable.containsUpdater(updater: updater)) {
-      listenable.addUpdater(updater);
+    if (updater != null && !observable._containsUpdater(updater: updater)) {
+      observable._addUpdater(updater);
       void disposer() {
-        listenable.removeUpdater(updater);
+        observable._removeUpdater(updater);
       }
 
       addDisposer(disposer);

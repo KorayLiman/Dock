@@ -4,7 +4,7 @@ import 'package:liman/product/state/reactive/observer/observer_stateless_widget.
 typedef WidgetCallback = Widget Function();
 
 @immutable
-final class Observer extends ObserverStatelessWidget {
+final class Observer extends ObserverBaseStatelessWidget {
   const Observer({required this.builder, super.key});
 
   final WidgetCallback builder;
