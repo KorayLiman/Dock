@@ -57,7 +57,7 @@ final class Observable<T> {
     _notifyToUpdate();
   }
 
-  void _update(ChangeGenericValue<T> changeGenericValue) {
+  void update(ChangeGenericValue<T> changeGenericValue) {
     value = changeGenericValue.call(value);
   }
 }

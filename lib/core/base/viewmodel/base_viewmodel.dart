@@ -9,6 +9,7 @@ import 'package:liman/product/state/primitive/docker/docker.dart';
 
 part '../../../product/state/primitive/docker/docker_stateless_element_mixin.dart';
 part '../mixins/base_viewmodel_mixin.dart';
+part '../mixins/base_viewmodel_state_mixin.dart';
 
 typedef DockerUpdater = void Function();
 
@@ -20,7 +21,7 @@ enum PageState { success, loading, empty, error, offline }
 /// AIM OF THIS CLASS IS LEAVING UI THINGS TO VIEW AND PUTTING ALL THE METHODS HERE.
 ///
 /// YOU WILL HAVE FULL CONTROL OVER STATE OF VIEW
-abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin {
+abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _BaseViewModelStateMixin {
   /// Called when View is created
   @mustCallSuper
   void onInit(BuildContext stateContext) {
