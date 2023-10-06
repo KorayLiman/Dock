@@ -4,7 +4,7 @@ import 'package:liman/core/base/view/base_view.dart';
 import 'package:liman/core/widget/dock_builder/dock_builder.dart';
 import 'package:liman/product/state/primitive/docker/docker.dart';
 import 'package:liman/product/state/reactive/observer/observer.dart';
-import 'package:liman_example/pages/general/home/home_main_child/viewmodel/home_main_child_viewmodel.dart';
+import 'package:liman_example/pages/general/home_tab/children/home_main_child/viewmodel/home_main_child_viewmodel.dart';
 
 @RoutePage()
 final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
@@ -25,15 +25,15 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Observer(
-              builder: () => Text('Count: ${viewModel.count.value}'),
+              builder: () => Text('(Observer) Count: ${viewModel.count.value}'),
             ),
             Observer(
-              builder: () => Text('Weight: ${viewModel.weight.value}'),
+              builder: () => Text('(Observer) Weight: ${viewModel.weight.value}'),
             ),
             Docker(
               id: '0',
               viewModel: viewModel,
-              builder: (viewModel) => Text(viewModel.age.toString()),
+              builder: (viewModel) => Text('(Docker) Age: ${viewModel.age}'),
             ),
           ],
         ),
@@ -48,19 +48,25 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         FloatingActionButton.extended(
+          heroTag: null,
           onPressed: viewModel.incrementCounter,
-          label: const Text('Increment counter'),
+          label: const Text('Increment count'),
           icon: const Icon(Icons.add),
         ),
         const SizedBox(
           height: 12,
         ),
         FloatingActionButton.extended(
+          heroTag: null,
           onPressed: viewModel.incrementWeight,
           label: const Text('Increment weight'),
           icon: const Icon(Icons.add),
         ),
+        const SizedBox(
+          height: 12,
+        ),
         FloatingActionButton.extended(
+          heroTag: null,
           onPressed: viewModel.incrementAge,
           label: const Text('Increment age'),
           icon: const Icon(Icons.add),

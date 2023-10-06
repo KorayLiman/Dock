@@ -7,6 +7,9 @@ import 'package:liman/product/state/reactive/observable/observable.dart';
 
 typedef Disposer = void Function();
 
+/// A mixin on [StatelessElement] that updates Observer widgets
+///
+/// on containing
 mixin ObserverStatelessElementMixin on StatelessElement {
   List<Disposer>? _disposers;
 

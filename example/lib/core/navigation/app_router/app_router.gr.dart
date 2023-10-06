@@ -12,14 +12,14 @@ import 'package:auto_route/auto_route.dart' as _i8;
 import 'package:flutter/material.dart' as _i9;
 import 'package:liman_example/pages/authentication/login/view/login_view.dart'
     as _i6;
-import 'package:liman_example/pages/general/home/home_list_child/view/home_list_child_view.dart'
+import 'package:liman_example/pages/general/home_tab/children/home_list_child/view/home_list_child_view.dart'
     as _i1;
-import 'package:liman_example/pages/general/home/home_main_child/view/home_main_child_view.dart'
+import 'package:liman_example/pages/general/home_tab/children/home_main_child/view/home_main_child_view.dart'
     as _i2;
-import 'package:liman_example/pages/general/home/home_parent/view/home_view.dart'
-    as _i4;
-import 'package:liman_example/pages/general/home/home_settings_child/view/home_settings_child_view.dart'
+import 'package:liman_example/pages/general/home_tab/children/home_settings_child/view/home_settings_child_view.dart'
     as _i3;
+import 'package:liman_example/pages/general/home_tab/parent/home_tab_parent/view/home_tab_parent_view.dart'
+    as _i4;
 import 'package:liman_example/pages/launch/splash/view/splash_view.dart' as _i7;
 import 'package:liman_example/product/components/loader_overlay/loader_overlay.dart'
     as _i5;
@@ -62,12 +62,12 @@ abstract class $AppRouter extends _i8.RootStackRouter {
         ),
       );
     },
-    HomeRoute.name: (routeData) {
-      final args =
-          routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
+    HomeTabParentRoute.name: (routeData) {
+      final args = routeData.argsAs<HomeTabParentRouteArgs>(
+          orElse: () => const HomeTabParentRouteArgs());
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i4.HomeView(arguments: args.arguments),
+        child: _i4.HomeTabParentView(arguments: args.arguments),
       );
     },
     LoaderOverlayRoute.name: (routeData) {
@@ -216,31 +216,31 @@ class HomeSettingsChildRouteArgs {
 }
 
 /// generated route for
-/// [_i4.HomeView]
-class HomeRoute extends _i8.PageRouteInfo<HomeRouteArgs> {
-  HomeRoute({
+/// [_i4.HomeTabParentView]
+class HomeTabParentRoute extends _i8.PageRouteInfo<HomeTabParentRouteArgs> {
+  HomeTabParentRoute({
     dynamic arguments,
     List<_i8.PageRouteInfo>? children,
   }) : super(
-          HomeRoute.name,
-          args: HomeRouteArgs(arguments: arguments),
+          HomeTabParentRoute.name,
+          args: HomeTabParentRouteArgs(arguments: arguments),
           initialChildren: children,
         );
 
-  static const String name = 'HomeRoute';
+  static const String name = 'HomeTabParentRoute';
 
-  static const _i8.PageInfo<HomeRouteArgs> page =
-      _i8.PageInfo<HomeRouteArgs>(name);
+  static const _i8.PageInfo<HomeTabParentRouteArgs> page =
+      _i8.PageInfo<HomeTabParentRouteArgs>(name);
 }
 
-class HomeRouteArgs {
-  const HomeRouteArgs({this.arguments});
+class HomeTabParentRouteArgs {
+  const HomeTabParentRouteArgs({this.arguments});
 
   final dynamic arguments;
 
   @override
   String toString() {
-    return 'HomeRouteArgs{arguments: $arguments}';
+    return 'HomeTabParentRouteArgs{arguments: $arguments}';
   }
 }
 

@@ -1,7 +1,7 @@
 enum RoutePaths {
   splash,
   login,
-  home,
+  homeTab,
   homeMainChild,
   homeListChild,
   homeSettingsChild,

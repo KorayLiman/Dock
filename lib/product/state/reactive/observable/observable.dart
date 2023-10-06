@@ -51,7 +51,7 @@ final class Observable<T> {
   }
 
   set value(T newValue) {
-    // TODO handle complex comparisons
+    // TODO(KorayLiman): handle complex comparisons
     if (newValue == _value) return;
     _value = newValue;
     _notifyToUpdate();

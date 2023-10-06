@@ -27,19 +27,22 @@ abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _B
   void onInit(BuildContext stateContext) {
     _assertDockBuilderInitialized();
     Dock
-      ..registerPostFrameCallback(onEndOfFrame)
+      ..registerPostFrameCallback(onPostFrame)
       ..registerNextFrameCallback(onNextFrame);
   }
 
-  /// Called after onInit. Handle network requests, navigation etc. here
+  // TODO(KorayLiman): Decide whether it is needed and must exist. Search usage scenarios
+  /// Called after onInit and when dependencies of this object change
   @mustCallSuper
-  void onReady() {
+  void onDependenciesChange() {
     _assertDockBuilderInitialized();
   }
 
-  /// Called at the end of the first frame of page render
+  /// Called at the end of the first frame of page render.
+  ///
+  /// Handle network requests, navigation etc. here
   @mustCallSuper
-  void onEndOfFrame(Duration timeStamp) {
+  void onPostFrame(Duration timeStamp) {
     _assertDockBuilderInitialized();
   }
 
