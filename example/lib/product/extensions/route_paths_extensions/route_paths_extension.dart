@@ -5,7 +5,7 @@ extension RoutePathsExtension on RoutePaths {
         RoutePaths.splash => '/splash',
         RoutePaths.login => '/login',
         RoutePaths.loaderDialog => '/loaderOverlay',
-        RoutePaths.home => '/home',
+        RoutePaths.homeTab => '/homeTab',
         RoutePaths.homeMainChild => 'homeMainChild',
         RoutePaths.homeListChild => 'homeMainList',
         RoutePaths.homeSettingsChild => 'homeMainSettings',

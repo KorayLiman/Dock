@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:liman/core/base/view/base_view.dart';
 import 'package:liman/core/widget/dock_builder/dock_builder.dart';
 import 'package:liman_example/core/navigation/app_router/app_router.gr.dart';
-import 'package:liman_example/pages/general/home/home_parent/viewmodel/home_viewmodel.dart';
+import 'package:liman_example/pages/general/home_tab/parent/home_tab_parent/viewmodel/home_tab_parent_viewmodel.dart';
 import 'package:liman_example/product/enums/route_paths.dart';
 import 'package:liman_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 
 @RoutePage()
-final class HomeView extends BaseView<HomeViewModel> {
-  HomeView({super.arguments}) : super(viewModel: HomeViewModel(), key: ValueKey<String>(RoutePaths.home.rawValue));
+final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
+  HomeTabParentView({super.arguments}) : super(viewModel: HomeTabParentViewModel(), key: ValueKey<String>(RoutePaths.homeTab.rawValue));
 
   @override
   DockBuilder build(BuildContext context) {

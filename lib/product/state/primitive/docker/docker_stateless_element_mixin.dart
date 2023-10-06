@@ -1,5 +1,6 @@
 part of '../../../../core/base/viewmodel/base_viewmodel.dart';
 
+/// A mixin on [StatelessElement] for primitive (manual) update
 mixin DockerStatelessElementMixin on StatelessElement {
   Docker get dockerWidget => widget as Docker;
   Map<String, DockerUpdater>? dockerUpdaters;
@@ -25,6 +26,7 @@ mixin DockerStatelessElementMixin on StatelessElement {
     super.unmount();
   }
 
+  /// Schedules widget to rebuilt in the next frame
   void updateElement() {
     assert(dockerUpdaters.isNotNull, "You called update() method on Docker doesn't exist or disposed");
     if (dockerWidget.viewModel._containsDockerUpdater(id: dockerWidget.id)) {

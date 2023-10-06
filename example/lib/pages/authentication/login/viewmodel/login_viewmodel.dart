@@ -17,6 +17,6 @@ final class LoginViewModel extends BaseViewModel<LoginViewModel> {
   }
 
   Future<void> goToHomePage({required BuildContext context}) async {
-    await context.pushRoute(HomeRoute());
+    await context.pushRoute(HomeTabParentRoute());
   }
 }

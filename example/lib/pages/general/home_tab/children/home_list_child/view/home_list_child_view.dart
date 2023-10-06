@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:liman/core/base/view/base_view.dart';
 import 'package:liman/core/widget/dock_builder/dock_builder.dart';
 import 'package:liman_example/core/navigation/app_router/app_router.gr.dart';
-import 'package:liman_example/pages/general/home/home_settings_child/viewmodel/home_settings_child_viewmodel.dart';
+import 'package:liman_example/pages/general/home_tab/children/home_list_child/viewmodel/home_list_child_viewmodel.dart';
 
 @RoutePage()
-final class HomeSettingsChildView extends BaseView<HomeSettingsChildViewModel> {
-  HomeSettingsChildView({super.arguments, super.key}) : super(viewModel: HomeSettingsChildViewModel(), inject: false);
+final class HomeListChildView extends BaseView<HomeListChildViewModel> {
+  HomeListChildView({super.arguments, super.key}) : super(viewModel: HomeListChildViewModel(), inject: false);
 
   @override
   DockBuilder build(BuildContext context) {
@@ -22,9 +22,9 @@ final class HomeSettingsChildView extends BaseView<HomeSettingsChildViewModel> {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            context.navigateTo(HomeMainChildRoute());
+            context.navigateTo(HomeSettingsChildRoute());
           },
-          child: const Text('Navigate to main'),
+          child: const Text('Navigate to settings'),
         ),
       ),
     );

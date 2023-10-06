@@ -73,7 +73,7 @@ mixin DockBuilderMixin on State<DockBuilder> {
 
   @override
   void didChangeDependencies() {
-    widget.viewModel.onReady();
+    widget.viewModel.onDependenciesChange();
     super.didChangeDependencies();
   }
 

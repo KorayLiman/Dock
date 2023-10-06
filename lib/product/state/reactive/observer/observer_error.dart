@@ -1,5 +1,7 @@
+/// Custom [Exception] for Observer widget
 final class ObserverError implements Exception {
   const ObserverError();
+
   @override
   String toString() {
     return '''

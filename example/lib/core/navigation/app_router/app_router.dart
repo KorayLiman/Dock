@@ -23,8 +23,8 @@ class AppRouter extends $AppRouter {
           path: RoutePaths.login.rawValue,
         ),
         AutoRoute(
-          page: HomeRoute.page,
-          path: RoutePaths.home.rawValue,
+          page: HomeTabParentRoute.page,
+          path: RoutePaths.homeTab.rawValue,
           children: [
             AutoRoute(
               page: HomeMainChildRoute.page,

@@ -4,10 +4,10 @@ import 'package:liman/core/locator/locator.dart';
 import 'package:liman/product/extensions/extensions.dart';
 import 'package:liman/product/mixins/single_ticker_provider_viewmodel_mixin.dart';
 
-final class HomeViewModel extends BaseViewModel<HomeViewModel> with SingleTickerProviderViewModelMixin {
-  static HomeViewModel get get => Locator.get<HomeViewModel>();
+final class HomeTabParentViewModel extends BaseViewModel<HomeTabParentViewModel> with SingleTickerProviderViewModelMixin {
+  static HomeTabParentViewModel get get => Locator.get<HomeTabParentViewModel>();
 
-  static HomeViewModel? get tryGet => Locator.tryGet<HomeViewModel>();
+  static HomeTabParentViewModel? get tryGet => Locator.tryGet<HomeTabParentViewModel>();
   late final BuildContext _stateContext;
   late final TabController tabController;
 
@@ -15,17 +15,16 @@ final class HomeViewModel extends BaseViewModel<HomeViewModel> with SingleTicker
   void onInit(BuildContext stateContext) {
     _stateContext = stateContext;
     tabController = TabController(length: 4, vsync: this);
-
+    setPageState(PageState.loading);
     super.onInit(stateContext);
   }
 
   @override
-  void onReady() {
-    setPageState(PageState.loading);
+  void onPostFrame(Duration timeStamp) {
     1.seconds.delay(() {
       setPageState(PageState.success);
     });
-    super.onReady();
+    super.onPostFrame(timeStamp);
   }
 
   @override
