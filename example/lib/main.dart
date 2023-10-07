@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         : Locator.register<AppRouter>(
             AppRouter(),
           );
+
     return MaterialApp.router(
       routerConfig: appRouter.config(
         navigatorObservers: () => [
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
             ),
         ],
       ),
-      theme: AppConstants.themeConstants.lightTheme,
+      theme: AppConstants.themeConstants.material3,
     );
   }
 }
