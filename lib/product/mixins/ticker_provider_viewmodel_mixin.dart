@@ -8,7 +8,7 @@ import 'package:liman/core/base/viewmodel/base_viewmodel.dart';
 base mixin TickerProviderViewModelMixin<T extends BaseViewModel> on BaseViewModel<T> implements TickerProvider {
   Set<Ticker>? _tickers;
 
-  BuildContext get stateContext;
+  BuildContext get context;
 
   @override
   Ticker createTicker(TickerCallback onTick) {
@@ -41,7 +41,7 @@ base mixin TickerProviderViewModelMixin<T extends BaseViewModel> on BaseViewMode
   }
 
   void _updateTickerModeNotifier() {
-    final newNotifier = TickerMode.getNotifier(stateContext);
+    final newNotifier = TickerMode.getNotifier(context);
     if (newNotifier == _tickerModeNotifier) {
       return;
     }

@@ -11,12 +11,16 @@ abstract class AppConstants {
 @immutable
 class _ThemeConstants {
   _ThemeConstants._();
+
   static _ThemeConstants? _instance;
 
   static _ThemeConstants get instance => _instance ??= _ThemeConstants._();
 
-  final ThemeData lightTheme = ThemeData(
+  final ThemeData material3 = ThemeData(
     useMaterial3: true,
     colorSchemeSeed: Colors.deepPurple,
+  );
+  final ThemeData material2 = ThemeData(
+    useMaterial3: false,
   );
 }

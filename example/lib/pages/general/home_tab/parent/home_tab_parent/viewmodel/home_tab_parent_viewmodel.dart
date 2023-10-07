@@ -8,15 +8,15 @@ final class HomeTabParentViewModel extends BaseViewModel<HomeTabParentViewModel>
   static HomeTabParentViewModel get get => Locator.get<HomeTabParentViewModel>();
 
   static HomeTabParentViewModel? get tryGet => Locator.tryGet<HomeTabParentViewModel>();
-  late final BuildContext _stateContext;
+  late final BuildContext _context;
   late final TabController tabController;
 
   @override
-  void onInit(BuildContext stateContext) {
-    _stateContext = stateContext;
+  void onInit(BuildContext element) {
+    _context = element;
     tabController = TabController(length: 4, vsync: this);
     setPageState(PageState.loading);
-    super.onInit(stateContext);
+    super.onInit(element);
   }
 
   @override
@@ -35,5 +35,5 @@ final class HomeTabParentViewModel extends BaseViewModel<HomeTabParentViewModel>
   }
 
   @override
-  BuildContext get stateContext => _stateContext;
+  BuildContext get context => _context;
 }

@@ -7,7 +7,7 @@ import 'package:liman/core/widget/dock_builder/dock_builder.dart';
 import 'package:liman/product/extensions/extensions.dart';
 import 'package:liman/product/state/primitive/docker/docker.dart';
 
-part '../../../product/state/primitive/docker/docker_stateless_element_mixin.dart';
+part '../../../product/state/primitive/docker/docker_stateless_element.dart';
 part '../mixins/base_viewmodel_mixin.dart';
 part '../mixins/base_viewmodel_state_mixin.dart';
 
@@ -24,7 +24,7 @@ enum PageState { success, loading, empty, error, offline }
 abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _BaseViewModelStateMixin {
   /// Called when View is created
   @mustCallSuper
-  void onInit(BuildContext stateContext) {
+  void onInit(BuildContext element) {
     _assertDockBuilderInitialized();
     Dock
       ..registerPostFrameCallback(onPostFrame)
