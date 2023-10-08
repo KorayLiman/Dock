@@ -6,7 +6,7 @@ mixin DockBuilderMixin on State<DockBuilder> {
   static const double _defaultIconSize = 48;
 
   /// Builds page according to [PageState]
-  Widget _buildPage() => switch (widget.viewModel.pageState) {
+  Widget _buildPage(BuildContext context) => switch (widget.viewModel.pageState) {
         PageState.success => widget.onSuccess(),
         PageState.loading => widget.onLoading != null
             ? widget.onLoading!()
@@ -80,9 +80,14 @@ mixin DockBuilderMixin on State<DockBuilder> {
   @override
   void dispose() {
     widget.viewModel.onDispose();
+
     if (Locator.isRegistered(instance: widget.viewModel)) {
-      Locator.unregister(instance: widget.viewModel);
-      Logger.logMsg(msg: "'${widget.viewModel.runtimeType}' Unregistered", color: LogColors.red);
+      final result = Locator.unregister(instance: widget.viewModel);
+      if (result) {
+        Logger.logMsg(msg: "'${widget.viewModel.runtimeType}' Unregistered", color: LogColors.red);
+      } else {
+        Logger.logMsg(msg: "---ERROR--- '${widget.viewModel.runtimeType}' is registered but a problem occurred while unregistering it", color: LogColors.red);
+      }
     } else {
       Logger.logMsg(msg: "Page disposed. No registered '${widget.viewModel.runtimeType}' found", color: LogColors.white);
     }

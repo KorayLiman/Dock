@@ -42,7 +42,7 @@ final class ObserverStatelessElement extends StatelessElement {
 
   @override
   Widget build() {
-    return Notifier.instance.createElement(
+    return Notifier.instance.createObserver(
       NotifyData(updater: updateElement, disposers: _disposers!),
       super.build,
     );

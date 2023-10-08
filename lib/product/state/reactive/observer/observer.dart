@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:liman/product/state/reactive/observer/observer_stateless_element.dart';
 
-typedef WidgetCallback = Widget Function();
+typedef WidgetCallback = Widget Function(BuildContext context);
 
 /// A reactive [StatelessWidget] receives updates when containing
 ///
@@ -16,6 +16,6 @@ final class Observer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return builder.call();
+    return builder.call(context);
   }
 }

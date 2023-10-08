@@ -5,9 +5,9 @@ import 'package:liman/product/extensions/extensions.dart';
 import 'package:liman/product/mixins/single_ticker_provider_viewmodel_mixin.dart';
 
 final class HomeTabParentViewModel extends BaseViewModel<HomeTabParentViewModel> with SingleTickerProviderViewModelMixin {
-  static HomeTabParentViewModel get get => Locator.get<HomeTabParentViewModel>();
+  static HomeTabParentViewModel get find => Locator.find<HomeTabParentViewModel>();
 
-  static HomeTabParentViewModel? get tryGet => Locator.tryGet<HomeTabParentViewModel>();
+  static HomeTabParentViewModel? get tryFind => Locator.tryFind<HomeTabParentViewModel>();
   late final BuildContext _context;
   late final TabController tabController;
 

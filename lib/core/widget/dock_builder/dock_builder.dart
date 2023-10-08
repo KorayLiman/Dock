@@ -12,10 +12,10 @@ part 'dock_builder_mixin.dart';
 typedef WidgetCallback = Widget Function();
 
 /// A SMART AND EASY [Widget] FOR MANAGING [PageState]
-final class DockBuilder extends StatefulWidget {
+final class DockBuilder<T extends BaseViewModel> extends StatefulWidget {
   const DockBuilder({required this.viewModel, required this.onSuccess, super.key, this.onEmpty, this.onError, this.onLoading, this.onOffline});
 
-  final BaseViewModel viewModel;
+  final T viewModel;
   final WidgetCallback onSuccess;
   final WidgetCallback? onLoading;
   final WidgetCallback? onEmpty;

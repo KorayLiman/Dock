@@ -29,7 +29,7 @@ final class Notifier {
     }
   }
 
-  Widget createElement(NotifyData data, WidgetCallback builder) {
+  Widget createObserver(NotifyData data, WidgetCallback builder) {
     _notifyData = data;
     final result = builder();
     if (data.disposers.isEmpty) {
