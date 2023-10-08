@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:liman/core/base/view/base_view.dart';
 import 'package:liman/core/widget/dock_builder/dock_builder.dart';
-import 'package:liman_example/core/navigation/app_router/app_router.gr.dart';
 import 'package:liman_example/pages/general/home_tab/children/home_settings_child/viewmodel/home_settings_child_viewmodel.dart';
 
 @RoutePage()
@@ -21,9 +20,7 @@ final class HomeSettingsChildView extends BaseView<HomeSettingsChildViewModel> {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
-            context.navigateTo(HomeMainChildRoute());
-          },
+          onPressed: () {},
           child: const Text('Navigate to main'),
         ),
       ),

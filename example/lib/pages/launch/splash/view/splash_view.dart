@@ -26,9 +26,7 @@ final class SplashView extends BaseView<SplashViewModel> {
       ),
       body: Center(
         child: ElevatedButton.icon(
-          onPressed: () async {
-            await viewModel.goToNextPage(context: context);
-          },
+          onPressed: viewModel.goToNextPage,
           label: const Text('Go to Login Page'),
           icon: const Icon(Icons.navigate_next),
         ),

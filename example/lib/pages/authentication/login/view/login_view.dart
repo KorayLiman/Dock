@@ -47,9 +47,7 @@ class _LoginViewBody extends DockAccess<LoginViewModel> {
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton.icon(
-        onPressed: () async {
-          await viewModel.goToHomePage(context: context);
-        },
+        onPressed: viewModel.goToHomePage,
         label: const Text('Navigate to Home'),
         icon: const Icon(Icons.navigate_next),
       ),

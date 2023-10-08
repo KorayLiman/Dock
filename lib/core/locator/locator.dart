@@ -1,35 +1,20 @@
-import 'package:get_it/get_it.dart';
+import 'package:flutter/material.dart';
+import 'package:liman/core/dock/dock.dart';
+import 'package:liman/product/extensions/object_extensions/object_extensions.dart';
 
-/// SMART [Locator] SERVICE
-abstract class Locator {
-  Locator._();
+part 'locator_impl.dart';
 
-  static final _locator = GetIt.instance;
+/// Global instance of [_LocatorImpl] class
+// ignore: non_constant_identifier_names
+final Locator = _LocatorImpl();
 
-  /// Registers given instance
-  static T register<T extends Object>(T instance) {
-    return _locator.registerSingleton<T>(instance);
-  }
+/// [_LocatorException]
+@immutable
+final class _LocatorException implements Exception {
+  const _LocatorException({required this.message});
 
-  /// Unregisters given instance or instance with type [T]
-  static void unregister<T extends Object>({T? instance}) {
-    _locator.unregister<T>(instance: instance);
-  }
+  final String message;
 
-  /// Gets registered object with Type [T]
-  static T get<T extends Object>() {
-    return _locator.get<T>();
-  }
-
-  /// Tries to get registered object with Type [T]
-  ///
-  /// Returns null if couldn't
-  static T? tryGet<T extends Object>() {
-    return isRegistered<T>() ? _locator.get<T>() : null;
-  }
-
-  /// Checks if given instance or instance with type [T] is registered
-  static bool isRegistered<T extends Object>({T? instance}) {
-    return _locator.isRegistered<T>(instance: instance);
-  }
+  @override
+  String toString() => message;
 }

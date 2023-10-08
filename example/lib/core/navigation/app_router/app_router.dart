@@ -7,7 +7,7 @@ import 'package:liman_example/product/enums/route_paths.dart';
 import 'package:liman_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'View,Route')
-class AppRouter extends $AppRouter {
+final class AppRouter extends $AppRouter {
   @override
   RouteType get defaultRouteType => const RouteType.adaptive();
 
@@ -52,9 +52,9 @@ class AppRouter extends $AppRouter {
       ];
 
   /// Locates AppRouter
-  static AppRouter get find => Locator.get<AppRouter>();
+  static AppRouter get find => Locator.find<AppRouter>();
 
-  CustomNavigationObserver get _navigationObserver => Locator.get<CustomNavigationObserver>();
+  CustomNavigationObserver get _navigationObserver => Locator.find<CustomNavigationObserver>();
 
   ///////// UTILS ////////////
 

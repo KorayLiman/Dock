@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appRouter = Locator.isRegistered<AppRouter>()
-        ? Locator.get<AppRouter>()
+        ? Locator.find<AppRouter>()
         : Locator.register<AppRouter>(
             AppRouter(),
           );
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       routerConfig: appRouter.config(
         navigatorObservers: () => [
           if (Locator.isRegistered<CustomNavigationObserver>())
-            Locator.get<CustomNavigationObserver>()
+            Locator.find<CustomNavigationObserver>()
           else
             Locator.register<CustomNavigationObserver>(
               CustomNavigationObserver(),

@@ -25,15 +25,15 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Observer(
-              builder: () => Text('(Observer) Count: ${viewModel.count.value}'),
+              builder: (context) => Text('(Observer) Count: ${viewModel.count.value}'),
             ),
             Observer(
-              builder: () => Text('(Observer) Weight: ${viewModel.weight.value}'),
+              builder: (context) => Text('(Observer) Weight: ${viewModel.weight.value}'),
             ),
             Docker(
               id: '0',
               viewModel: viewModel,
-              builder: (viewModel) => Text('(Docker) Age: ${viewModel.age}'),
+              builder: (context, viewModel) => Text('(Docker) Age: ${viewModel.age}'),
             ),
           ],
         ),
