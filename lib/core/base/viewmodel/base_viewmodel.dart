@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:dock/core/dock/dock.dart';
+import 'package:dock/core/widget/dock_builder/dock_builder.dart';
+import 'package:dock/product/extensions/extensions.dart';
+import 'package:dock/product/state/primitive/docker/docker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:liman/core/dock/dock.dart';
-import 'package:liman/core/widget/dock_builder/dock_builder.dart';
-import 'package:liman/product/extensions/extensions.dart';
-import 'package:liman/product/state/primitive/docker/docker.dart';
 
 part '../../../product/state/primitive/docker/docker_stateless_element.dart';
 part '../mixins/base_viewmodel_mixin.dart';

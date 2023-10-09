@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_constructors_over_static_methods
 import 'package:flutter/material.dart';
-import 'package:liman/product/extensions/extensions.dart';
-import 'package:liman/product/utils/logger.dart';
-import 'package:liman_example/core/navigation/app_router/app_router.dart';
-import 'package:liman_example/core/navigation/app_router/app_router.gr.dart';
-import 'package:liman_example/product/enums/route_paths.dart';
-import 'package:liman_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
+import 'package:dock/product/extensions/extensions.dart';
+import 'package:dock/product/utils/logger.dart';
+import 'package:dock_example/core/navigation/app_router/app_router.dart';
+import 'package:dock_example/core/navigation/app_router/app_router.gr.dart';
+import 'package:dock_example/product/enums/route_paths.dart';
+import 'package:dock_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 
 abstract class LoaderManager {
   static List<Key>? _widgetKeys;

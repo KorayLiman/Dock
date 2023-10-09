@@ -1,24 +1,24 @@
-#ifndef FLUTTER_PLUGIN_LIMAN_PLUGIN_H_
-#define FLUTTER_PLUGIN_LIMAN_PLUGIN_H_
+#ifndef FLUTTER_PLUGIN_DOCK_PLUGIN_H_
+#define FLUTTER_PLUGIN_DOCK_PLUGIN_H_
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar_windows.h>
 
 #include <memory>
 
-namespace liman {
+namespace dock {
 
-class LimanPlugin : public flutter::Plugin {
+class DockPlugin : public flutter::Plugin {
  public:
   static void RegisterWithRegistrar(flutter::PluginRegistrarWindows *registrar);
 
-  LimanPlugin();
+  DockPlugin();
 
-  virtual ~LimanPlugin();
+  virtual ~DockPlugin();
 
   // Disallow copy and assign.
-  LimanPlugin(const LimanPlugin&) = delete;
-  LimanPlugin& operator=(const LimanPlugin&) = delete;
+  DockPlugin(const DockPlugin&) = delete;
+  DockPlugin& operator=(const DockPlugin&) = delete;
 
   // Called when a method is called on this plugin's channel from Dart.
   void HandleMethodCall(
@@ -26,6 +26,6 @@ class LimanPlugin : public flutter::Plugin {
       std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
 };
 
-}  // namespace liman
+}  // namespace dock
 
-#endif  // FLUTTER_PLUGIN_LIMAN_PLUGIN_H_
+#endif  // FLUTTER_PLUGIN_DOCK_PLUGIN_H_

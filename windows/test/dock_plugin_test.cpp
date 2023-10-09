@@ -8,9 +8,9 @@
 #include <string>
 #include <variant>
 
-#include "liman_plugin.h"
+#include "dock_plugin.h"
 
-namespace liman {
+namespace dock {
 namespace test {
 
 namespace {
@@ -22,8 +22,8 @@ using flutter::MethodResultFunctions;
 
 }  // namespace
 
-TEST(LimanPlugin, GetPlatformVersion) {
-  LimanPlugin plugin;
+TEST(DockPlugin, GetPlatformVersion) {
+  DockPlugin plugin;
   // Save the reply value from the success callback.
   std::string result_string;
   plugin.HandleMethodCall(
@@ -40,4 +40,4 @@ TEST(LimanPlugin, GetPlatformVersion) {
 }
 
 }  // namespace test
-}  // namespace liman
+}  // namespace dock

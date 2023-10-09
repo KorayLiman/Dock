@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:liman/product/state/reactive/notifier/notify_data.dart';
-import 'package:liman/product/state/reactive/observer/observer_error.dart';
+import 'package:dock/product/state/reactive/notifier/notify_data.dart';
+import 'package:dock/product/state/reactive/observer/observer_error.dart';
 
 part '../notifier/notifier.dart';
 

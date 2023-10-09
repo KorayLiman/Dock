@@ -5,8 +5,8 @@
 import FlutterMacOS
 import Foundation
 
-import liman
+import dock
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  LimanPlugin.register(with: registry.registrar(forPlugin: "LimanPlugin"))
+  DockPlugin.register(with: registry.registrar(forPlugin: "DockPlugin"))
 }

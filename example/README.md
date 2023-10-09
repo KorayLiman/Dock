@@ -1,6 +1,6 @@
-# liman_example
+# dock_example
 
-Demonstrates how to use the liman plugin.
+Demonstrates how to use the dock plugin.
 
 ## Getting Started
 

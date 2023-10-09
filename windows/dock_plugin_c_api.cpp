@@ -1,12 +1,12 @@
-#include "include/liman/liman_plugin_c_api.h"
+#include "include/dock/dock_plugin_c_api.h"
 
 #include <flutter/plugin_registrar_windows.h>
 
-#include "liman_plugin.h"
+#include "dock_plugin.h"
 
-void LimanPluginCApiRegisterWithRegistrar(
+void DockPluginCApiRegisterWithRegistrar(
     FlutterDesktopPluginRegistrarRef registrar) {
-  liman::LimanPlugin::RegisterWithRegistrar(
+  dock::DockPlugin::RegisterWithRegistrar(
       flutter::PluginRegistrarManager::GetInstance()
           ->GetRegistrar<flutter::PluginRegistrarWindows>(registrar));
 }

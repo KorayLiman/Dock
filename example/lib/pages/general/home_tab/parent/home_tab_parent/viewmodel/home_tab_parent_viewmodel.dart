@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:liman/core/base/viewmodel/base_viewmodel.dart';
-import 'package:liman/core/locator/locator.dart';
-import 'package:liman/product/extensions/extensions.dart';
-import 'package:liman/product/mixins/single_ticker_provider_viewmodel_mixin.dart';
+import 'package:dock/core/base/viewmodel/base_viewmodel.dart';
+import 'package:dock/core/locator/locator.dart';
+import 'package:dock/product/extensions/extensions.dart';
+import 'package:dock/product/mixins/single_ticker_provider_viewmodel_mixin.dart';
 
 final class HomeTabParentViewModel extends BaseViewModel<HomeTabParentViewModel> with SingleTickerProviderViewModelMixin {
   static HomeTabParentViewModel get find => Locator.find<HomeTabParentViewModel>();

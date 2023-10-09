@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:liman/product/state/reactive/notifier/notify_data.dart';
-import 'package:liman/product/state/reactive/observable/observable.dart';
+import 'package:dock/product/state/reactive/notifier/notify_data.dart';
+import 'package:dock/product/state/reactive/observable/observable.dart';
 
 typedef Disposer = void Function();
 

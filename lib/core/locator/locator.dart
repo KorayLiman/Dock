@@ -1,6 +1,6 @@
+import 'package:dock/core/dock/dock.dart';
+import 'package:dock/product/extensions/object_extensions/object_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:liman/core/dock/dock.dart';
-import 'package:liman/product/extensions/object_extensions/object_extensions.dart';
 
 part 'locator_impl.dart';
 

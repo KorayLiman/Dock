@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:liman/product/extensions/collection_extensions/list_extensions/list_extensions.dart';
+import 'package:dock/product/extensions/collection_extensions/list_extensions/list_extensions.dart';
 
 void main() {
   testWidgets('List extension test', (WidgetTester tester) async {

@@ -1,4 +1,4 @@
-package com.harbour.liman_example
+package com.liman.dock_example
 
 import io.flutter.embedding.android.FlutterActivity
 

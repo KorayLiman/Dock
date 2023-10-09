@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.harbour" "\0"
-            VALUE "FileDescription", "liman_example" "\0"
+            VALUE "CompanyName", "com.liman" "\0"
+            VALUE "FileDescription", "dock_example" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "liman_example" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.harbour. All rights reserved." "\0"
-            VALUE "OriginalFilename", "liman_example.exe" "\0"
-            VALUE "ProductName", "liman_example" "\0"
+            VALUE "InternalName", "dock_example" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 com.liman. All rights reserved." "\0"
+            VALUE "OriginalFilename", "dock_example.exe" "\0"
+            VALUE "ProductName", "dock_example" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
