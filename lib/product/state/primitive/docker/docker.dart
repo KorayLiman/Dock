@@ -1,5 +1,5 @@
+import 'package:dock/core/base/viewmodel/base_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:liman/core/base/viewmodel/base_viewmodel.dart';
 
 typedef DockerBuilderFn<T> = Widget Function(BuildContext context, T viewModel);
 

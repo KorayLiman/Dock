@@ -1,4 +1,4 @@
-#include "liman_plugin.h"
+#include "dock_plugin.h"
 
 // This must be included before many other Windows headers.
 #include <windows.h>
@@ -13,17 +13,17 @@
 #include <memory>
 #include <sstream>
 
-namespace liman {
+namespace dock {
 
 // static
-void LimanPlugin::RegisterWithRegistrar(
+void DockPlugin::RegisterWithRegistrar(
     flutter::PluginRegistrarWindows *registrar) {
   auto channel =
       std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
-          registrar->messenger(), "liman",
+          registrar->messenger(), "dock",
           &flutter::StandardMethodCodec::GetInstance());
 
-  auto plugin = std::make_unique<LimanPlugin>();
+  auto plugin = std::make_unique<DockPlugin>();
 
   channel->SetMethodCallHandler(
       [plugin_pointer = plugin.get()](const auto &call, auto result) {
@@ -33,11 +33,11 @@ void LimanPlugin::RegisterWithRegistrar(
   registrar->AddPlugin(std::move(plugin));
 }
 
-LimanPlugin::LimanPlugin() {}
+DockPlugin::DockPlugin() {}
 
-LimanPlugin::~LimanPlugin() {}
+DockPlugin::~DockPlugin() {}
 
-void LimanPlugin::HandleMethodCall(
+void DockPlugin::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
   if (method_call.method_name().compare("getPlatformVersion") == 0) {
@@ -56,4 +56,4 @@ void LimanPlugin::HandleMethodCall(
   }
 }
 
-}  // namespace liman
+}  // namespace dock

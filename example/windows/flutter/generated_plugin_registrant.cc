@@ -6,9 +6,9 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <liman/liman_plugin_c_api.h>
+#include <dock/dock_plugin_c_api.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  LimanPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("LimanPluginCApi"));
+  DockPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("DockPluginCApi"));
 }

@@ -7,7 +7,7 @@ class _LocatorImpl {
   /// Stored instances
   final _dependencyInstances = <String, _Instance>{};
 
-  /// Gets key of instance in [_dependencyInstances]
+  /// Generates key from given [type]
   String _getInstanceKey(Type type) {
     return type.toString();
   }
@@ -26,13 +26,13 @@ class _LocatorImpl {
   }
 
   /// Registers given instance to be created at first access
-  void registerLazy<T extends Object>(T instance, {bool keepAlive = false}) {
+  void registerLazy<T extends Object>(InstanceBuilder<T> builder, {bool keepAlive = false}) {
     Dock.throwConditional(
       exception: _LocatorException(message: 'Object of type $T is already registered'),
-      throwIf: isRegistered<T>(instance: instance),
+      throwIf: isRegistered<T>(),
     );
 
-    final instanceToRegister = _Instance<T>(builder: () => instance, keepAlive: keepAlive);
+    final instanceToRegister = _Instance<T>(builder: builder, keepAlive: keepAlive);
     _dependencyInstances[_getInstanceKey(T)] = instanceToRegister;
   }
 

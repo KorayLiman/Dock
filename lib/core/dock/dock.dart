@@ -1,4 +1,4 @@
-import 'package:liman/core/base/dock_base/dock_base.dart';
+import 'package:dock/core/base/dock_base/dock_base.dart';
 
 typedef FrameCallback = void Function(Duration timeStamp);
 

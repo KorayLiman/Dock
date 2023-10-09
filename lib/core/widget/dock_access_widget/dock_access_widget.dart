@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:liman/core/base/viewmodel/base_viewmodel.dart';
-import 'package:liman/core/locator/locator.dart';
+import 'package:dock/core/base/viewmodel/base_viewmodel.dart';
+import 'package:dock/core/locator/locator.dart';
 
 /// A CONST [StatelessWidget] FOR ACCESSING VIEWMODEL EASILY
 abstract class DockAccess<T extends BaseViewModel> extends StatelessWidget {

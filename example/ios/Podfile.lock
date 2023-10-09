@@ -1,27 +1,27 @@
 PODS:
+  - dock (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - liman (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
+  - dock (from `.symlinks/plugins/dock/ios`)
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - liman (from `.symlinks/plugins/liman/ios`)
 
 EXTERNAL SOURCES:
+  dock:
+    :path: ".symlinks/plugins/dock/ios"
   Flutter:
     :path: Flutter
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
-  liman:
-    :path: ".symlinks/plugins/liman/ios"
 
 SPEC CHECKSUMS:
+  dock: 29c2dec9024ba33e2a75c6544cd7a49d90668375
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
-  liman: 3e14027bbca02a20d71844d221ddf84fd9fe7921
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 

@@ -9,20 +9,20 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/material.dart' as _i9;
-import 'package:liman_example/pages/authentication/login/view/login_view.dart'
+import 'package:dock_example/pages/authentication/login/view/login_view.dart'
     as _i6;
-import 'package:liman_example/pages/general/home_tab/children/home_list_child/view/home_list_child_view.dart'
+import 'package:dock_example/pages/general/home_tab/children/home_list_child/view/home_list_child_view.dart'
     as _i1;
-import 'package:liman_example/pages/general/home_tab/children/home_main_child/view/home_main_child_view.dart'
+import 'package:dock_example/pages/general/home_tab/children/home_main_child/view/home_main_child_view.dart'
     as _i2;
-import 'package:liman_example/pages/general/home_tab/children/home_settings_child/view/home_settings_child_view.dart'
+import 'package:dock_example/pages/general/home_tab/children/home_settings_child/view/home_settings_child_view.dart'
     as _i3;
-import 'package:liman_example/pages/general/home_tab/parent/home_tab_parent/view/home_tab_parent_view.dart'
+import 'package:dock_example/pages/general/home_tab/parent/home_tab_parent/view/home_tab_parent_view.dart'
     as _i4;
-import 'package:liman_example/pages/launch/splash/view/splash_view.dart' as _i7;
-import 'package:liman_example/product/components/loader_overlay/loader_overlay.dart'
+import 'package:dock_example/pages/launch/splash/view/splash_view.dart' as _i7;
+import 'package:dock_example/product/components/loader_overlay/loader_overlay.dart'
     as _i5;
+import 'package:flutter/material.dart' as _i9;
 
 abstract class $AppRouter extends _i8.RootStackRouter {
   $AppRouter({super.navigatorKey});

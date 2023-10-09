@@ -1,8 +1,8 @@
+import 'package:dock/core/locator/locator.dart';
+import 'package:dock_example/core/navigation/app_router/app_router.dart';
+import 'package:dock_example/core/navigation/navigation_observer/navigation_observer.dart';
+import 'package:dock_example/product/constants/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:liman/core/locator/locator.dart';
-import 'package:liman_example/core/navigation/app_router/app_router.dart';
-import 'package:liman_example/core/navigation/navigation_observer/navigation_observer.dart';
-import 'package:liman_example/product/constants/app_constants.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

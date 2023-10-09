@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liman/product/state/reactive/observer/observer_stateless_element.dart';
+import 'package:dock/product/state/reactive/observer/observer_stateless_element.dart';
 
 typedef WidgetCallback = Widget Function(BuildContext context);
 

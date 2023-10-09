@@ -1,11 +1,11 @@
 {
-    "name": "liman_example",
-    "short_name": "liman_example",
+    "name": "dock_example",
+    "short_name": "dock_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Demonstrates how to use the liman plugin.",
+    "description": "Demonstrates how to use the dock plugin.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

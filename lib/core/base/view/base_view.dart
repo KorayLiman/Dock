@@ -1,7 +1,7 @@
+import 'package:dock/core/base/viewmodel/base_viewmodel.dart';
+import 'package:dock/core/locator/locator.dart';
+import 'package:dock/core/widget/dock_builder/dock_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:liman/core/base/viewmodel/base_viewmodel.dart';
-import 'package:liman/core/locator/locator.dart';
-import 'package:liman/core/widget/dock_builder/dock_builder.dart';
 
 /// AN ABSTRACT [StatelessWidget] FOR OPTIONALLY REGISTERING VIEWMODEL OF ANY VIEW
 abstract base class BaseView<T extends BaseViewModel> extends StatelessWidget {
