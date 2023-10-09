@@ -1,6 +1,4 @@
-part of 'locator.dart';
-
-typedef InstanceBuilder<T extends Object> = T Function();
+part of 'locator_service.dart';
 
 /// Smart dependency management
 class _LocatorImpl {

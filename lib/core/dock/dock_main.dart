@@ -1,6 +1,5 @@
 import 'package:dock/core/base/dock_base/dock_base.dart';
-
-typedef FrameCallback = void Function(Duration timeStamp);
+import 'package:dock/typedefs.dart';
 
 /// GLOBAL INSTANCE OF [_Dock] CLASS
 // ignore: non_constant_identifier_names

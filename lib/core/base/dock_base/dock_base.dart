@@ -1,6 +1,5 @@
+import 'package:dock/typedefs.dart';
 import 'package:flutter/material.dart';
-
-typedef WidgetCallback = Widget Function();
 
 /// DOCK ABSTRACT BASE CLASS
 abstract base class DockBase {

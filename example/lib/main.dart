@@ -1,4 +1,4 @@
-import 'package:dock/core/locator/locator.dart';
+import 'package:dock/dock.dart';
 import 'package:dock_example/core/navigation/app_router/app_router.dart';
 import 'package:dock_example/core/navigation/navigation_observer/navigation_observer.dart';
 import 'package:dock_example/product/constants/app_constants.dart';

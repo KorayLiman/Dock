@@ -1,5 +1,4 @@
-typedef Disposer = void Function();
-typedef Updater = void Function();
+import 'package:dock/typedefs.dart';
 
 final class NotifyData {
   const NotifyData({required this.updater, required this.disposers});
