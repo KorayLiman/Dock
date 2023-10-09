@@ -1,8 +1,5 @@
 part of '../observable/observable.dart';
 
-typedef WidgetCallback = Widget Function();
-typedef Disposer = void Function();
-
 final class Notifier {
   Notifier._();
 

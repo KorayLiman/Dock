@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:dock/product/state/reactive/observer/observer_stateless_element.dart';
-
-typedef WidgetCallback = Widget Function(BuildContext context);
+import 'package:dock/typedefs.dart';
+import 'package:flutter/material.dart';
 
 /// A reactive [StatelessWidget] receives updates when containing
 ///
@@ -9,7 +8,7 @@ typedef WidgetCallback = Widget Function(BuildContext context);
 final class Observer extends StatelessWidget {
   const Observer({required this.builder, super.key});
 
-  final WidgetCallback builder;
+  final WidgetCallbackViaContext builder;
 
   @override
   StatelessElement createElement() => ObserverStatelessElement(this);

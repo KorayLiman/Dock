@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:dock/product/state/reactive/notifier/notify_data.dart';
 import 'package:dock/product/state/reactive/observable/observable.dart';
-
-typedef Disposer = void Function();
+import 'package:dock/typedefs.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 /// A [StatelessElement] of Observer to update it's [Widget]
 final class ObserverStatelessElement extends StatelessElement {

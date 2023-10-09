@@ -1,17 +1,16 @@
 import 'dart:async';
 
-import 'package:dock/core/dock/dock.dart';
+import 'package:dock/core/dock/dock_main.dart';
 import 'package:dock/core/widget/dock_builder/dock_builder.dart';
 import 'package:dock/product/extensions/extensions.dart';
 import 'package:dock/product/state/primitive/docker/docker.dart';
+import 'package:dock/typedefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 part '../../../product/state/primitive/docker/docker_stateless_element.dart';
 part '../mixins/base_viewmodel_mixin.dart';
 part '../mixins/base_viewmodel_state_mixin.dart';
-
-typedef DockerUpdater = void Function();
 
 /// [PageState]
 enum PageState { success, loading, empty, error, offline }

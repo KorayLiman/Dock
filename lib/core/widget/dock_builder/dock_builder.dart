@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:dock/core/base/viewmodel/base_viewmodel.dart';
-import 'package:dock/core/dock/dock.dart';
+import 'package:dock/core/dock/dock_main.dart';
 import 'package:dock/core/locator/locator.dart';
 import 'package:dock/product/extensions/extensions.dart';
 import 'package:dock/product/state/reactive/observer/observer.dart';
 import 'package:dock/product/utils/logger.dart';
+import 'package:dock/typedefs.dart';
+import 'package:flutter/material.dart';
 
 part '../default_appbar/default_appbar.dart';
 part 'dock_builder_mixin.dart';
-
-typedef WidgetCallback = Widget Function();
 
 /// A SMART AND EASY [Widget] FOR MANAGING [PageState]
 final class DockBuilder<T extends BaseViewModel> extends StatefulWidget {

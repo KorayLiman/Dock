@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:dock/product/state/reactive/notifier/notify_data.dart';
 import 'package:dock/product/state/reactive/observer/observer_error.dart';
+import 'package:dock/typedefs.dart';
+import 'package:flutter/material.dart';
 
 part '../notifier/notifier.dart';
-
-typedef ChangeGenericValue<T> = T Function(T object);
-typedef Updater = void Function();
 
 final class Observable<T> {
   Observable(this._value);
