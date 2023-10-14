@@ -193,7 +193,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.3"
-  dock:
+  dock_flutter:
     dependency: "direct main"
     description:
       path: ".."

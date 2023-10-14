@@ -6,7 +6,7 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <dock/dock_plugin_c_api.h>
+#include <dock_flutter/dock_plugin_c_api.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   DockPluginCApiRegisterWithRegistrar(
