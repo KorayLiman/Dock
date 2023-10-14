@@ -1,6 +1,6 @@
-import 'package:dock/core/dock/dock_main.dart';
-import 'package:dock/product/extensions/object_extensions/object_extensions.dart';
-import 'package:dock/typedefs.dart';
+import 'package:dock_flutter/core/dock/dock_main.dart';
+import 'package:dock_flutter/product/extensions/object_extensions/object_extensions.dart';
+import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
 
 part 'locator_impl.dart';

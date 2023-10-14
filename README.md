@@ -1,4 +1,4 @@
-# dock
+# dock_flutter
 
 A new Flutter plugin project.
 

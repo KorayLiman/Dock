@@ -1,5 +1,5 @@
-import 'package:dock/core/base/viewmodel/base_viewmodel.dart';
-import 'package:dock/product/extensions/extensions.dart';
+import 'package:dock_flutter/core/base/viewmodel/base_viewmodel.dart';
+import 'package:dock_flutter/product/extensions/extensions.dart';
 
 final class HomeMainChildViewModel extends BaseViewModel<HomeMainChildViewModel> {
   final count = 0.observable;

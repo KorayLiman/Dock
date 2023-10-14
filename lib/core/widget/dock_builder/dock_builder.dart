@@ -1,10 +1,10 @@
-import 'package:dock/core/base/viewmodel/base_viewmodel.dart';
-import 'package:dock/core/dock/dock_main.dart';
-import 'package:dock/core/locator/locator.dart';
-import 'package:dock/product/extensions/extensions.dart';
-import 'package:dock/product/state/reactive/observer/observer.dart';
-import 'package:dock/product/utils/logger/logger.dart';
-import 'package:dock/typedefs.dart';
+import 'package:dock_flutter/core/base/viewmodel/base_viewmodel.dart';
+import 'package:dock_flutter/core/dock/dock_main.dart';
+import 'package:dock_flutter/core/locator/locator.dart';
+import 'package:dock_flutter/product/extensions/extensions.dart';
+import 'package:dock_flutter/product/state/reactive/observer/observer.dart';
+import 'package:dock_flutter/product/utils/logger/logger.dart';
+import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
 
 part '../default_appbar/default_appbar.dart';

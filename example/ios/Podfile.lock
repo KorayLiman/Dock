@@ -1,28 +1,28 @@
 PODS:
-  - dock (0.0.1):
+  - dock_flutter (0.0.1):
     - Flutter
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
 
 DEPENDENCIES:
-  - dock (from `.symlinks/plugins/dock/ios`)
+  - dock_flutter (from `.symlinks/plugins/dock_flutter/ios`)
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
 
 EXTERNAL SOURCES:
-  dock:
-    :path: ".symlinks/plugins/dock/ios"
+  dock_flutter:
+    :path: ".symlinks/plugins/dock_flutter/ios"
   Flutter:
     :path: Flutter
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  dock: 29c2dec9024ba33e2a75c6544cd7a49d90668375
+  dock_flutter: deb77f3166b8a9e402c5035e24752027761aafe3
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
 
-PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+PODFILE CHECKSUM: 6b9eb94e9f98a329f2ef624b852a6e42d090af2b
 
 COCOAPODS: 1.12.1

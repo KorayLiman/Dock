@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dock/core/locator/locator.dart';
-import 'package:dock_example/core/navigation/app_router/app_router.gr.dart';
-import 'package:dock_example/core/navigation/navigation_observer/navigation_observer.dart';
-import 'package:dock_example/product/enums/route_paths.dart';
-import 'package:dock_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
+import 'package:dock_flutter/dock.dart';
+import 'package:dock_flutter_example/core/navigation/app_router/app_router.gr.dart';
+import 'package:dock_flutter_example/core/navigation/navigation_observer/navigation_observer.dart';
+import 'package:dock_flutter_example/product/enums/route_paths.dart';
+import 'package:dock_flutter_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 import 'package:flutter/material.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'View,Route')

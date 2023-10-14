@@ -1,4 +1,4 @@
-name: dock_example
+name: dock_flutter_example
 description: Demonstrates how to use the dock plugin.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

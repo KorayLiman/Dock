@@ -1,6 +1,6 @@
-# dock_example
+# dock_flutter_example
 
-Demonstrates how to use the dock plugin.
+Demonstrates how to use the dock_flutter plugin.
 
 ## Getting Started
 

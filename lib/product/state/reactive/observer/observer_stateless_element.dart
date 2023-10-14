@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:dock/product/state/reactive/notifier/notify_data.dart';
-import 'package:dock/product/state/reactive/observable/observable.dart';
-import 'package:dock/typedefs.dart';
+import 'package:dock_flutter/product/state/reactive/notifier/notify_data.dart';
+import 'package:dock_flutter/product/state/reactive/observable/observable.dart';
+import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 

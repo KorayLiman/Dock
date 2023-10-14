@@ -1,5 +1,5 @@
-import 'package:dock/core/base/dock_base/dock_base.dart';
-import 'package:dock/typedefs.dart';
+import 'package:dock_flutter/core/base/dock_base/dock_base.dart';
+import 'package:dock_flutter/typedefs.dart';
 
 /// GLOBAL INSTANCE OF [_Dock] CLASS
 // ignore: non_constant_identifier_names

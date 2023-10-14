@@ -1,11 +1,11 @@
 {
-    "name": "dock_example",
-    "short_name": "dock_example",
+    "name": "dock_flutter_example",
+    "short_name": "dock_flutter_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Demonstrates how to use the dock plugin.",
+    "description": "Demonstrates how to use the dock_flutter plugin.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

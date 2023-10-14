@@ -1,7 +1,7 @@
+import 'package:dock_flutter/dock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:dock/core/base/viewmodel/base_viewmodel.dart';
 
 /// FLUTTER'S DEFAULT [TickerProviderStateMixin] SUITABLE FOR VIEWMODEL'S EXTEND FROM [BaseViewModel]
 @optionalTypeArgs

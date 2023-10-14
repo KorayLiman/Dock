@@ -1,4 +1,4 @@
-import 'package:dock/dock.dart';
+import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

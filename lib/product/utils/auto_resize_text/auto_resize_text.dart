@@ -1,5 +1,5 @@
-import 'package:dock/dock.dart';
-import 'package:dock/product/utils/auto_resize_text/fit_behaviour.dart';
+import 'package:dock_flutter/dock.dart';
+import 'package:dock_flutter/product/utils/auto_resize_text/fit_behaviour.dart';
 import 'package:flutter/material.dart';
 
 @immutable
