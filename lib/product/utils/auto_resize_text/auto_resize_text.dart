@@ -1,16 +1,14 @@
 import 'package:dock_flutter/dock.dart';
-import 'package:dock_flutter/product/utils/auto_resize_text/fit_behaviour.dart';
 import 'package:flutter/material.dart';
 
+/// A Custom [Text] widget resizes to fit parent's constraints
 @immutable
 final class AutoResizeText extends StatelessWidget {
   const AutoResizeText(
     this.data, {
     super.key,
     this.innerKey,
-    this.fitBehaviour = FitBehaviour.shrink,
     this.minFontSize = 12.0,
-    this.maxFontSize = double.maxFinite,
     this.stepCoefficient = 1.0,
     this.locale,
     this.maxLines,
@@ -27,11 +25,11 @@ final class AutoResizeText extends StatelessWidget {
   });
 
   final String? data;
+
+  /// Actual key of [Text] widget inside
   final Key? innerKey;
   final TextStyle? style;
-  final FitBehaviour fitBehaviour;
   final double minFontSize;
-  final double maxFontSize;
   final double stepCoefficient;
   final Locale? locale;
   final int? maxLines;
@@ -53,74 +51,58 @@ final class AutoResizeText extends StatelessWidget {
 
   static const _defaultFontSize = 14.0;
 
+  /// Checks for misuse
   void _validateProperties({required double currentFontSize}) {
-    assert(maxFontSize > 0, 'Max font size cannot be zero or negative');
-    assert(minFontSize > 0, 'Max font size cannot be zero or negative');
-    assert(maxFontSize > minFontSize, 'Max font size cannot be zero or negative');
+    assert(minFontSize > 0, 'Min font size cannot be zero or negative');
     assert(minFontSize <= currentFontSize, 'Min font size cannot be greater than font size');
     assert(
       () {
-        if (fitBehaviour == FitBehaviour.shrink) {
-          if (currentFontSize - minFontSize < stepCoefficient) {
-            return false;
-          }
+        if (currentFontSize - minFontSize < stepCoefficient) {
+          return false;
         }
+
         return true;
       }(),
       '''
     StepCoefficient is $stepCoefficient but fontSize - minFontSize = ${currentFontSize - minFontSize}
     which is lower than $stepCoefficient. Therefore cannot perform any step for resizing''',
     );
-    assert(
-      () {
-        if (fitBehaviour == FitBehaviour.expand) {
-          if (maxFontSize - currentFontSize < stepCoefficient) {
-            return false;
-          }
-        }
-        return true;
-      }(),
-      '''
-    StepCoefficient is $stepCoefficient but maxFontSize - fontSize = ${maxFontSize - currentFontSize}
-    which is lower than $stepCoefficient. Therefore cannot perform any step for resizing''',
-    );
   }
 
+  /// Resizes text if necessary
   ({double fontSize, int iterationCount}) _resizeIfNecessary({
     required BoxConstraints constraints,
     required DefaultTextStyle defaultStyle,
     required TextStyle currentStyle,
     required double defaultTextScaleFactor,
   }) {
-    if (fitBehaviour == FitBehaviour.shrink) {
-      if (_checkIfFits(currentStyle: currentStyle, defaultStyle: defaultStyle, defaultTextScaleFactor: defaultTextScaleFactor, constraints: constraints)) {
-        return (fontSize: currentStyle.fontSize!, iterationCount: 0);
-      } else {
-        var iterationCount = 0;
+    if (_checkIfFits(currentStyle: currentStyle, defaultStyle: defaultStyle, defaultTextScaleFactor: defaultTextScaleFactor, constraints: constraints)) {
+      return (fontSize: currentStyle.fontSize!, iterationCount: 0);
+    } else {
+      var iterationCount = 0;
 
-        var min = minFontSize;
-        var current = currentStyle.fontSize!;
-        var max = currentStyle.fontSize!;
-        while (true) {
-          if (max - min < stepCoefficient) {
-            current = min;
-            break;
-          }
-          iterationCount++;
-          current = (max + min) / 2;
-          currentStyle = currentStyle.copyWith(fontSize: current);
-          if (!_checkIfFits(currentStyle: currentStyle, defaultTextScaleFactor: defaultTextScaleFactor, defaultStyle: defaultStyle, constraints: constraints)) {
-            max = current;
-          } else {
-            min = current;
-          }
+      var min = minFontSize;
+      var current = currentStyle.fontSize!;
+      var max = currentStyle.fontSize!;
+      while (true) {
+        if (max - min < stepCoefficient) {
+          current = min;
+          break;
         }
-        return (fontSize: current, iterationCount: iterationCount);
+        iterationCount++;
+        current = (max + min) / 2;
+        currentStyle = currentStyle.copyWith(fontSize: current);
+        if (!_checkIfFits(currentStyle: currentStyle, defaultTextScaleFactor: defaultTextScaleFactor, defaultStyle: defaultStyle, constraints: constraints)) {
+          max = current;
+        } else {
+          min = current;
+        }
       }
+      return (fontSize: current, iterationCount: iterationCount);
     }
-    return (fontSize: 0, iterationCount: 0);
   }
 
+  /// Checks if text fits with given style
   bool _checkIfFits({required TextStyle currentStyle, required DefaultTextStyle defaultStyle, required double defaultTextScaleFactor, required BoxConstraints constraints}) {
     final textPainter = TextPainter(
       text: TextSpan(
@@ -162,10 +144,10 @@ final class AutoResizeText extends StatelessWidget {
           }
 
           _validateProperties(currentFontSize: currentStyle.fontSize!);
-          Stopwatch? stopWatch;
+          Stopwatch? stopwatch;
 
           if (calculateResizeExecTime) {
-            stopWatch = Stopwatch()..start();
+            stopwatch = Stopwatch()..start();
           }
 
           final result = _resizeIfNecessary(
@@ -175,10 +157,11 @@ final class AutoResizeText extends StatelessWidget {
             defaultTextScaleFactor: MediaQuery.textScaleFactorOf(context),
           );
           currentStyle = currentStyle.copyWith(fontSize: result.fontSize);
-          if (stopWatch.isNotNull) {
-            stopWatch!.stop();
+          if (stopwatch.isNotNull) {
+            stopwatch!.stop();
+
             print('''
-            Exec time: ${stopWatch.elapsed.inMicroseconds} Microseconds.
+            Exec time: ${stopwatch.elapsed.inMicroseconds} Microseconds.
             Iteration count: ${result.iterationCount}''');
           }
         }
