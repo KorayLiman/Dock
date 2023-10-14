@@ -1,0 +1,4 @@
+enum FitBehaviour {
+  shrink,
+  expand,
+}

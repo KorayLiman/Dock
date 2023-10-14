@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dock/product/utils/logger.dart';
+import 'package:dock/product/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 
 class CustomNavigationObserver extends AutoRouterObserver {

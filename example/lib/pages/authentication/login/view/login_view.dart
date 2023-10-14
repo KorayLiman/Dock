@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dock/core/base/view/base_view.dart';
-import 'package:dock/core/widget/dock_access_widget/dock_access_widget.dart';
-import 'package:dock/core/widget/dock_builder/dock_builder.dart';
+import 'package:dock/dock.dart';
 import 'package:dock_example/pages/authentication/login/viewmodel/login_viewmodel.dart';
 import 'package:dock_example/product/components/appbars/appbars.dart';
 import 'package:dock_example/product/enums/route_paths.dart';
@@ -46,10 +44,25 @@ class _LoginViewBody extends DockAccess<LoginViewModel> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ElevatedButton.icon(
-        onPressed: viewModel.goToHomePage,
-        label: const Text('Navigate to Home'),
-        icon: const Icon(Icons.navigate_next),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 200,
+            width: 200,
+            color: Colors.blue,
+            child: const AutoResizeText(
+              'Accept',
+              maxLines: 1,
+              style: TextStyle(fontSize: 65),
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: viewModel.goToHomePage,
+            label: const Text('Login'),
+            icon: const Icon(Icons.navigate_next),
+          ),
+        ],
       ),
     );
   }

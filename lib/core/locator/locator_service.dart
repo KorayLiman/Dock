@@ -9,10 +9,10 @@ part 'locator_impl.dart';
 // ignore: non_constant_identifier_names
 final Locator = _LocatorImpl();
 
-/// [_LocatorException]
+/// [LocatorException]
 @immutable
-final class _LocatorException implements Exception {
-  const _LocatorException({required this.message});
+final class LocatorException implements Exception {
+  const LocatorException({required this.message});
 
   final String message;
 

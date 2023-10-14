@@ -8,3 +8,4 @@ export 'core/widget/widget.dart';
 export 'product/extensions/extensions.dart';
 export 'product/mixins/mixins.dart';
 export 'product/state/state.dart';
+export 'product/utils/utils.dart';
