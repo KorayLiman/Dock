@@ -53,37 +53,37 @@ final class AutoResizeText extends StatelessWidget {
 
   static const _defaultFontSize = 14.0;
 
-  void _validateProperties() {
+  void _validateProperties({required double currentFontSize}) {
     assert(maxFontSize > 0, 'Max font size cannot be zero or negative');
     assert(minFontSize > 0, 'Max font size cannot be zero or negative');
     assert(maxFontSize > minFontSize, 'Max font size cannot be zero or negative');
-    // assert(minFontSize <= _currentStyle!.fontSize!, 'Min font size cannot be greater than font size');
-    // assert(
-    //   () {
-    //     if (fitBehaviour == FitBehaviour.shrink) {
-    //       if (_currentStyle!.fontSize! - minFontSize < stepCoefficient) {
-    //         return false;
-    //       }
-    //     }
-    //     return true;
-    //   }(),
-    //   '''
-    // StepCoefficient is $stepCoefficient but fontSize - minFontSize = ${_currentStyle!.fontSize! - minFontSize}
-    // which is lower than $stepCoefficient. Therefore cannot perform any step for resizing''',
-    // );
-    // assert(
-    //   () {
-    //     if (fitBehaviour == FitBehaviour.expand) {
-    //       if (maxFontSize - _currentStyle!.fontSize! < stepCoefficient) {
-    //         return false;
-    //       }
-    //     }
-    //     return true;
-    //   }(),
-    //   '''
-    // StepCoefficient is $stepCoefficient but maxFontSize - fontSize = ${maxFontSize - _currentStyle!.fontSize!}
-    // which is lower than $stepCoefficient. Therefore cannot perform any step for resizing''',
-    // );
+    assert(minFontSize <= currentFontSize, 'Min font size cannot be greater than font size');
+    assert(
+      () {
+        if (fitBehaviour == FitBehaviour.shrink) {
+          if (currentFontSize - minFontSize < stepCoefficient) {
+            return false;
+          }
+        }
+        return true;
+      }(),
+      '''
+    StepCoefficient is $stepCoefficient but fontSize - minFontSize = ${currentFontSize - minFontSize}
+    which is lower than $stepCoefficient. Therefore cannot perform any step for resizing''',
+    );
+    assert(
+      () {
+        if (fitBehaviour == FitBehaviour.expand) {
+          if (maxFontSize - currentFontSize < stepCoefficient) {
+            return false;
+          }
+        }
+        return true;
+      }(),
+      '''
+    StepCoefficient is $stepCoefficient but maxFontSize - fontSize = ${maxFontSize - currentFontSize}
+    which is lower than $stepCoefficient. Therefore cannot perform any step for resizing''',
+    );
   }
 
   ({double fontSize, int iterationCount}) _resizeIfNecessary({
@@ -144,39 +144,6 @@ final class AutoResizeText extends StatelessWidget {
     return didFit;
   }
 
-  // void _tryToShrink({
-  //   required TextPainter textPainter,
-  //   required BoxConstraints constraints,
-  //   required DefaultTextStyle defaultStyle,
-  //   required double defaultTextScaleFactor,
-  //   required double min,
-  //   required double current,
-  //   required double max,
-  // }) {
-  //   _iterationCount++;
-  //   // if (!_checkIfFits(textPainter: textPainter, constraints: constraints)) {
-  //   //   current = (max + min) / 2;
-  //   //
-  //   //   if (current - min < stepCoefficient) {
-  //   //     _currentStyle = _currentStyle!.copyWith(fontSize: min);
-  //   //     return;
-  //   //   } else {
-  //   //
-  //   //     max = current;
-  //   //     final newTextPainter = _createTextPainter(defaultStyle: defaultStyle, defaultTextScaleFactor: defaultTextScaleFactor)..layout(maxWidth: constraints.maxWidth);
-  //   //     _tryToShrink(textPainter: newTextPainter, constraints: constraints, defaultStyle: defaultStyle, defaultTextScaleFactor: defaultTextScaleFactor, min: min, current: current, max: max);
-  //   //   }
-  //   // } else {
-  //   //   if (max - current < stepCoefficient) {
-  //   //     _currentStyle = _currentStyle!.copyWith(fontSize: current);
-  //   //     return;
-  //   //   }
-  //   //   final newFontSize = (_currentStyle!.fontSize! + minSize) / 2;
-  //   //   final newTextPainter = _createTextPainter(defaultStyle: defaultStyle, defaultTextScaleFactor: defaultTextScaleFactor)..layout(maxWidth: constraints.maxWidth);
-  //   //   _tryToShrink(textPainter: newTextPainter, constraints: constraints, defaultStyle: defaultStyle, defaultTextScaleFactor: defaultTextScaleFactor, minSize: newFontSize);
-  //   // }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -194,7 +161,7 @@ final class AutoResizeText extends StatelessWidget {
             currentStyle = currentStyle.copyWith(fontSize: _defaultFontSize);
           }
 
-          _validateProperties();
+          _validateProperties(currentFontSize: currentStyle.fontSize!);
           Stopwatch? stopWatch;
 
           if (calculateResizeExecTime) {
