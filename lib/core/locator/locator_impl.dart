@@ -13,7 +13,7 @@ class _LocatorImpl {
   /// Registers given instance
   T register<T extends Object>(T instance, {bool keepAlive = false}) {
     Dock.throwConditional(
-      exception: _LocatorException(message: 'Object of type $T is already registered'),
+      exception: LocatorException(message: 'Object of type $T is already registered'),
       throwIf: isRegistered<T>(instance: instance),
     );
 
@@ -26,7 +26,7 @@ class _LocatorImpl {
   /// Registers given instance to be created at first access
   void registerLazy<T extends Object>(InstanceBuilder<T> builder, {bool keepAlive = false}) {
     Dock.throwConditional(
-      exception: _LocatorException(message: 'Object of type $T is already registered'),
+      exception: LocatorException(message: 'Object of type $T is already registered'),
       throwIf: isRegistered<T>(),
     );
 
@@ -59,7 +59,7 @@ class _LocatorImpl {
   /// Throws if couldn't
   T find<T extends Object>() {
     Dock.throwConditional(
-      exception: _LocatorException(message: 'Tried to find Object of type $T that is not registered'),
+      exception: LocatorException(message: 'Tried to find Object of type $T that is not registered'),
       throwIf: !isRegistered<T>(),
     );
     final instance = _dependencyInstances[_getInstanceKey(T)];
