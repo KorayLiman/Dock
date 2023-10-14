@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  very_good_analysis: ^5.1.0
   flutter_web_plugins:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
@@ -18,28 +19,26 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  very_good_analysis: ^5.1.0
-
-
+  flutter_lints: ^2.0.0
 
 flutter:
 
   plugin:
     platforms:
       android:
-        package: com.liman.dock
-        pluginClass: DockPlugin
+        package: com.liman.dock_flutter
+        pluginClass: DockFlutterPlugin
       ios:
-        pluginClass: DockPlugin
+        pluginClass: DockFlutterPlugin
       linux:
-        pluginClass: DockPlugin
+        pluginClass: DockFlutterPlugin
       macos:
-        pluginClass: DockPlugin
+        pluginClass: DockFlutterPlugin
       windows:
-        pluginClass: DockPluginCApi
+        pluginClass: DockFlutterPluginCApi
       web:
-        pluginClass: DockWeb
-        fileName: dock_web.dart
+        pluginClass: DockFlutterWeb
+        fileName: dock_flutter_web.dart
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

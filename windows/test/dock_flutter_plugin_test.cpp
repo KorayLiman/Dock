@@ -8,9 +8,9 @@
 #include <string>
 #include <variant>
 
-#include "dock_plugin.h"
+#include "dock_flutter_plugin.h"
 
-namespace dock {
+namespace dock_flutter {
 namespace test {
 
 namespace {
@@ -22,8 +22,8 @@ using flutter::MethodResultFunctions;
 
 }  // namespace
 
-TEST(DockPlugin, GetPlatformVersion) {
-  DockPlugin plugin;
+TEST(DockFlutterPlugin, GetPlatformVersion) {
+  DockFlutterPlugin plugin;
   // Save the reply value from the success callback.
   std::string result_string;
   plugin.HandleMethodCall(
@@ -40,4 +40,4 @@ TEST(DockPlugin, GetPlatformVersion) {
 }
 
 }  // namespace test
-}  // namespace dock
+}  // namespace dock_flutter

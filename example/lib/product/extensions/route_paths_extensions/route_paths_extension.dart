@@ -1,4 +1,4 @@
-import 'package:dock_example/product/enums/route_paths.dart';
+import 'package:dock_flutter_example/product/enums/route_paths.dart';
 
 extension RoutePathsExtension on RoutePaths {
   String get rawValue => switch (this) {

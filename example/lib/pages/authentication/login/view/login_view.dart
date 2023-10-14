@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dock/dock.dart';
-import 'package:dock_example/pages/authentication/login/viewmodel/login_viewmodel.dart';
-import 'package:dock_example/product/components/appbars/appbars.dart';
-import 'package:dock_example/product/enums/route_paths.dart';
-import 'package:dock_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
+import 'package:dock_flutter/dock.dart';
+import 'package:dock_flutter_example/pages/authentication/login/viewmodel/login_viewmodel.dart';
+import 'package:dock_flutter_example/product/components/appbars/appbars.dart';
+import 'package:dock_flutter_example/product/enums/route_paths.dart';
+import 'package:dock_flutter_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -44,25 +44,10 @@ class _LoginViewBody extends DockAccess<LoginViewModel> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 200,
-            width: 200,
-            color: Colors.blue,
-            child: const AutoResizeText(
-              'Accept',
-              maxLines: 1,
-              style: TextStyle(fontSize: 65),
-            ),
-          ),
-          ElevatedButton.icon(
-            onPressed: viewModel.goToHomePage,
-            label: const Text('Login'),
-            icon: const Icon(Icons.navigate_next),
-          ),
-        ],
+      child: ElevatedButton.icon(
+        onPressed: viewModel.goToHomePage,
+        label: const Text('Login'),
+        icon: const Icon(Icons.navigate_next),
       ),
     );
   }

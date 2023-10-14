@@ -1,7 +1,7 @@
-import 'package:dock/dock.dart';
-import 'package:dock_example/core/navigation/app_router/app_router.dart';
-import 'package:dock_example/core/navigation/navigation_observer/navigation_observer.dart';
-import 'package:dock_example/product/constants/app_constants.dart';
+import 'package:dock_flutter/dock.dart';
+import 'package:dock_flutter_example/core/navigation/app_router/app_router.dart';
+import 'package:dock_flutter_example/core/navigation/navigation_observer/navigation_observer.dart';
+import 'package:dock_flutter_example/product/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
 void main() {

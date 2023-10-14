@@ -1,5 +1,5 @@
-import 'package:dock/product/state/reactive/observer/observer_stateless_element.dart';
-import 'package:dock/typedefs.dart';
+import 'package:dock_flutter/product/state/reactive/observer/observer_stateless_element.dart';
+import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
 
 /// A reactive [StatelessWidget] receives updates when containing

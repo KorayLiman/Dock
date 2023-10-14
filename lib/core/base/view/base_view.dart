@@ -1,6 +1,6 @@
-import 'package:dock/core/base/viewmodel/base_viewmodel.dart';
-import 'package:dock/core/locator/locator.dart';
-import 'package:dock/core/widget/dock_builder/dock_builder.dart';
+import 'package:dock_flutter/core/base/viewmodel/base_viewmodel.dart';
+import 'package:dock_flutter/core/locator/locator.dart';
+import 'package:dock_flutter/core/widget/dock_builder/dock_builder.dart';
 import 'package:flutter/material.dart';
 
 /// AN ABSTRACT [StatelessWidget] FOR OPTIONALLY REGISTERING VIEWMODEL OF ANY VIEW

@@ -1,4 +1,4 @@
-import 'package:dock/typedefs.dart';
+import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
 
 /// DOCK ABSTRACT BASE CLASS

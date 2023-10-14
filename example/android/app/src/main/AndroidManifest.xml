@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="dock_example"
+        android:label="dock_flutter_example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,4 +1,4 @@
-import 'package:dock/product/state/reactive/observable/observable.dart';
+import 'package:dock_flutter/product/state/reactive/observable/observable.dart';
 
 /// GENERIC EXTENSION
 extension GenericExtension<T extends Object> on T {

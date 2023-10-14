@@ -1,12 +1,12 @@
-#include "include/dock/dock_plugin_c_api.h"
+#include "include/dock_flutter/dock_flutter_plugin_c_api.h"
 
 #include <flutter/plugin_registrar_windows.h>
 
-#include "dock_plugin.h"
+#include "dock_flutter_plugin.h"
 
-void DockPluginCApiRegisterWithRegistrar(
+void DockFlutterPluginCApiRegisterWithRegistrar(
     FlutterDesktopPluginRegistrarRef registrar) {
-  dock::DockPlugin::RegisterWithRegistrar(
+  dock_flutter::DockFlutterPlugin::RegisterWithRegistrar(
       flutter::PluginRegistrarManager::GetInstance()
           ->GetRegistrar<flutter::PluginRegistrarWindows>(registrar));
 }

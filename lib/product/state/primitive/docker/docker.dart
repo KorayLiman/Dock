@@ -1,5 +1,5 @@
-import 'package:dock/core/base/viewmodel/base_viewmodel.dart';
-import 'package:dock/typedefs.dart';
+import 'package:dock_flutter/core/base/viewmodel/base_viewmodel.dart';
+import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
 
 /// Primitive (Manual) updatable [StatelessWidget] by it's [id]

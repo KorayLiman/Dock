@@ -1,4 +1,4 @@
-#include "dock_plugin.h"
+#include "dock_flutter_plugin.h"
 
 // This must be included before many other Windows headers.
 #include <windows.h>
@@ -13,17 +13,17 @@
 #include <memory>
 #include <sstream>
 
-namespace dock {
+namespace dock_flutter {
 
 // static
-void DockPlugin::RegisterWithRegistrar(
+void DockFlutterPlugin::RegisterWithRegistrar(
     flutter::PluginRegistrarWindows *registrar) {
   auto channel =
       std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
-          registrar->messenger(), "dock",
+          registrar->messenger(), "dock_flutter",
           &flutter::StandardMethodCodec::GetInstance());
 
-  auto plugin = std::make_unique<DockPlugin>();
+  auto plugin = std::make_unique<DockFlutterPlugin>();
 
   channel->SetMethodCallHandler(
       [plugin_pointer = plugin.get()](const auto &call, auto result) {
@@ -33,11 +33,11 @@ void DockPlugin::RegisterWithRegistrar(
   registrar->AddPlugin(std::move(plugin));
 }
 
-DockPlugin::DockPlugin() {}
+DockFlutterPlugin::DockFlutterPlugin() {}
 
-DockPlugin::~DockPlugin() {}
+DockFlutterPlugin::~DockFlutterPlugin() {}
 
-void DockPlugin::HandleMethodCall(
+void DockFlutterPlugin::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
   if (method_call.method_name().compare("getPlatformVersion") == 0) {
@@ -56,4 +56,4 @@ void DockPlugin::HandleMethodCall(
   }
 }
 
-}  // namespace dock
+}  // namespace dock_flutter
