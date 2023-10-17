@@ -6,7 +6,7 @@ import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-/// A [StatelessElement] of Observer to update it's [Widget]
+/// A [StatelessElement] of Observer for updating it's [Widget]
 final class ObserverStatelessElement extends StatelessElement {
   ObserverStatelessElement(super.widget);
 
@@ -28,6 +28,7 @@ final class ObserverStatelessElement extends StatelessElement {
     super.unmount();
   }
 
+  /// Schedules widget to rebuilt in the next frame
   void updateElement() {
     if (_disposers != null) {
       final schedulerPhase = SchedulerBinding.instance.schedulerPhase;

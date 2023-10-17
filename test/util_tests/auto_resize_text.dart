@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-// ignore: avoid_void_async
-void validate({required WidgetTester tester, required Widget widget, required double expectedFontSize}) async {
+Future<void> _validate({required WidgetTester tester, required Widget widget, required double expectedFontSize}) async {
   await tester.pumpWidget(
     MaterialApp(
       home: Scaffold(
@@ -14,7 +13,9 @@ void validate({required WidgetTester tester, required Widget widget, required do
       ),
     ),
   );
-  expect(nearEqual(tester.widget<Text>(find.byType(Text)).style?.fontSize, expectedFontSize, 0.5), true);
+  final fontSize = tester.widget<Text>(find.byType(Text)).style!.fontSize!;
+  tester.printToConsole('fontSize: $fontSize Expected: $expectedFontSize');
+  expect(nearEqual(fontSize, expectedFontSize, 0.1), true);
 }
 
 void main() {
@@ -25,7 +26,7 @@ void main() {
       testWidgets(
         'Auto Shrink',
         (tester) async {
-          validate(
+          await _validate(
             tester: tester,
             widget: const SizedBox(
               height: 200,
@@ -37,6 +38,61 @@ void main() {
               ),
             ),
             expectedFontSize: 33,
+          );
+
+          await _validate(
+            tester: tester,
+            widget: const SizedBox(
+              height: 200,
+              width: 350,
+              child: AutoResizeText(
+                'Accept',
+                maxLines: 1,
+                style: TextStyle(fontSize: 500),
+              ),
+            ),
+            expectedFontSize: 57.75,
+          );
+          await _validate(
+            tester: tester,
+            widget: const SizedBox(
+              height: 200,
+              width: 350,
+              child: AutoResizeText(
+                'Accept',
+                maxLines: 1,
+                minFontSize: 100,
+                style: TextStyle(fontSize: 500),
+              ),
+            ),
+            expectedFontSize: 100,
+          );
+          await _validate(
+            tester: tester,
+            widget: SizedBox(
+              height: 200,
+              width: 350,
+              child: AutoResizeText(
+                'Accept' * 99,
+                maxLines: 2,
+                style: const TextStyle(fontSize: 500),
+              ),
+            ),
+            expectedFontSize: 12,
+          );
+          await _validate(
+            tester: tester,
+            widget: SizedBox(
+              height: 200,
+              width: 350,
+              child: AutoResizeText(
+                'Accept' * 5,
+                maxLines: 3,
+                minFontSize: 24,
+                style: const TextStyle(fontSize: 60),
+              ),
+            ),
+            expectedFontSize: 34.68,
           );
         },
       );
