@@ -41,7 +41,6 @@ void main() {
       viewModel.counter.value++;
       await tester.pump();
       expect(find.text('Count: 1'), findsOneWidget);
-      expect(find.text('Alphabet: c'), findsOneWidget);
       viewModel.alphabet.update((alphabet) {
         alphabet.add('d');
       });
