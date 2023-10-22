@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - lcov.info - product/mixins/lib/product/mixins/single_ticker_provider_viewmodel_mixin.dart</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">product/mixins/lib/product/mixins</a> - single_ticker_provider_viewmodel_mixin.dart<span style="font-size: 80%;"> (source / <a href="single_ticker_provider_viewmodel_mixin.dart.func-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">lcov.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">70.6&nbsp;%</td>
+            <td class="headerCovTableEntry">34</td>
+            <td class="headerCovTableEntry">24</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2023-10-20 15:43:05</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+                  <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : import 'package:dock_flutter/dock.dart';</span>
+<span id="L2"><span class="lineNum">       2</span>              : import 'package:flutter/foundation.dart';</span>
+<span id="L3"><span class="lineNum">       3</span>              : import 'package:flutter/material.dart';</span>
+<span id="L4"><span class="lineNum">       4</span>              : import 'package:flutter/scheduler.dart';</span>
+<span id="L5"><span class="lineNum">       5</span>              : </span>
+<span id="L6"><span class="lineNum">       6</span>              : /// FLUTTER'S DEFAULT [SingleTickerProviderStateMixin] SUITABLE FOR VIEWMODEL'S EXTEND FROM [BaseViewModel]</span>
+<span id="L7"><span class="lineNum">       7</span>              : @optionalTypeArgs</span>
+<span id="L8"><span class="lineNum">       8</span>              : base mixin SingleTickerProviderViewModelMixin&lt;T extends BaseViewModel&gt; on BaseViewModel&lt;T&gt; implements TickerProvider {</span>
+<span id="L9"><span class="lineNum">       9</span>              :   Ticker? _ticker;</span>
+<span id="L10"><span class="lineNum">      10</span>              : </span>
+<span id="L11"><span class="lineNum">      11</span>              :   BuildContext get context;</span>
+<span id="L12"><span class="lineNum">      12</span>              : </span>
+<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC tlaBgGNC">           1 :   @override</span></span>
+<span id="L14"><span class="lineNum">      14</span>              :   Ticker createTicker(TickerCallback onTick) {</span>
+<span id="L15"><span class="lineNum">      15</span>              :     //ignore: prefer_asserts_with_message</span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">           2 :     assert(() {</span></span>
+<span id="L17"><span class="lineNum">      17</span> <span class="tlaGNC">           1 :       if (_ticker == null) {</span></span>
+<span id="L18"><span class="lineNum">      18</span>              :         return true;</span>
+<span id="L19"><span class="lineNum">      19</span>              :       }</span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaUNC tlaBgUNC">           0 :       throw FlutterError.fromParts(&lt;DiagnosticsNode&gt;[</span></span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaUNC">           0 :         ErrorSummary('$runtimeType is a SingleTickerProviderViewModelMixin but multiple tickers were created.'),</span></span>
+<span id="L22"><span class="lineNum">      22</span> <span class="tlaUNC">           0 :         ErrorDescription('A SingleTickerProviderViewModelMixin can only be used as a TickerProvider once.'),</span></span>
+<span id="L23"><span class="lineNum">      23</span> <span class="tlaUNC">           0 :         ErrorHint(</span></span>
+<span id="L24"><span class="lineNum">      24</span>              :           'If a State is used for multiple AnimationController objects, or if it is passed to other '</span>
+<span id="L25"><span class="lineNum">      25</span>              :           'objects and those objects might use it more than one time in total, then instead of '</span>
+<span id="L26"><span class="lineNum">      26</span>              :           'mixing in a SingleTickerProviderViewModelMixin, use a regular TickerProviderViewModelMixin.',</span>
+<span id="L27"><span class="lineNum">      27</span>              :         ),</span>
+<span id="L28"><span class="lineNum">      28</span>              :       ]);</span>
+<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC tlaBgGNC">           1 :     }());</span></span>
+<span id="L30"><span class="lineNum">      30</span> <span class="tlaGNC">           4 :     _ticker = Ticker(onTick, debugLabel: kDebugMode ? 'created by ${describeIdentity(this)}' : null);</span></span>
+<span id="L31"><span class="lineNum">      31</span> <span class="tlaGNC">           1 :     _updateTickerModeNotifier();</span></span>
+<span id="L32"><span class="lineNum">      32</span> <span class="tlaGNC">           1 :     _updateTicker(); // Sets _ticker.mute correctly.</span></span>
+<span id="L33"><span class="lineNum">      33</span> <span class="tlaGNC">           1 :     return _ticker!;</span></span>
+<span id="L34"><span class="lineNum">      34</span>              :   }</span>
+<span id="L35"><span class="lineNum">      35</span>              : </span>
+<span id="L36"><span class="lineNum">      36</span> <span class="tlaGNC">           1 :   @override</span></span>
+<span id="L37"><span class="lineNum">      37</span>              :   void onDispose() {</span>
+<span id="L38"><span class="lineNum">      38</span>              :     //ignore: prefer_asserts_with_message</span>
+<span id="L39"><span class="lineNum">      39</span> <span class="tlaGNC">           2 :     assert(() {</span></span>
+<span id="L40"><span class="lineNum">      40</span> <span class="tlaGNC">           3 :       if (_ticker == null || !_ticker!.isActive) {</span></span>
+<span id="L41"><span class="lineNum">      41</span>              :         return true;</span>
+<span id="L42"><span class="lineNum">      42</span>              :       }</span>
+<span id="L43"><span class="lineNum">      43</span> <span class="tlaUNC tlaBgUNC">           0 :       throw FlutterError.fromParts(&lt;DiagnosticsNode&gt;[</span></span>
+<span id="L44"><span class="lineNum">      44</span> <span class="tlaUNC">           0 :         ErrorSummary('$this was disposed with an active Ticker.'),</span></span>
+<span id="L45"><span class="lineNum">      45</span> <span class="tlaUNC">           0 :         ErrorDescription(</span></span>
+<span id="L46"><span class="lineNum">      46</span> <span class="tlaUNC">           0 :           '$runtimeType created a Ticker via its SingleTickerProviderViewModelMixin, but at the time '</span></span>
+<span id="L47"><span class="lineNum">      47</span>              :           'dispose() was called on the mixin, that Ticker was still active. The Ticker must '</span>
+<span id="L48"><span class="lineNum">      48</span>              :           'be disposed before calling super.dispose().',</span>
+<span id="L49"><span class="lineNum">      49</span>              :         ),</span>
+<span id="L50"><span class="lineNum">      50</span> <span class="tlaUNC">           0 :         ErrorHint(</span></span>
+<span id="L51"><span class="lineNum">      51</span>              :           'Tickers used by AnimationControllers '</span>
+<span id="L52"><span class="lineNum">      52</span>              :           'should be disposed by calling dispose() on the AnimationController itself. '</span>
+<span id="L53"><span class="lineNum">      53</span>              :           'Otherwise, the ticker will leak.',</span>
+<span id="L54"><span class="lineNum">      54</span>              :         ),</span>
+<span id="L55"><span class="lineNum">      55</span> <span class="tlaUNC">           0 :         _ticker!.describeForError('The offending ticker was'),</span></span>
+<span id="L56"><span class="lineNum">      56</span>              :       ]);</span>
+<span id="L57"><span class="lineNum">      57</span> <span class="tlaGNC tlaBgGNC">           1 :     }());</span></span>
+<span id="L58"><span class="lineNum">      58</span> <span class="tlaGNC">           3 :     _tickerModeNotifier?.removeListener(_updateTicker);</span></span>
+<span id="L59"><span class="lineNum">      59</span> <span class="tlaGNC">           1 :     _tickerModeNotifier = null;</span></span>
+<span id="L60"><span class="lineNum">      60</span> <span class="tlaGNC">           1 :     super.onDispose();</span></span>
+<span id="L61"><span class="lineNum">      61</span>              :   }</span>
+<span id="L62"><span class="lineNum">      62</span>              : </span>
+<span id="L63"><span class="lineNum">      63</span>              :   ValueListenable&lt;bool&gt;? _tickerModeNotifier;</span>
+<span id="L64"><span class="lineNum">      64</span>              : </span>
+<span id="L65"><span class="lineNum">      65</span> <span class="tlaGNC">           1 :   void _updateTicker() {</span></span>
+<span id="L66"><span class="lineNum">      66</span> <span class="tlaGNC">           1 :     if (_ticker != null) {</span></span>
+<span id="L67"><span class="lineNum">      67</span> <span class="tlaGNC">           4 :       _ticker!.muted = !_tickerModeNotifier!.value;</span></span>
+<span id="L68"><span class="lineNum">      68</span>              :     }</span>
+<span id="L69"><span class="lineNum">      69</span>              :   }</span>
+<span id="L70"><span class="lineNum">      70</span>              : </span>
+<span id="L71"><span class="lineNum">      71</span> <span class="tlaGNC">           1 :   void _updateTickerModeNotifier() {</span></span>
+<span id="L72"><span class="lineNum">      72</span> <span class="tlaGNC">           2 :     final newNotifier = TickerMode.getNotifier(context);</span></span>
+<span id="L73"><span class="lineNum">      73</span> <span class="tlaGNC">           2 :     if (newNotifier == _tickerModeNotifier) {</span></span>
+<span id="L74"><span class="lineNum">      74</span>              :       return;</span>
+<span id="L75"><span class="lineNum">      75</span>              :     }</span>
+<span id="L76"><span class="lineNum">      76</span> <span class="tlaGNC">           1 :     _tickerModeNotifier?.removeListener(_updateTicker);</span></span>
+<span id="L77"><span class="lineNum">      77</span> <span class="tlaGNC">           2 :     newNotifier.addListener(_updateTicker);</span></span>
+<span id="L78"><span class="lineNum">      78</span> <span class="tlaGNC">           1 :     _tickerModeNotifier = newNotifier;</span></span>
+<span id="L79"><span class="lineNum">      79</span>              :   }</span>
+<span id="L80"><span class="lineNum">      80</span>              : }</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

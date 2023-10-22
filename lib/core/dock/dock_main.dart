@@ -28,6 +28,11 @@ final class _Dock extends DockBase {
     return widgetsBinding.scheduleFrameCallback(callBack);
   }
 
+  /// Cancels registered [FrameCallback] with given [id]
+  void cancelRegisteredFrameCallback(int id) {
+    return widgetsBinding.cancelFrameCallbackWithId(id);
+  }
+
   /// Throws [exception] if given condition [throwIf] is satisfied
   void throwConditional({required Exception exception, required bool throwIf}) {
     if (throwIf) throw exception;

@@ -9,8 +9,8 @@ final class DockerStatelessElement extends StatelessElement {
 
   @override
   void mount(Element? parent, Object? newSlot) {
-    dockerWidget.viewModel._dockerUpdaters ??= {};
-    dockerUpdaters = dockerWidget.viewModel._dockerUpdaters;
+    dockerWidget.vModel._dockerUpdaters ??= {};
+    dockerUpdaters = dockerWidget.vModel._dockerUpdaters;
 
     dockerUpdaters![dockerWidget.id] = updateElement;
 
@@ -23,7 +23,7 @@ final class DockerStatelessElement extends StatelessElement {
     dockerUpdaters!.remove(dockerWidget.id);
     if (dockerUpdaters!.isEmpty) {
       dockerUpdaters = null;
-      dockerWidget.viewModel._dockerUpdaters = null;
+      dockerWidget.vModel._dockerUpdaters = null;
     }
     super.unmount();
   }
@@ -31,7 +31,7 @@ final class DockerStatelessElement extends StatelessElement {
   /// Schedules widget to rebuilt in the next frame
   void updateElement() {
     assert(dockerUpdaters.isNotNull, "You called update() method on Docker doesn't exist or disposed");
-    if (dockerWidget.viewModel._containsDockerUpdater(id: dockerWidget.id)) {
+    if (dockerWidget.vModel._containsDockerUpdater(id: dockerWidget.id)) {
       final schedulerPhase = SchedulerBinding.instance.schedulerPhase;
       if (schedulerPhase == SchedulerPhase.idle || schedulerPhase == SchedulerPhase.postFrameCallbacks) {
         markNeedsBuild();

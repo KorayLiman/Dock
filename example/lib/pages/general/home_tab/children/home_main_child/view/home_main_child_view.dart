@@ -30,7 +30,7 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
             Docker(
               id: '0',
               viewModel: viewModel,
-              builder: (context) => Text('(Docker) Age: ${viewModel.age}'),
+              builder: (context, viewModel) => Text('(Docker) Age: ${viewModel.age}'),
             ),
           ],
         ),
