@@ -1,5 +1,10 @@
 part of '../observable/observable.dart';
 
+/// Simply a bridge between [Observable] and ObserverStatelessElement (or call it Observer)
+///
+/// When an Observer is building if any [Observable] is encountered calls [notifyRead]
+///
+/// Adds [Updater] to Observable and [Disposer] to ObserverStatelessElement
 final class Notifier {
   Notifier._();
 
@@ -10,10 +15,12 @@ final class Notifier {
 
   NotifyData? _notifyData;
 
+  /// Adds [Disposer] to _disposers list inside ObserverStatelessElement
   void addDisposer(Disposer disposer) {
     _notifyData?.disposers.add(disposer);
   }
 
+  /// Adds [Updater] to [Observable] and [Disposer] to ObserverStatelessElement
   void notifyRead<T>(Observable<T> observable) {
     final updater = _notifyData?.updater;
     if (updater != null && !observable._containsUpdater(updater: updater)) {
@@ -26,11 +33,12 @@ final class Notifier {
     }
   }
 
+  /// Parses Observer for any [Observable]s inside
   Widget createObserver(NotifyData data, WidgetCallback builder) {
     _notifyData = data;
     final result = builder();
     if (data.disposers.isEmpty) {
-      throw const ObserverError();
+      throw ObserverError();
     }
     _notifyData = null;
     return result;

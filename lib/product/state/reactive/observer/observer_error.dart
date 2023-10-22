@@ -1,6 +1,6 @@
-/// Custom [Exception] for Observer widget
-final class ObserverError implements Exception {
-  const ObserverError();
+/// [ObserverError] while no Observable detected inside Observer Widget
+final class ObserverError extends Error {
+  ObserverError();
 
   @override
   String toString() {

@@ -2,9 +2,9 @@ import 'package:dock_flutter/product/state/reactive/observer/observer_stateless_
 import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
 
-/// A reactive [StatelessWidget] receives updates when containing
+/// A reactive [StatelessWidget] receives update when containing
 ///
-/// observables' values change
+/// Observable's value changes
 final class Observer extends StatelessWidget {
   const Observer({required this.builder, super.key});
 
