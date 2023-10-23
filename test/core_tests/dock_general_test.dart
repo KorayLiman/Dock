@@ -29,7 +29,12 @@ void main() {
       viewModel.setPageState(PageState.success);
       await tester.pump();
       expect(find.text('state: onSuccess'), findsOneWidget);
-
+      await tester.tap(find.text('push'));
+      await tester.pumpAndSettle();
+      expect(Locator.tryFind<_TestViewModel3>(), isNotNull);
+      await tester.tap(find.text('pop'));
+      await tester.pumpAndSettle();
+      expect(Locator.tryFind<_TestViewModel3>(), isNull);
       expect(() => _TestViewModel2().onInit(StatelessElement(const _DummyStatelessWidget())), throwsAssertionError);
     },
   );
@@ -38,6 +43,8 @@ void main() {
 final class _TestViewModel extends BaseViewModel<_TestViewModel> {}
 
 final class _TestViewModel2 extends BaseViewModel<_TestViewModel2> {}
+
+final class _TestViewModel3 extends BaseViewModel<_TestViewModel2> {}
 
 final class _TestView extends BaseView<_TestViewModel> {
   _TestView() : super(viewModel: _TestViewModel());
@@ -64,7 +71,16 @@ class _Body extends DockAccess<_TestViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('state: onSuccess');
+    return Column(
+      children: [
+        const Text('state: onSuccess'),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => _TestView3()));
+            },
+            child: const Text('push'))
+      ],
+    );
   }
 }
 
@@ -74,5 +90,31 @@ class _DummyStatelessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
+  }
+}
+
+final class _TestView3 extends BaseView<_TestViewModel3> {
+  _TestView3() : super(viewModel: _TestViewModel3());
+
+  @override
+  DockBuilder build(BuildContext context) {
+    return DockBuilder(
+      viewModel: viewModel,
+      onSuccess: () => _onSuccess(context: context),
+      onEmpty: () => const Text('state: onEmpty'),
+      onLoading: () => const Text('state: onLoading'),
+      onOffline: () => const Text('state: onOffline'),
+      onError: () => const Text('state: onError'),
+    );
+  }
+
+  Widget _onSuccess({required BuildContext context}) {
+    return Scaffold(
+      body: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('pop')),
+    );
   }
 }
