@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 enum _E {
   first,
-  second,
 }
 
 void main() {

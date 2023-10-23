@@ -67,7 +67,7 @@ final class _TestView extends BaseView<_TestViewModel> {
 }
 
 class _Body extends DockAccess<_TestViewModel> {
-  const _Body({super.key});
+  const _Body();
 
   @override
   Widget build(BuildContext context) {
@@ -75,17 +75,18 @@ class _Body extends DockAccess<_TestViewModel> {
       children: [
         const Text('state: onSuccess'),
         ElevatedButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => _TestView3()));
-            },
-            child: const Text('push'))
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute<void>(builder: (context) => _TestView3()));
+          },
+          child: const Text('push'),
+        ),
       ],
     );
   }
 }
 
 class _DummyStatelessWidget extends StatelessWidget {
-  const _DummyStatelessWidget({super.key});
+  const _DummyStatelessWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -111,10 +112,11 @@ final class _TestView3 extends BaseView<_TestViewModel3> {
   Widget _onSuccess({required BuildContext context}) {
     return Scaffold(
       body: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('pop')),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: const Text('pop'),
+      ),
     );
   }
 }
