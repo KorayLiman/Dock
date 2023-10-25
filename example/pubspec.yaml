@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  auto_route: ^7.8.4
+
 
   dock_flutter:
     # When depending on this package from a real application you should use:
@@ -21,6 +21,7 @@ dependencies:
     path: ../
 
   cupertino_icons: ^1.0.2
+  auto_route: ^7.8.4
 
 dev_dependencies:
   integration_test:

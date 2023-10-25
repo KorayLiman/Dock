@@ -9,13 +9,20 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:dock_flutter_example/pages/authentication/login/view/login_view.dart' as _i6;
-import 'package:dock_flutter_example/pages/general/home_tab/children/home_list_child/view/home_list_child_view.dart' as _i1;
-import 'package:dock_flutter_example/pages/general/home_tab/children/home_main_child/view/home_main_child_view.dart' as _i2;
-import 'package:dock_flutter_example/pages/general/home_tab/children/home_settings_child/view/home_settings_child_view.dart' as _i3;
-import 'package:dock_flutter_example/pages/general/home_tab/parent/home_tab_parent/view/home_tab_parent_view.dart' as _i4;
-import 'package:dock_flutter_example/pages/launch/splash/view/splash_view.dart' as _i7;
-import 'package:dock_flutter_example/product/components/loader_overlay/loader_overlay.dart' as _i5;
+import 'package:dock_flutter_example/pages/authentication/login/view/login_view.dart'
+    as _i6;
+import 'package:dock_flutter_example/pages/general/home_tab/children/home_list_child/view/home_list_child_view.dart'
+    as _i1;
+import 'package:dock_flutter_example/pages/general/home_tab/children/home_main_child/view/home_main_child_view.dart'
+    as _i2;
+import 'package:dock_flutter_example/pages/general/home_tab/children/home_settings_child/view/home_settings_child_view.dart'
+    as _i3;
+import 'package:dock_flutter_example/pages/general/home_tab/parent/home_tab_parent/view/home_tab_parent_view.dart'
+    as _i4;
+import 'package:dock_flutter_example/pages/launch/splash/view/splash_view.dart'
+    as _i7;
+import 'package:dock_flutter_example/product/components/loader_overlay/loader_overlay.dart'
+    as _i5;
 import 'package:flutter/material.dart' as _i9;
 
 abstract class $AppRouter extends _i8.RootStackRouter {
@@ -24,7 +31,8 @@ abstract class $AppRouter extends _i8.RootStackRouter {
   @override
   final Map<String, _i8.PageFactory> pagesMap = {
     HomeListChildRoute.name: (routeData) {
-      final args = routeData.argsAs<HomeListChildRouteArgs>(orElse: () => const HomeListChildRouteArgs());
+      final args = routeData.argsAs<HomeListChildRouteArgs>(
+          orElse: () => const HomeListChildRouteArgs());
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i1.HomeListChildView(
@@ -34,7 +42,8 @@ abstract class $AppRouter extends _i8.RootStackRouter {
       );
     },
     HomeMainChildRoute.name: (routeData) {
-      final args = routeData.argsAs<HomeMainChildRouteArgs>(orElse: () => const HomeMainChildRouteArgs());
+      final args = routeData.argsAs<HomeMainChildRouteArgs>(
+          orElse: () => const HomeMainChildRouteArgs());
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.HomeMainChildView(
@@ -44,7 +53,8 @@ abstract class $AppRouter extends _i8.RootStackRouter {
       );
     },
     HomeSettingsChildRoute.name: (routeData) {
-      final args = routeData.argsAs<HomeSettingsChildRouteArgs>(orElse: () => const HomeSettingsChildRouteArgs());
+      final args = routeData.argsAs<HomeSettingsChildRouteArgs>(
+          orElse: () => const HomeSettingsChildRouteArgs());
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i3.HomeSettingsChildView(
@@ -54,14 +64,16 @@ abstract class $AppRouter extends _i8.RootStackRouter {
       );
     },
     HomeTabParentRoute.name: (routeData) {
-      final args = routeData.argsAs<HomeTabParentRouteArgs>(orElse: () => const HomeTabParentRouteArgs());
+      final args = routeData.argsAs<HomeTabParentRouteArgs>(
+          orElse: () => const HomeTabParentRouteArgs());
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i4.HomeTabParentView(arguments: args.arguments),
       );
     },
     LoaderOverlayRoute.name: (routeData) {
-      final args = routeData.argsAs<LoaderOverlayRouteArgs>(orElse: () => const LoaderOverlayRouteArgs());
+      final args = routeData.argsAs<LoaderOverlayRouteArgs>(
+          orElse: () => const LoaderOverlayRouteArgs());
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i5.LoaderDialog(
@@ -71,14 +83,16 @@ abstract class $AppRouter extends _i8.RootStackRouter {
       );
     },
     LoginRoute.name: (routeData) {
-      final args = routeData.argsAs<LoginRouteArgs>(orElse: () => const LoginRouteArgs());
+      final args = routeData.argsAs<LoginRouteArgs>(
+          orElse: () => const LoginRouteArgs());
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i6.LoginView(arguments: args.arguments),
       );
     },
     SplashRoute.name: (routeData) {
-      final args = routeData.argsAs<SplashRouteArgs>(orElse: () => const SplashRouteArgs());
+      final args = routeData.argsAs<SplashRouteArgs>(
+          orElse: () => const SplashRouteArgs());
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i7.SplashView(arguments: args.arguments),
@@ -105,7 +119,8 @@ class HomeListChildRoute extends _i8.PageRouteInfo<HomeListChildRouteArgs> {
 
   static const String name = 'HomeListChildRoute';
 
-  static const _i8.PageInfo<HomeListChildRouteArgs> page = _i8.PageInfo<HomeListChildRouteArgs>(name);
+  static const _i8.PageInfo<HomeListChildRouteArgs> page =
+      _i8.PageInfo<HomeListChildRouteArgs>(name);
 }
 
 class HomeListChildRouteArgs {
@@ -142,7 +157,8 @@ class HomeMainChildRoute extends _i8.PageRouteInfo<HomeMainChildRouteArgs> {
 
   static const String name = 'HomeMainChildRoute';
 
-  static const _i8.PageInfo<HomeMainChildRouteArgs> page = _i8.PageInfo<HomeMainChildRouteArgs>(name);
+  static const _i8.PageInfo<HomeMainChildRouteArgs> page =
+      _i8.PageInfo<HomeMainChildRouteArgs>(name);
 }
 
 class HomeMainChildRouteArgs {
@@ -163,7 +179,8 @@ class HomeMainChildRouteArgs {
 
 /// generated route for
 /// [_i3.HomeSettingsChildView]
-class HomeSettingsChildRoute extends _i8.PageRouteInfo<HomeSettingsChildRouteArgs> {
+class HomeSettingsChildRoute
+    extends _i8.PageRouteInfo<HomeSettingsChildRouteArgs> {
   HomeSettingsChildRoute({
     dynamic arguments,
     _i9.Key? key,
@@ -179,7 +196,8 @@ class HomeSettingsChildRoute extends _i8.PageRouteInfo<HomeSettingsChildRouteArg
 
   static const String name = 'HomeSettingsChildRoute';
 
-  static const _i8.PageInfo<HomeSettingsChildRouteArgs> page = _i8.PageInfo<HomeSettingsChildRouteArgs>(name);
+  static const _i8.PageInfo<HomeSettingsChildRouteArgs> page =
+      _i8.PageInfo<HomeSettingsChildRouteArgs>(name);
 }
 
 class HomeSettingsChildRouteArgs {
@@ -212,7 +230,8 @@ class HomeTabParentRoute extends _i8.PageRouteInfo<HomeTabParentRouteArgs> {
 
   static const String name = 'HomeTabParentRoute';
 
-  static const _i8.PageInfo<HomeTabParentRouteArgs> page = _i8.PageInfo<HomeTabParentRouteArgs>(name);
+  static const _i8.PageInfo<HomeTabParentRouteArgs> page =
+      _i8.PageInfo<HomeTabParentRouteArgs>(name);
 }
 
 class HomeTabParentRouteArgs {
@@ -244,7 +263,8 @@ class LoaderOverlayRoute extends _i8.PageRouteInfo<LoaderOverlayRouteArgs> {
 
   static const String name = 'LoaderOverlayRoute';
 
-  static const _i8.PageInfo<LoaderOverlayRouteArgs> page = _i8.PageInfo<LoaderOverlayRouteArgs>(name);
+  static const _i8.PageInfo<LoaderOverlayRouteArgs> page =
+      _i8.PageInfo<LoaderOverlayRouteArgs>(name);
 }
 
 class LoaderOverlayRouteArgs {
@@ -277,7 +297,8 @@ class LoginRoute extends _i8.PageRouteInfo<LoginRouteArgs> {
 
   static const String name = 'LoginRoute';
 
-  static const _i8.PageInfo<LoginRouteArgs> page = _i8.PageInfo<LoginRouteArgs>(name);
+  static const _i8.PageInfo<LoginRouteArgs> page =
+      _i8.PageInfo<LoginRouteArgs>(name);
 }
 
 class LoginRouteArgs {
@@ -305,7 +326,8 @@ class SplashRoute extends _i8.PageRouteInfo<SplashRouteArgs> {
 
   static const String name = 'SplashRoute';
 
-  static const _i8.PageInfo<SplashRouteArgs> page = _i8.PageInfo<SplashRouteArgs>(name);
+  static const _i8.PageInfo<SplashRouteArgs> page =
+      _i8.PageInfo<SplashRouteArgs>(name);
 }
 
 class SplashRouteArgs {

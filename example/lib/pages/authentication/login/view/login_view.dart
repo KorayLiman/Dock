@@ -12,7 +12,7 @@ final class LoginView extends BaseView<LoginViewModel> {
 
   @override
   DockBuilder build(BuildContext context) {
-    return DockBuilder(
+    return DockBuilder<LoginViewModel>(
       viewModel: viewModel,
       onSuccess: () => const Scaffold(
         appBar: DefaultAppBar(
@@ -30,10 +30,36 @@ class _LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
-      onPressed: viewModel.showAndHideLoader,
-      label: const Text('Show loader'),
-      icon: const Icon(Icons.refresh),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        FloatingActionButton.extended(
+          heroTag: "0",
+          onPressed: viewModel.showCustomOverlay,
+          label: const Text('Show custom overlay'),
+          icon: const Icon(Icons.info_outline),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        FloatingActionButton.extended(
+          heroTag: "1",
+          onPressed: viewModel.showDefaultToast,
+          label: const Text('Show default toast'),
+          icon: const Icon(Icons.info_outline),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        FloatingActionButton.extended(
+          heroTag: "2",
+          onPressed: viewModel.showAndHideLoader,
+          label: const Text('Show loader'),
+          icon: const Icon(Icons.refresh),
+        ),
+      ],
     );
   }
 }

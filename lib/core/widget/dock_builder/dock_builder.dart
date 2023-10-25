@@ -22,10 +22,10 @@ final class DockBuilder<T extends BaseViewModel> extends StatefulWidget {
   final WidgetCallback? onOffline;
 
   @override
-  State<DockBuilder> createState() => _DockBuilderState();
+  State<DockBuilder> createState() => _DockBuilderState<T>();
 }
 
-class _DockBuilderState extends State<DockBuilder> with DockBuilderMixin {
+class _DockBuilderState<T extends BaseViewModel> extends State<DockBuilder> with DockBuilderMixin<T> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -23,6 +23,20 @@ class _LocatorImpl {
     return instance;
   }
 
+  /// Registers given instance as new if already exists one.
+  ///
+  /// In other words: Replaces old instance or creates one.
+  T registerAsNew<T extends Object>(T instance, {bool keepAlive = false}) {
+    if (isRegistered<T>(instance: instance)) {
+      unregister<T>(instance: instance);
+    }
+
+    final instanceToRegister = _Instance<T>(builder: () => instance, keepAlive: keepAlive);
+    instanceToRegister.instance = instanceToRegister.builder.call();
+    _dependencyInstances[_getInstanceKey(T)] = instanceToRegister;
+    return instance;
+  }
+
   /// Registers given instance to be created at first access
   void registerLazy<T extends Object>(InstanceBuilder<T> builder, {bool keepAlive = false}) {
     Dock.throwConditional(
@@ -83,7 +97,8 @@ class _LocatorImpl {
 
   /// Checks if given instance or instance of type [T] is registered
   bool isRegistered<T extends Object>({T? instance}) {
-    return _dependencyInstances.containsKey(instance == null ? _getInstanceKey(T) : _getInstanceKey(instance.runtimeType));
+    final instanceKey = instance == null ? _getInstanceKey(T) : _getInstanceKey(instance.runtimeType);
+    return _dependencyInstances[instanceKey] != null;
   }
 }
 
@@ -91,7 +106,7 @@ class _LocatorImpl {
 class _Instance<T extends Object> {
   _Instance({required this.builder, required this.keepAlive});
 
-  InstanceBuilder<T> builder;
-  bool keepAlive;
+  final InstanceBuilder<T> builder;
+  final bool keepAlive;
   T? instance;
 }

@@ -12,7 +12,7 @@ final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
 
   @override
   DockBuilder build(BuildContext context) {
-    return DockBuilder(
+    return DockBuilder<HomeTabParentViewModel>(
       viewModel: viewModel,
       onSuccess: () => _onSuccess(context: context),
     );

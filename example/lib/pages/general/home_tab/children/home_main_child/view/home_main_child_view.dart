@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
-  HomeMainChildView({super.arguments, super.key}) : super(viewModel: HomeMainChildViewModel(), inject: false);
+  HomeMainChildView({super.arguments, super.key}) : super(viewModel: HomeMainChildViewModel(), viewConfig: const ViewConfig(inject: false));
 
   @override
   DockBuilder build(BuildContext context) {
-    return DockBuilder(
+    return DockBuilder<HomeMainChildViewModel>(
       viewModel: viewModel,
       onSuccess: () => _onSuccess(context: context),
     );

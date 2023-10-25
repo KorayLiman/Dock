@@ -51,7 +51,7 @@ final class _TestView extends BaseView<_TestViewModel> {
 
   @override
   DockBuilder build(BuildContext context) {
-    return DockBuilder(
+    return DockBuilder<_TestViewModel>(
       viewModel: viewModel,
       onSuccess: () => _onSuccess(context: context),
       onEmpty: () => const Text('state: onEmpty'),
@@ -99,7 +99,7 @@ final class _TestView3 extends BaseView<_TestViewModel3> {
 
   @override
   DockBuilder build(BuildContext context) {
-    return DockBuilder(
+    return DockBuilder<_TestViewModel3>(
       viewModel: viewModel,
       onSuccess: () => _onSuccess(context: context),
       onEmpty: () => const Text('state: onEmpty'),
