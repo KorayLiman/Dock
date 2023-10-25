@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 final class HomeListChildView extends BaseView<HomeListChildViewModel> {
-  HomeListChildView({super.arguments, super.key}) : super(viewModel: HomeListChildViewModel(), inject: false);
+  HomeListChildView({super.arguments, super.key}) : super(viewModel: HomeListChildViewModel(), viewConfig: const ViewConfig(inject: false));
 
   @override
   DockBuilder build(BuildContext context) {
-    return DockBuilder(
+    return DockBuilder<HomeListChildViewModel>(
       viewModel: viewModel,
       onSuccess: () => _onSuccess(context: context),
     );

@@ -13,7 +13,7 @@ final class SplashView extends BaseView<SplashViewModel> {
 
   @override
   DockBuilder build(BuildContext context) {
-    return DockBuilder(
+    return DockBuilder<SplashViewModel>(
       viewModel: viewModel,
       onSuccess: () => _onSuccess(context: context),
     );

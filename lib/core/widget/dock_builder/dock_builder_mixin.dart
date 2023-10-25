@@ -1,7 +1,7 @@
 part of 'dock_builder.dart';
 
 /// MIXIN FOR [DockBuilder] STATE
-mixin DockBuilderMixin on State<DockBuilder> {
+mixin DockBuilderMixin<T extends BaseViewModel> on State<DockBuilder> {
   /// [PageState] default icon size
   static const double _defaultIconSize = 48;
 
@@ -80,16 +80,16 @@ mixin DockBuilderMixin on State<DockBuilder> {
   @override
   void dispose() {
     widget.viewModel.onDispose();
-
-    if (Locator.isRegistered(instance: widget.viewModel)) {
-      final result = Locator.unregister(instance: widget.viewModel);
+    final vModel = Locator.tryFind<T>();
+    if (vModel.hashCode == widget.viewModel.hashCode) {
+      final result = Locator.unregister<T>();
       if (result) {
-        Logger.logMsg(msg: "'${widget.viewModel.runtimeType}' Unregistered", color: LogColors.red);
+        Logger.logMsg(msg: "'$T' Unregistered", color: LogColors.red);
       } else {
-        Logger.logMsg(msg: "---ERROR--- '${widget.viewModel.runtimeType}' is registered but a problem occurred while unregistering it", color: LogColors.red);
+        Logger.logMsg(msg: "---ERROR--- '$T' is registered but a problem occurred while unregistering it", color: LogColors.red);
       }
     } else {
-      Logger.logMsg(msg: "Page disposed. No registered '${widget.viewModel.runtimeType}' found", color: LogColors.white);
+      Logger.logMsg(msg: "Page disposed. No registered '$T' found", color: LogColors.white);
     }
     super.dispose();
   }

@@ -52,7 +52,7 @@ final class _TestViewModel2 extends BaseViewModel<_TestViewModel2> {
 }
 
 final class _TestView2 extends BaseView<_TestViewModel2> {
-  _TestView2({super.arguments, super.key}) : super(viewModel: _TestViewModel2());
+  _TestView2() : super(viewModel: _TestViewModel2());
 
   @override
   DockBuilder build(BuildContext context) {
