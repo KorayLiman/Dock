@@ -8,24 +8,24 @@ import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
 
 part '../default_appbar/default_appbar.dart';
-part 'dock_builder_mixin.dart';
+part 'state_builder_mixin.dart';
 
 /// A SMART AND EASY [Widget] FOR MANAGING [PageState]
-final class DockBuilder<T extends BaseViewModel> extends StatefulWidget {
-  const DockBuilder({required this.viewModel, required this.onSuccess, super.key, this.onEmpty, this.onError, this.onLoading, this.onOffline});
+final class StateBuilder<T extends BaseViewModel> extends StatefulWidget {
+  const StateBuilder({required this.viewModel, required this.onSuccess, super.key, this.onEmpty, this.onError, this.onLoading, this.onOffline});
 
   final T viewModel;
-  final WidgetCallback onSuccess;
-  final WidgetCallback? onLoading;
-  final WidgetCallback? onEmpty;
-  final WidgetCallback? onError;
-  final WidgetCallback? onOffline;
+  final WidgetCallbackViaContext onSuccess;
+  final WidgetCallbackViaContext? onLoading;
+  final WidgetCallbackViaContext? onEmpty;
+  final WidgetCallbackViaContext? onError;
+  final WidgetCallbackViaContext? onOffline;
 
   @override
-  State<DockBuilder> createState() => _DockBuilderState<T>();
+  State<StateBuilder> createState() => _StateBuilderState<T>();
 }
 
-class _DockBuilderState<T extends BaseViewModel> extends State<DockBuilder> with DockBuilderMixin<T> {
+class _StateBuilderState<T extends BaseViewModel> extends State<StateBuilder> with StateBuilderMixin<T> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

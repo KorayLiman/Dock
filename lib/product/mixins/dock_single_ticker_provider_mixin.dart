@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-/// FLUTTER'S DEFAULT [SingleTickerProviderStateMixin] SUITABLE FOR VIEWMODEL'S EXTEND FROM [BaseViewModel]
+/// FLUTTER'S DEFAULT [SingleTickerProviderStateMixin] SUITABLE FOR VIEWMODELS EXTEND FROM [BaseViewModel]
 @optionalTypeArgs
-base mixin SingleTickerProviderViewModelMixin<T extends BaseViewModel> on BaseViewModel<T> implements TickerProvider {
+base mixin DockSingleTickerProviderMixin<T extends BaseViewModel> on BaseViewModel<T> implements TickerProvider {
   Ticker? _ticker;
 
   BuildContext get context;
@@ -18,12 +18,12 @@ base mixin SingleTickerProviderViewModelMixin<T extends BaseViewModel> on BaseVi
         return true;
       }
       throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('$runtimeType is a SingleTickerProviderViewModelMixin but multiple tickers were created.'),
-        ErrorDescription('A SingleTickerProviderViewModelMixin can only be used as a TickerProvider once.'),
+        ErrorSummary('$runtimeType is a DockSingleTickerProviderMixin but multiple tickers were created.'),
+        ErrorDescription('A DockSingleTickerProviderMixin can only be used as a TickerProvider once.'),
         ErrorHint(
           'If a State is used for multiple AnimationController objects, or if it is passed to other '
           'objects and those objects might use it more than one time in total, then instead of '
-          'mixing in a SingleTickerProviderViewModelMixin, use a regular TickerProviderViewModelMixin.',
+          'mixing in a DockSingleTickerProviderMixin, use a regular DockTickerProviderMixin.',
         ),
       ]);
     }());
@@ -43,7 +43,7 @@ base mixin SingleTickerProviderViewModelMixin<T extends BaseViewModel> on BaseVi
       throw FlutterError.fromParts(<DiagnosticsNode>[
         ErrorSummary('$this was disposed with an active Ticker.'),
         ErrorDescription(
-          '$runtimeType created a Ticker via its SingleTickerProviderViewModelMixin, but at the time '
+          '$runtimeType created a Ticker via its DockSingleTickerProviderMixin, but at the time '
           'dispose() was called on the mixin, that Ticker was still active. The Ticker must '
           'be disposed before calling super.dispose().',
         ),

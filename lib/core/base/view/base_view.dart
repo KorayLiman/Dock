@@ -1,6 +1,6 @@
 import 'package:dock_flutter/core/base/viewmodel/base_viewmodel.dart';
 import 'package:dock_flutter/core/locator/locator.dart';
-import 'package:dock_flutter/core/widget/dock_builder/dock_builder.dart';
+import 'package:dock_flutter/core/widget/state_builder/state_builder.dart';
 import 'package:flutter/material.dart';
 
 /// AN ABSTRACT [StatelessWidget] FOR OPTIONALLY REGISTERING VIEWMODEL OF ANY VIEW
@@ -22,10 +22,10 @@ abstract base class BaseView<T extends BaseViewModel> extends StatelessWidget {
   /// Child [viewModel]
   late final T viewModel;
 
-  /// [build] method of [StatelessWidget] but returns [DockBuilder] instead of [Widget]
+  /// [build] method of [StatelessWidget] but returns [StateBuilder] instead of [Widget]
   @override
   @protected
-  DockBuilder build(BuildContext context);
+  StateBuilder build(BuildContext context);
 }
 
 /// Config for Injection of View

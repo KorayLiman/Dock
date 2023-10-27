@@ -22,10 +22,10 @@ final class _TestView extends BaseView<_TestViewModel> {
   _TestView() : super(viewModel: _TestViewModel());
 
   @override
-  DockBuilder build(BuildContext context) {
-    return DockBuilder(
+  StateBuilder build(BuildContext context) {
+    return StateBuilder(
       viewModel: viewModel,
-      onSuccess: () => _onSuccess(context: context),
+      onSuccess: (context) => _onSuccess(context: context),
     );
   }
 
@@ -55,10 +55,10 @@ final class _TestView2 extends BaseView<_TestViewModel2> {
   _TestView2() : super(viewModel: _TestViewModel2());
 
   @override
-  DockBuilder build(BuildContext context) {
-    return DockBuilder(
+  StateBuilder build(BuildContext context) {
+    return StateBuilder(
       viewModel: viewModel,
-      onSuccess: () => _onSuccess(context: context),
+      onSuccess: (context) => _onSuccess(context: context),
     );
   }
 

@@ -1,4 +1,4 @@
-part of '../dock_builder/dock_builder.dart';
+part of '../state_builder/state_builder.dart';
 
 /// DEFAULT [AppBar] of [PageState]
 class _DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dock_flutter/core/dock/dock_main.dart';
-import 'package:dock_flutter/core/widget/dock_builder/dock_builder.dart';
+import 'package:dock_flutter/core/widget/state_builder/state_builder.dart';
 import 'package:dock_flutter/product/extensions/extensions.dart';
 import 'package:dock_flutter/product/state/primitive/docker/docker.dart';
 import 'package:dock_flutter/typedefs.dart';
@@ -24,7 +24,7 @@ abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _B
   /// Called when View is created
   @mustCallSuper
   void onInit(BuildContext element) {
-    _assertDockBuilderInitialized();
+    _assertStateBuilderInitialized();
     Dock
       ..registerPostFrameCallback(onPostFrame)
       ..registerNextFrameCallback(onNextFrame);
@@ -34,7 +34,7 @@ abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _B
   /// Called after onInit and when dependencies of this object change
   @mustCallSuper
   void onDependenciesChange() {
-    _assertDockBuilderInitialized();
+    _assertStateBuilderInitialized();
   }
 
   /// Called at the end of the first frame of page render.
@@ -42,18 +42,18 @@ abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _B
   /// Handle network requests, navigation etc. here
   @mustCallSuper
   void onPostFrame(Duration timeStamp) {
-    _assertDockBuilderInitialized();
+    _assertStateBuilderInitialized();
   }
 
   /// Called at the beginning of the second frame of page render
   @mustCallSuper
   void onNextFrame(Duration timeStamp) {
-    _assertDockBuilderInitialized();
+    _assertStateBuilderInitialized();
   }
 
   /// Called when view is getting disposed
   @mustCallSuper
   void onDispose() {
-    _assertDockBuilderInitialized();
+    _assertStateBuilderInitialized();
   }
 }

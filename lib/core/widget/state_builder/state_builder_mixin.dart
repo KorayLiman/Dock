@@ -1,17 +1,17 @@
-part of 'dock_builder.dart';
+part of 'state_builder.dart';
 
-/// MIXIN FOR [DockBuilder] STATE
-mixin DockBuilderMixin<T extends BaseViewModel> on State<DockBuilder> {
+/// MIXIN FOR [StateBuilder] STATE
+mixin StateBuilderMixin<T extends BaseViewModel> on State<StateBuilder> {
   /// [PageState] default icon size
   static const double _defaultIconSize = 48;
 
   /// Builds page according to [PageState]
   Widget _buildPage(BuildContext context) => switch (widget.viewModel.pageState) {
-        PageState.success => widget.onSuccess(),
+        PageState.success => widget.onSuccess(context),
         PageState.loading => widget.onLoading != null
-            ? widget.onLoading!()
+            ? widget.onLoading!(context)
             : Dock.defaultOnLoadingWidgetBuilder != null
-                ? Dock.defaultOnLoadingWidgetBuilder!()
+                ? Dock.defaultOnLoadingWidgetBuilder!(context)
                 : const Scaffold(
                     appBar: _DefaultAppBar(),
                     body: Center(
@@ -19,9 +19,9 @@ mixin DockBuilderMixin<T extends BaseViewModel> on State<DockBuilder> {
                     ),
                   ),
         PageState.empty => widget.onEmpty != null
-            ? widget.onEmpty!()
+            ? widget.onEmpty!(context)
             : Dock.defaultOnEmptyWidgetBuilder != null
-                ? Dock.defaultOnEmptyWidgetBuilder!()
+                ? Dock.defaultOnEmptyWidgetBuilder!(context)
                 : const Scaffold(
                     appBar: _DefaultAppBar(),
                     body: Center(
@@ -32,9 +32,9 @@ mixin DockBuilderMixin<T extends BaseViewModel> on State<DockBuilder> {
                     ),
                   ),
         PageState.error => widget.onError != null
-            ? widget.onError!()
+            ? widget.onError!(context)
             : Dock.defaultOnErrorWidgetBuilder != null
-                ? Dock.defaultOnErrorWidgetBuilder!()
+                ? Dock.defaultOnErrorWidgetBuilder!(context)
                 : const Scaffold(
                     appBar: _DefaultAppBar(),
                     body: Center(
@@ -46,9 +46,9 @@ mixin DockBuilderMixin<T extends BaseViewModel> on State<DockBuilder> {
                     ),
                   ),
         PageState.offline => widget.onOffline != null
-            ? widget.onOffline!()
+            ? widget.onOffline!(context)
             : Dock.defaultOnOfflineWidgetBuilder != null
-                ? Dock.defaultOnOfflineWidgetBuilder!()
+                ? Dock.defaultOnOfflineWidgetBuilder!(context)
                 : const Scaffold(
                     appBar: _DefaultAppBar(),
                     body: Center(
@@ -66,7 +66,7 @@ mixin DockBuilderMixin<T extends BaseViewModel> on State<DockBuilder> {
 
   @override
   void initState() {
-    widget.viewModel.markDockBuilderInitialized(widget);
+    widget.viewModel.markStateBuilderInitialized(widget);
     widget.viewModel.onInit(context);
     super.initState();
   }

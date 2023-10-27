@@ -1,2 +1,2 @@
-export 'single_ticker_provider_viewmodel_mixin.dart';
-export 'ticker_provider_viewmodel_mixin.dart';
+export 'dock_single_ticker_provider_mixin.dart';
+export 'dock_ticker_provider_mixin.dart';

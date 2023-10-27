@@ -5,7 +5,7 @@ import 'package:flutter/scheduler.dart';
 
 /// FLUTTER'S DEFAULT [TickerProviderStateMixin] SUITABLE FOR VIEWMODEL'S EXTEND FROM [BaseViewModel]
 @optionalTypeArgs
-base mixin TickerProviderViewModelMixin<T extends BaseViewModel> on BaseViewModel<T> implements TickerProvider {
+base mixin DockTickerProviderMixin<T extends BaseViewModel> on BaseViewModel<T> implements TickerProvider {
   Set<Ticker>? _tickers;
 
   BuildContext get context;
@@ -60,7 +60,7 @@ base mixin TickerProviderViewModelMixin<T extends BaseViewModel> on BaseViewMode
             throw FlutterError.fromParts(<DiagnosticsNode>[
               ErrorSummary('$this was disposed with an active Ticker.'),
               ErrorDescription(
-                '$runtimeType created a Ticker via its TickerProviderViewModelMixin, but at the time '
+                '$runtimeType created a Ticker via its DockTickerProviderMixin, but at the time '
                 'dispose() was called on the mixin, that Ticker was still active. All Tickers must '
                 'be disposed before calling super.dispose().',
               ),
@@ -89,7 +89,7 @@ base mixin TickerProviderViewModelMixin<T extends BaseViewModel> on BaseViewMode
 class _WidgetTicker extends Ticker {
   _WidgetTicker(super.onTick, this._creator, {super.debugLabel});
 
-  final TickerProviderViewModelMixin _creator;
+  final DockTickerProviderMixin _creator;
 
   @override
   void dispose() {

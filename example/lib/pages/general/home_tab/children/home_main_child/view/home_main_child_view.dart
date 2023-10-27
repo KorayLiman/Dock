@@ -8,10 +8,10 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
   HomeMainChildView({super.arguments, super.key}) : super(viewModel: HomeMainChildViewModel(), viewConfig: const ViewConfig(inject: false));
 
   @override
-  DockBuilder build(BuildContext context) {
-    return DockBuilder<HomeMainChildViewModel>(
+  StateBuilder build(BuildContext context) {
+    return StateBuilder<HomeMainChildViewModel>(
       viewModel: viewModel,
-      onSuccess: () => _onSuccess(context: context),
+      onSuccess: (context) => _onSuccess(context: context),
     );
   }
 

@@ -4,7 +4,7 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-final class _TestViewModel extends BaseViewModel<_TestViewModel> with TickerProviderViewModelMixin {
+final class _TestViewModel extends BaseViewModel<_TestViewModel> with DockTickerProviderMixin {
   late BuildContext _element;
   late final AnimationController animationController;
   late final AnimationController rotationAnimationController;
@@ -48,9 +48,9 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: DockBuilder<_TestViewModel>(
+            body: StateBuilder<_TestViewModel>(
               viewModel: viewModel,
-              onSuccess: () {
+              onSuccess: (context) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
