@@ -9,10 +9,10 @@ final class HomeListChildView extends BaseView<HomeListChildViewModel> {
   HomeListChildView({super.arguments, super.key}) : super(viewModel: HomeListChildViewModel(), viewConfig: const ViewConfig(inject: false));
 
   @override
-  DockBuilder build(BuildContext context) {
-    return DockBuilder<HomeListChildViewModel>(
+  StateBuilder build(BuildContext context) {
+    return StateBuilder<HomeListChildViewModel>(
       viewModel: viewModel,
-      onSuccess: () => _onSuccess(context: context),
+      onSuccess: (context) => _onSuccess(context: context),
     );
   }
 

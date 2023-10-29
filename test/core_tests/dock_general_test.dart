@@ -36,6 +36,22 @@ void main() {
       await tester.pumpAndSettle();
       expect(Locator.tryFind<_TestViewModel3>(), isNull);
       expect(() => _TestViewModel2().onInit(StatelessElement(const _DummyStatelessWidget())), throwsAssertionError);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: _TestView4(),
+        ),
+      );
+      expect(find.byKey(_TestView4._key), findsOneWidget);
+      final testViewModel4 = Locator.find<_TestViewModel4>()..setPageState(PageState.empty);
+      await tester.pump();
+      expect(find.byKey(_TestView4._key1), findsOneWidget);
+      testViewModel4.setPageState(PageState.error);
+      await tester.pump();
+      expect(find.byKey(_TestView4._key2), findsOneWidget);
+      testViewModel4.setPageState(PageState.offline);
+      await tester.pump();
+      expect(find.byKey(_TestView4._key3), findsOneWidget);
     },
   );
 }
@@ -44,20 +60,28 @@ final class _TestViewModel extends BaseViewModel<_TestViewModel> {}
 
 final class _TestViewModel2 extends BaseViewModel<_TestViewModel2> {}
 
-final class _TestViewModel3 extends BaseViewModel<_TestViewModel2> {}
+final class _TestViewModel3 extends BaseViewModel<_TestViewModel3> {}
+
+final class _TestViewModel4 extends BaseViewModel<_TestViewModel4> {
+  @override
+  void onInit(BuildContext element) {
+    setPageState(PageState.loading);
+    super.onInit(element);
+  }
+}
 
 final class _TestView extends BaseView<_TestViewModel> {
   _TestView() : super(viewModel: _TestViewModel());
 
   @override
-  DockBuilder build(BuildContext context) {
-    return DockBuilder<_TestViewModel>(
+  StateBuilder build(BuildContext context) {
+    return StateBuilder<_TestViewModel>(
       viewModel: viewModel,
-      onSuccess: () => _onSuccess(context: context),
-      onEmpty: () => const Text('state: onEmpty'),
-      onLoading: () => const Text('state: onLoading'),
-      onOffline: () => const Text('state: onOffline'),
-      onError: () => const Text('state: onError'),
+      onSuccess: (context) => _onSuccess(context: context),
+      onEmpty: (context) => const Text('state: onEmpty'),
+      onLoading: (context) => const Text('state: onLoading'),
+      onOffline: (context) => const Text('state: onOffline'),
+      onError: (context) => const Text('state: onError'),
     );
   }
 
@@ -98,14 +122,14 @@ final class _TestView3 extends BaseView<_TestViewModel3> {
   _TestView3() : super(viewModel: _TestViewModel3());
 
   @override
-  DockBuilder build(BuildContext context) {
-    return DockBuilder<_TestViewModel3>(
+  StateBuilder build(BuildContext context) {
+    return StateBuilder<_TestViewModel3>(
       viewModel: viewModel,
-      onSuccess: () => _onSuccess(context: context),
-      onEmpty: () => const Text('state: onEmpty'),
-      onLoading: () => const Text('state: onLoading'),
-      onOffline: () => const Text('state: onOffline'),
-      onError: () => const Text('state: onError'),
+      onSuccess: (context) => _onSuccess(context: context),
+      onEmpty: (context) => const Text('state: onEmpty'),
+      onLoading: (context) => const Text('state: onLoading'),
+      onOffline: (context) => const Text('state: onOffline'),
+      onError: (context) => const Text('state: onError'),
     );
   }
 
@@ -118,5 +142,38 @@ final class _TestView3 extends BaseView<_TestViewModel3> {
         child: const Text('pop'),
       ),
     );
+  }
+}
+
+final class _TestView4 extends BaseView<_TestViewModel4> {
+  _TestView4() : super(viewModel: _TestViewModel4());
+
+  static final _key = UniqueKey();
+  static final _key1 = UniqueKey();
+  static final _key2 = UniqueKey();
+  static final _key3 = UniqueKey();
+
+  @override
+  StateBuilder build(BuildContext context) {
+    Dock.defaultOnLoadingWidgetBuilder = (context) => CircularProgressIndicator(
+          key: _key,
+        );
+    Dock.defaultOnEmptyWidgetBuilder = (context) => CircularProgressIndicator(
+          key: _key1,
+        );
+    Dock.defaultOnErrorWidgetBuilder = (context) => CircularProgressIndicator(
+          key: _key2,
+        );
+    Dock.defaultOnOfflineWidgetBuilder = (context) => CircularProgressIndicator(
+          key: _key3,
+        );
+    return StateBuilder<_TestViewModel4>(
+      viewModel: viewModel,
+      onSuccess: (context) => _onSuccess(context: context),
+    );
+  }
+
+  Widget _onSuccess({required BuildContext context}) {
+    return const Scaffold();
   }
 }

@@ -11,14 +11,14 @@ abstract base class DockBase {
   WidgetsBinding? testBindings;
 
   /// Default on loading widget builder
-  WidgetCallback? defaultOnLoadingWidgetBuilder;
+  WidgetCallbackViaContext? defaultOnLoadingWidgetBuilder;
 
-  ///  Default on empty widget builder
-  WidgetCallback? defaultOnEmptyWidgetBuilder;
+  /// Default on empty widget builder
+  WidgetCallbackViaContext? defaultOnEmptyWidgetBuilder;
 
-  ///  Default on error widget builder
-  WidgetCallback? defaultOnErrorWidgetBuilder;
+  /// Default on error widget builder
+  WidgetCallbackViaContext? defaultOnErrorWidgetBuilder;
 
-  ///  Default on offline widget builder
-  WidgetCallback? defaultOnOfflineWidgetBuilder;
+  /// Default on offline widget builder
+  WidgetCallbackViaContext? defaultOnOfflineWidgetBuilder;
 }

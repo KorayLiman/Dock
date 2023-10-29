@@ -12,20 +12,20 @@ base mixin _BaseViewModelStateMixin {
   //ignore: use_setters_to_change_properties
   void setPageState(PageState newPageState) => _pageState.value = newPageState;
 
-  /// Holds the initialization state of any [DockBuilder] associated with this viewmodel
-  bool _isDockBuilderInitialized = false;
+  /// Holds the initialization state of any [StateBuilder] associated with this viewmodel
+  bool _isStateBuilderInitialized = false;
 
-  /// Sets the initialization state of created [DockBuilder] associated with this viewmodel
-  void markDockBuilderInitialized(DockBuilder dockBuilder) {
-    _isDockBuilderInitialized = true;
+  /// Sets the initialization state of created [StateBuilder] associated with this viewmodel
+  void markStateBuilderInitialized(StateBuilder stateBuilder) {
+    _isStateBuilderInitialized = true;
   }
 
   /// If any widget lifecycle method is called by user manually(which shouldn't happen) and
-  /// no [DockBuilder] created associated with this viewmodel warn user
-  void _assertDockBuilderInitialized() {
+  /// no [StateBuilder] created associated with this viewmodel warn user
+  void _assertStateBuilderInitialized() {
     assert(
-      _isDockBuilderInitialized,
-      "You called a widget lifecycle method but didn't create any DockBuilder for current viewmodel.\nAlso it's not sensible calling any widget lifecycle methods manually from outside",
+      _isStateBuilderInitialized,
+      "You called a widget lifecycle method but didn't create any StateBuilder for current viewmodel.\nAlso it's not sensible calling any widget lifecycle methods manually from outside",
     );
   }
 

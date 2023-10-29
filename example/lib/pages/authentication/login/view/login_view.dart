@@ -11,10 +11,10 @@ final class LoginView extends BaseView<LoginViewModel> {
   LoginView({super.arguments}) : super(viewModel: LoginViewModel(), key: ValueKey<String>(RoutePaths.login.rawValue));
 
   @override
-  DockBuilder build(BuildContext context) {
-    return DockBuilder<LoginViewModel>(
+  StateBuilder build(BuildContext context) {
+    return StateBuilder<LoginViewModel>(
       viewModel: viewModel,
-      onSuccess: () => const Scaffold(
+      onSuccess: (context) => const Scaffold(
         appBar: DefaultAppBar(
           title: 'Login',
         ),

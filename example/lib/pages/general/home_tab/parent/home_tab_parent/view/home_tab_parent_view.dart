@@ -11,10 +11,10 @@ final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
   HomeTabParentView({super.arguments}) : super(viewModel: HomeTabParentViewModel(), key: ValueKey<String>(RoutePaths.homeTab.rawValue));
 
   @override
-  DockBuilder build(BuildContext context) {
-    return DockBuilder<HomeTabParentViewModel>(
+  StateBuilder build(BuildContext context) {
+    return StateBuilder<HomeTabParentViewModel>(
       viewModel: viewModel,
-      onSuccess: () => _onSuccess(context: context),
+      onSuccess: (context) => _onSuccess(context: context),
     );
   }
 
