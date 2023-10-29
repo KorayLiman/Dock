@@ -1,18 +1,19 @@
 import 'package:dock_flutter/dock.dart';
+import 'package:dock_flutter/product/utils/overlay_manager/overlay_manager.dart';
 import 'package:dock_flutter_example/core/navigation/app_router/app_router.dart';
 import 'package:dock_flutter_example/core/navigation/app_router/app_router.gr.dart';
-import 'package:dock_flutter_example/product/utils/loader_manager/loader_manager.dart';
-import 'package:dock_flutter_example/product/utils/overlay_manager/overlay_manager.dart';
 import 'package:flutter/material.dart';
 
 final class LoginViewModel extends BaseViewModel<LoginViewModel> {
   static LoginViewModel get find => Locator.find<LoginViewModel>();
 
   static LoginViewModel? get tryFind => Locator.tryFind<LoginViewModel>();
+  LoaderManager _loaderManager = LoaderManager(AppRouter.find.navigatorKey);
+  OverlayManager _overlayManager = OverlayManager(AppRouter.find.navigatorKey);
 
   void showAndHideLoader() {
-    LoaderManager.show();
-    1.seconds.delay(LoaderManager.hide);
+    _loaderManager.show();
+    2.seconds.delay(_loaderManager.hide);
   }
 
   Future<void> goToHomePage() async {
@@ -20,11 +21,11 @@ final class LoginViewModel extends BaseViewModel<LoginViewModel> {
   }
 
   void showDefaultToast() {
-    OverlayManager().showToast("Default toast, " * 10);
+    _overlayManager.showToast("Default toast, " * 10, toastPosition: ToastPosition.bottom);
   }
 
   void showCustomOverlay() {
-    OverlayManager().showCustomOverlay(
+    _overlayManager.showOverlay(
       positionedBuilder: (context) => Positioned(
         height: 120,
         bottom: 40,

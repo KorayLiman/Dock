@@ -1,3 +1,16 @@
+## 0.1.0-dev.2
+
+> Note: This release has breaking changes.
+
+- **BREAKING**: DockBuilder is renamed to StateBuilder.
+- **BREAKING**: Added context parameter to view state builders (onSuccess, onLoading etc..).
+- **BREAKING**: SingleTickerProviderViewModelMixin is renamed to DockSingleTickerProviderMixin.
+- **BREAKING**: TickerProviderViewModelMixin is renamed to DockTickerProviderMixin.
+- Feat: Added LoaderManager for showing loading indicators.
+- Feat: Added OverlayManager for showing toasts or custom overlays.
+- Added more tests.
+
+
 ## 0.1.0-dev.1
 
 > Note: This release has breaking changes.
