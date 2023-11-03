@@ -5,7 +5,7 @@ final class DockerStatelessElement extends StatelessElement {
   DockerStatelessElement(super.widget);
 
   Docker get dockerWidget => widget as Docker;
-  Map<String, DockerUpdater>? dockerUpdaters;
+  Map<Object, DockerUpdater>? dockerUpdaters;
 
   @override
   void mount(Element? parent, Object? newSlot) {

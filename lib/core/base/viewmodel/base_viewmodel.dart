@@ -30,7 +30,6 @@ abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _B
       ..registerNextFrameCallback(onNextFrame);
   }
 
-  // TODO(KorayLiman): Decide whether it is needed and must exist. Search usage scenarios
   /// Called after onInit and when dependencies of this object change
   @mustCallSuper
   void onDependenciesChange() {

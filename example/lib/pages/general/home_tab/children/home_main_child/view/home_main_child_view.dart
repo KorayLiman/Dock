@@ -27,10 +27,40 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
             Observer(
               builder: (context) => Text('(Observer) Weight: ${viewModel.weight.value}'),
             ),
+            const Blank(12),
             Docker(
               id: '0',
               viewModel: viewModel,
               builder: (context, viewModel) => Text('(Docker) Age: ${viewModel.age}'),
+            ),
+            const SizedBox(
+              height: 100,
+              child: CustomScrollView(
+                slivers: [
+                  SliverBlank(40),
+                  SliverList(
+                    delegate: SliverChildListDelegate.fixed(
+                      [
+                        Center(child: Text('Sliver elem 1')),
+                        Blank(9),
+                        Center(child: Text('Sliver elem 2')),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Center(
+              child: Blurred(
+                borderRadius: BorderRadius.circular(12),
+                overlay: const Icon(Icons.blur_circular),
+                blur: 20,
+                child: Container(
+                  height: 80,
+                  width: 80,
+                  color: Colors.grey.shade400,
+                ),
+              ),
             ),
           ],
         ),

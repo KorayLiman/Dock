@@ -25,7 +25,7 @@ final class LoaderManager {
   final GlobalKey<NavigatorState> _key;
   static List<LoaderRoute>? _routes;
   WidgetCallbackViaContext loaderBuilder = (BuildContext context) => const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator.adaptive(),
       );
 
   /// Shows loader dialog

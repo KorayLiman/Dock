@@ -36,7 +36,7 @@ class _LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         FloatingActionButton.extended(
-          heroTag: "0",
+          heroTag: '0',
           onPressed: viewModel.showCustomOverlay,
           label: const Text('Show custom overlay'),
           icon: const Icon(Icons.info_outline),
@@ -45,7 +45,7 @@ class _LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
           height: 12,
         ),
         FloatingActionButton.extended(
-          heroTag: "1",
+          heroTag: '1',
           onPressed: viewModel.showDefaultToast,
           label: const Text('Show default toast'),
           icon: const Icon(Icons.info_outline),
@@ -54,7 +54,7 @@ class _LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
           height: 12,
         ),
         FloatingActionButton.extended(
-          heroTag: "2",
+          heroTag: '2',
           onPressed: viewModel.showAndHideLoader,
           label: const Text('Show loader'),
           icon: const Icon(Icons.refresh),
