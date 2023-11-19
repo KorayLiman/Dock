@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dock_flutter/dock.dart';
+import 'package:dock_flutter/product/extensions/animation_extensions/animation_extensions.dart';
 import 'package:dock_flutter_example/pages/general/home_tab/children/home_main_child/viewmodel/home_main_child_viewmodel.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,11 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+              color: Colors.blue,
+              height: 40,
+              width: 40,
+            ).fadeIn(curve: Curves.bounceIn).fadeOut(delay: 1.seconds),
             Observer(
               builder: (context) => Text('(Observer) Count: ${viewModel.count.value}'),
             ),
