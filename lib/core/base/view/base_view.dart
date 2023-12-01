@@ -19,7 +19,7 @@ abstract base class BaseView<T extends BaseViewModel> extends StatelessWidget {
     this.viewModel.arguments = arguments;
   }
 
-  /// Child [viewModel]
+  /// [viewModel]
   late final T viewModel;
 
   /// [build] method of [StatelessWidget] but returns [StateBuilder] instead of [Widget]
@@ -28,7 +28,7 @@ abstract base class BaseView<T extends BaseViewModel> extends StatelessWidget {
   StateBuilder build(BuildContext context);
 }
 
-/// Config for Injection of View
+/// Configuration for [View]
 final class ViewConfig {
   const ViewConfig({required this.inject, this.asNewInstance = true});
 

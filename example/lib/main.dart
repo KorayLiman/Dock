@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     final appRouter = Locator.isRegistered<AppRouter>()
         ? Locator.find<AppRouter>()
         : Locator.register<AppRouter>(
-            AppRouter(),
+            AppRouter.create(),
           );
 
     return MaterialApp.router(

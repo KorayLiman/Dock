@@ -16,7 +16,7 @@ final class LoaderRoute extends DialogRoute<dynamic> {
 
 /// Helper class for showing loader dialog
 ///
-/// [NavigatorState] key is required either of Root or Nested Navigator's
+/// [NavigatorState] key is required either of Root's or Nested Navigator's
 ///
 /// Override [loaderBuilder] if you want to use custom [Widget]
 final class LoaderManager {

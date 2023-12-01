@@ -8,6 +8,11 @@ import 'package:flutter/material.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'View,Route')
 final class AppRouter extends $AppRouter {
+  AppRouter._();
+
+  // ignore: prefer_constructors_over_static_methods
+  static AppRouter create() => AppRouter._();
+
   @override
   RouteType get defaultRouteType => const RouteType.adaptive();
 

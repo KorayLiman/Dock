@@ -14,11 +14,16 @@ final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeTabParentViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => _onSuccess(context: context),
+      onSuccess: (context) => const HomeTabParentSuccessWidget(),
     );
   }
+}
 
-  Widget _onSuccess({required BuildContext context}) {
+class HomeTabParentSuccessWidget extends StatelessWidget {
+  const HomeTabParentSuccessWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return AutoTabsRouter(
       routes: [
         HomeMainChildRoute(),

@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dock_flutter/core/base/view/base_view.dart';
-import 'package:dock_flutter/core/widget/state_builder/state_builder.dart';
+import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/pages/launch/splash/viewmodel/splash_viewmodel.dart';
 import 'package:dock_flutter_example/product/components/appbars/appbars.dart';
 import 'package:dock_flutter_example/product/enums/route_paths.dart';
@@ -15,11 +14,16 @@ final class SplashView extends BaseView<SplashViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<SplashViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => _onSuccess(context: context),
+      onSuccess: (context) => const SplashViewSuccessWidget(),
     );
   }
+}
 
-  Widget _onSuccess({required BuildContext context}) {
+class SplashViewSuccessWidget extends DockAccess<SplashViewModel> {
+  const SplashViewSuccessWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const DefaultAppBar(
         title: 'Splash',

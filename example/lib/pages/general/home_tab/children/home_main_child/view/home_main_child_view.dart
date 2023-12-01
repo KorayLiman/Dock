@@ -12,11 +12,18 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeMainChildViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => _onSuccess(context: context),
+      onSuccess: (context) => HomeMainSuccessWidget(viewModel: viewModel),
     );
   }
+}
 
-  Widget _onSuccess({required BuildContext context}) {
+class HomeMainSuccessWidget extends StatelessWidget {
+  const HomeMainSuccessWidget({required this.viewModel, super.key});
+
+  final HomeMainChildViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
@@ -71,11 +78,18 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
           ],
         ),
       ),
-      floatingActionButton: _homeMainFloatingActionButton(context: context, viewModel: viewModel),
+      floatingActionButton: _HomeMainFloatingActionButton(viewModel: viewModel),
     );
   }
+}
 
-  Widget _homeMainFloatingActionButton({required BuildContext context, required HomeMainChildViewModel viewModel}) {
+class _HomeMainFloatingActionButton extends StatelessWidget {
+  const _HomeMainFloatingActionButton({required this.viewModel, super.key});
+
+  final HomeMainChildViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,

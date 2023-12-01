@@ -9,6 +9,9 @@ final class HomeTabParentViewModel extends BaseViewModel<HomeTabParentViewModel>
   late final TabController tabController;
 
   @override
+  BuildContext get context => _context;
+
+  @override
   void onInit(BuildContext element) {
     _context = element;
     tabController = TabController(length: 4, vsync: this);
@@ -30,7 +33,4 @@ final class HomeTabParentViewModel extends BaseViewModel<HomeTabParentViewModel>
 
     super.onDispose();
   }
-
-  @override
-  BuildContext get context => _context;
 }

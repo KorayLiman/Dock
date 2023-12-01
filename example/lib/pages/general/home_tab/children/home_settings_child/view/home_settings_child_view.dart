@@ -11,15 +11,22 @@ final class HomeSettingsChildView extends BaseView<HomeSettingsChildViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeSettingsChildViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => _onSuccess(context: context),
+      onSuccess: (context) => HomeSettingsChildSuccessWidget(viewModel: viewModel),
     );
   }
+}
 
-  Widget _onSuccess({required BuildContext context}) {
+class HomeSettingsChildSuccessWidget extends StatelessWidget {
+  const HomeSettingsChildSuccessWidget({required this.viewModel, super.key});
+
+  final HomeSettingsChildViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () => viewModel.navigateToMain(context: context),
           child: const Text('Navigate to main'),
         ),
       ),

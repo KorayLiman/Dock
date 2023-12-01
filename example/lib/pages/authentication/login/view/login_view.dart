@@ -14,13 +14,7 @@ final class LoginView extends BaseView<LoginViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<LoginViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => const Scaffold(
-        appBar: DefaultAppBar(
-          title: 'Login',
-        ),
-        body: _LoginViewBody(),
-        floatingActionButton: _LoginViewFloatingActionButton(),
-      ),
+      onSuccess: (context) => const LoginViewSuccessWidget(),
     );
   }
 }
@@ -75,6 +69,21 @@ class _LoginViewBody extends DockAccess<LoginViewModel> {
         label: const Text('Login'),
         icon: const Icon(Icons.navigate_next),
       ),
+    );
+  }
+}
+
+class LoginViewSuccessWidget extends StatelessWidget {
+  const LoginViewSuccessWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      appBar: DefaultAppBar(
+        title: 'Login',
+      ),
+      body: _LoginViewBody(),
+      floatingActionButton: _LoginViewFloatingActionButton(),
     );
   }
 }

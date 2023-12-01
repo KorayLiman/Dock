@@ -25,7 +25,9 @@ class CustomNavigationObserver extends AutoRouterObserver {
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didRemove(route, previousRoute);
     _setOverlayStateOnRemove(route, previousRoute);
-    Logger.logMsg(msg: 'Removed Route: ${route.data?.name}', color: LogColors.red);
+    if (!_isDialogOrModalBottomSheetRoute(route)) {
+      Logger.logMsg(msg: 'Removed Route: ${route.data?.name}', color: LogColors.red);
+    }
   }
 
   @override

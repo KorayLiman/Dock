@@ -2,10 +2,6 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
 extension AnimationExtension on Widget {
-  void qq (){
-    final widget = this as BaseAnimatedWidget;
-    widget.
-  }
   OpacityAnim fadeIn({
     Duration duration = OpacityAnim.defaultDuration,
     Duration delay = OpacityAnim.defaultDelay,
