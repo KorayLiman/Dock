@@ -8,6 +8,6 @@ final class SplashViewModel extends BaseViewModel<SplashViewModel> {
   static SplashViewModel? get tryFind => Locator.tryFind<SplashViewModel>();
 
   Future<void> goToNextPage() async {
-    await router.replace(LoginRoute());
+    await rootRouter.replace(LoginRoute());
   }
 }

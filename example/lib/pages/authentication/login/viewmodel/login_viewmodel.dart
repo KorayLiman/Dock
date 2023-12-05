@@ -14,7 +14,7 @@ final class LoginViewModel extends BaseViewModel<LoginViewModel> {
   }
 
   Future<void> goToHomePage() async {
-    await router.push(HomeTabParentRoute());
+    await rootRouter.push(HomeTabParentRoute());
   }
 
   void showDefaultToast() {
