@@ -1,10 +1,9 @@
-import 'package:dock_flutter_example/product/enums/route_paths.dart';
+import 'package:dock_flutter_example/product/enums/route_paths/route_paths.dart';
 
-extension RoutePathsExtension on RoutePaths {
+extension RoutePathExtension on RoutePaths {
   String get rawValue => switch (this) {
         RoutePaths.splash => '/splash',
         RoutePaths.login => '/login',
-        RoutePaths.loaderDialog => '/loaderOverlay',
         RoutePaths.homeTab => '/homeTab',
         RoutePaths.homeMainChild => 'homeMainChild',
         RoutePaths.homeListChild => 'homeMainList',

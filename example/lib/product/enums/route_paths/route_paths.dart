@@ -5,7 +5,4 @@ enum RoutePaths {
   homeMainChild,
   homeListChild,
   homeSettingsChild,
-
-  // DIALOGS
-  loaderDialog,
 }
