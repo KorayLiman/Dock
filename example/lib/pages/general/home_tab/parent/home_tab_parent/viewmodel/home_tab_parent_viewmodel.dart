@@ -2,9 +2,6 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
 final class HomeTabParentViewModel extends BaseViewModel<HomeTabParentViewModel> with DockSingleTickerProviderMixin {
-  static HomeTabParentViewModel get find => Locator.find<HomeTabParentViewModel>();
-
-  static HomeTabParentViewModel? get tryFind => Locator.tryFind<HomeTabParentViewModel>();
   late final BuildContext _context;
   late final TabController tabController;
 

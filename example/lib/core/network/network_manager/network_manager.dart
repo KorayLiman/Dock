@@ -2,7 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:dock_flutter_example/core/network/network.dart';
-import 'package:dock_flutter_example/env/envied/env.dart';
+import 'package:dock_flutter_example/env/env.dart';
 import 'package:dock_flutter_example/product/constants/constants.dart';
 import 'package:dock_flutter_example/product/enums/enums.dart';
 

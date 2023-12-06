@@ -1,4 +1,4 @@
-import 'package:dock_flutter_example/product/enums/enum.dart';
+import 'package:dock_flutter_example/product/enums/enums.dart';
 
 extension RequestTypeExtension on RequestType {
   String get type => switch (this) {

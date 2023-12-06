@@ -6,9 +6,9 @@ import 'package:dock_flutter_example/product/enums/enums.dart';
 import 'package:flutter/material.dart';
 
 abstract base class BaseService {
-  BaseService(this._networkManager);
+  const BaseService();
 
-  late final NetworkManager _networkManager;
+  NetworkManager get _networkManager => NetworkManager.instance;
 
   Future<BaseResponse<T>> request<T, M extends BaseModel<dynamic>>({
     required RequestPath path,

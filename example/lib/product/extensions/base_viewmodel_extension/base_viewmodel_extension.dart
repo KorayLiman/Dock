@@ -1,5 +1,5 @@
 import 'package:dock_flutter/dock.dart';
-import 'package:dock_flutter_example/core/navigation/app_router/app_router.dart';
+import 'package:dock_flutter_example/core/core.dart';
 
 extension LoaderAndOverlayExtension on BaseViewModel {
   LoaderManager get rootLoaderManager => LoaderManager(rootRouter.navigatorKey);

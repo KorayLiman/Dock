@@ -37,7 +37,7 @@ final class CoreDio with NetworkLoggerMixin {
       if (showLoader) _loaderManager.show();
       if (kDebugMode) logRequestInfo(requestUrl: '${_dio.options.baseUrl}${path.path}', type: type, data: data, pathSuffix: pathSuffix, headers: headers, queryParameters: queryParameters);
       _dio.options = _baseOptions.copyWith(connectTimeout: connectionTimeout, receiveTimeout: receiveTimeout, sendTimeout: sendTimeout);
-      final requestStartTime = DateTime.now().millisecondsSinceEpoch;
+      final stopwatch = Stopwatch()..start();
       final response = await _dio.request<T>(
         pathSuffix == null ? path.path : '${path.path}/$pathSuffix',
         queryParameters: queryParameters?.toJson(),
@@ -48,7 +48,8 @@ final class CoreDio with NetworkLoggerMixin {
           contentType: contentType,
         ),
       );
-      final responseTimeMilliseconds = DateTime.now().millisecondsSinceEpoch - requestStartTime;
+      stopwatch.stop();
+      final responseTimeMilliseconds = stopwatch.elapsedMilliseconds;
       return _getPrimitiveSuccessResponse(response: response, requestUrl: '${_dio.options.baseUrl}${path.path}', responseTime: responseTimeMilliseconds);
     } catch (exception) {
       return _getPrimitiveErrorResponse(error: exception, requestUrl: '${_dio.options.baseUrl}${path.path}');
@@ -76,7 +77,7 @@ final class CoreDio with NetworkLoggerMixin {
       if (showLoader) _loaderManager.show();
       if (kDebugMode) logRequestInfo(requestUrl: '${_dio.options.baseUrl}${path.path}', type: type, data: data, pathSuffix: pathSuffix, headers: headers, queryParameters: queryParameters);
       _dio.options = _baseOptions.copyWith(connectTimeout: connectionTimeout, receiveTimeout: receiveTimeout, sendTimeout: sendTimeout);
-      final requestStartTime = DateTime.now().millisecondsSinceEpoch;
+      final stopwatch = Stopwatch()..start();
       final response = await _dio.request<dynamic>(
         pathSuffix == null ? path.path : '${path.path}$pathSuffix',
         queryParameters: queryParameters?.toJson(),
@@ -87,7 +88,8 @@ final class CoreDio with NetworkLoggerMixin {
           contentType: contentType,
         ),
       );
-      final responseTimeMilliseconds = DateTime.now().millisecondsSinceEpoch - requestStartTime;
+      stopwatch.stop();
+      final responseTimeMilliseconds = stopwatch.elapsedMilliseconds;
       return _getSuccessResponse<T, M>(response: response, requestUrl: '${_dio.options.baseUrl}${path.path}', responseEntityModel: responseEntityModel, responseTime: responseTimeMilliseconds);
     } catch (exception) {
       return _getErrorResponse(error: exception, requestUrl: '${_dio.options.baseUrl}${path.path}');
