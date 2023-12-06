@@ -12,13 +12,13 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeMainChildViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => HomeMainSuccessWidget(viewModel: viewModel),
+      onSuccess: (context) => HomeMainOnSuccessWidget(viewModel: viewModel),
     );
   }
 }
 
-class HomeMainSuccessWidget extends StatelessWidget {
-  const HomeMainSuccessWidget({required this.viewModel, super.key});
+class HomeMainOnSuccessWidget extends StatelessWidget {
+  const HomeMainOnSuccessWidget({required this.viewModel, super.key});
 
   final HomeMainChildViewModel viewModel;
 
@@ -78,13 +78,13 @@ class HomeMainSuccessWidget extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: _HomeMainFloatingActionButton(viewModel: viewModel),
+      floatingActionButton: HomeMainFloatingActionButton(viewModel: viewModel),
     );
   }
 }
 
-class _HomeMainFloatingActionButton extends StatelessWidget {
-  const _HomeMainFloatingActionButton({required this.viewModel, super.key});
+class HomeMainFloatingActionButton extends StatelessWidget {
+  const HomeMainFloatingActionButton({required this.viewModel, super.key});
 
   final HomeMainChildViewModel viewModel;
 
@@ -100,18 +100,14 @@ class _HomeMainFloatingActionButton extends StatelessWidget {
           label: const Text('Increment count'),
           icon: const Icon(Icons.add),
         ),
-        const SizedBox(
-          height: 12,
-        ),
+        const Blank(12),
         FloatingActionButton.extended(
           heroTag: null,
           onPressed: viewModel.incrementWeight,
           label: const Text('Increment weight'),
           icon: const Icon(Icons.add),
         ),
-        const SizedBox(
-          height: 12,
-        ),
+        const Blank(12),
         FloatingActionButton.extended(
           heroTag: null,
           onPressed: viewModel.incrementAge,

@@ -14,13 +14,13 @@ final class LoginView extends BaseView<LoginViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<LoginViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => const LoginViewSuccessWidget(),
+      onSuccess: (context) => const LoginViewOnSuccessWidget(),
     );
   }
 }
 
-class _LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
-  const _LoginViewFloatingActionButton();
+class LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
+  const LoginViewFloatingActionButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,31 +35,34 @@ class _LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
           label: const Text('Show custom overlay'),
           icon: const Icon(Icons.info_outline),
         ),
-        const SizedBox(
-          height: 12,
-        ),
+        const Blank(12),
         FloatingActionButton.extended(
           heroTag: '1',
           onPressed: viewModel.showDefaultToast,
           label: const Text('Show default toast'),
           icon: const Icon(Icons.info_outline),
         ),
-        const SizedBox(
-          height: 12,
-        ),
+        const Blank(12),
         FloatingActionButton.extended(
           heroTag: '2',
           onPressed: viewModel.showAndHideLoader,
           label: const Text('Show loader'),
           icon: const Icon(Icons.refresh),
         ),
+        const Blank(12),
+        FloatingActionButton.extended(
+          heroTag: '3',
+          onPressed: viewModel.login,
+          label: const Text('Login'),
+          icon: const Icon(Icons.login),
+        ),
       ],
     );
   }
 }
 
-class _LoginViewBody extends DockAccess<LoginViewModel> {
-  const _LoginViewBody();
+class LoginViewBody extends DockAccess<LoginViewModel> {
+  const LoginViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +76,8 @@ class _LoginViewBody extends DockAccess<LoginViewModel> {
   }
 }
 
-class LoginViewSuccessWidget extends StatelessWidget {
-  const LoginViewSuccessWidget({super.key});
+class LoginViewOnSuccessWidget extends StatelessWidget {
+  const LoginViewOnSuccessWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +85,8 @@ class LoginViewSuccessWidget extends StatelessWidget {
       appBar: DefaultAppBar(
         title: 'Login',
       ),
-      body: _LoginViewBody(),
-      floatingActionButton: _LoginViewFloatingActionButton(),
+      body: LoginViewBody(),
+      floatingActionButton: LoginViewFloatingActionButton(),
     );
   }
 }

@@ -14,13 +14,13 @@ final class SplashView extends BaseView<SplashViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<SplashViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => const SplashViewSuccessWidget(),
+      onSuccess: (context) => const SplashViewOnSuccessWidget(),
     );
   }
 }
 
-class SplashViewSuccessWidget extends DockAccess<SplashViewModel> {
-  const SplashViewSuccessWidget({super.key});
+class SplashViewOnSuccessWidget extends DockAccess<SplashViewModel> {
+  const SplashViewOnSuccessWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

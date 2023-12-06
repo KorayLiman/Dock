@@ -8,6 +8,7 @@ import 'package:dock_flutter_example/product/extensions/extension.dart';
 import 'package:dock_flutter_example/product/mixin/mixin.dart';
 import 'package:dock_flutter_example/product/model/model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 final class CoreDio with NetworkLoggerMixin {
   CoreDio({required BaseOptions baseOptions}) {
@@ -22,6 +23,9 @@ final class CoreDio with NetworkLoggerMixin {
   Future<BaseResponse<T>> primitiveRequest<T extends Object>({
     required RequestPath path,
     required RequestType type,
+    required bool showLoader,
+    required bool showErrorResponseSnackBar,
+    required bool showSuccessResponseSnackBar,
     BaseModel<dynamic>? data,
     FormData? dioFormData,
     BaseModel<dynamic>? queryParameters,
@@ -31,7 +35,6 @@ final class CoreDio with NetworkLoggerMixin {
     Duration? connectionTimeout,
     Duration? receiveTimeout,
     Duration? sendTimeout,
-    bool showLoader = false,
   }) async {
     try {
       if (showLoader) _loaderManager.show();
@@ -50,9 +53,12 @@ final class CoreDio with NetworkLoggerMixin {
       );
       stopwatch.stop();
       final responseTimeMilliseconds = stopwatch.elapsedMilliseconds;
-      return _getPrimitiveSuccessResponse(response: response, requestUrl: '${_dio.options.baseUrl}${path.path}', responseTime: responseTimeMilliseconds);
-    } catch (exception) {
-      return _getPrimitiveErrorResponse(error: exception, requestUrl: '${_dio.options.baseUrl}${path.path}');
+      final resp = _getPrimitiveSuccessResponse(response: response, requestUrl: '${_dio.options.baseUrl}${path.path}', responseTime: responseTimeMilliseconds);
+      if (showSuccessResponseSnackBar) _showSuccessResponseSnackBar(messages: resp.messages);
+      return resp;
+    } catch (error) {
+      if (showErrorResponseSnackBar) _showErrorResponseSnackBar(error: error);
+      return _getPrimitiveErrorResponse(error: error, requestUrl: '${_dio.options.baseUrl}${path.path}');
     } finally {
       _loaderManager.hide();
     }
@@ -62,6 +68,9 @@ final class CoreDio with NetworkLoggerMixin {
     required RequestPath path,
     required RequestType type,
     required M responseEntityModel,
+    required bool showLoader,
+    required bool showErrorResponseSnackBar,
+    required bool showSuccessResponseSnackBar,
     BaseModel<dynamic>? data,
     FormData? dioFormData,
     BaseModel<dynamic>? queryParameters,
@@ -71,14 +80,13 @@ final class CoreDio with NetworkLoggerMixin {
     Duration? connectionTimeout,
     Duration? receiveTimeout,
     Duration? sendTimeout,
-    bool showLoader = false,
   }) async {
     try {
       if (showLoader) _loaderManager.show();
       if (kDebugMode) logRequestInfo(requestUrl: '${_dio.options.baseUrl}${path.path}', type: type, data: data, pathSuffix: pathSuffix, headers: headers, queryParameters: queryParameters);
       _dio.options = _baseOptions.copyWith(connectTimeout: connectionTimeout, receiveTimeout: receiveTimeout, sendTimeout: sendTimeout);
       final stopwatch = Stopwatch()..start();
-      final response = await _dio.request<dynamic>(
+      final response = await _dio.request<Map<String, dynamic>>(
         pathSuffix == null ? path.path : '${path.path}$pathSuffix',
         queryParameters: queryParameters?.toJson(),
         data: dioFormData ?? data?.toJson(),
@@ -90,9 +98,12 @@ final class CoreDio with NetworkLoggerMixin {
       );
       stopwatch.stop();
       final responseTimeMilliseconds = stopwatch.elapsedMilliseconds;
-      return _getSuccessResponse<T, M>(response: response, requestUrl: '${_dio.options.baseUrl}${path.path}', responseEntityModel: responseEntityModel, responseTime: responseTimeMilliseconds);
-    } catch (exception) {
-      return _getErrorResponse(error: exception, requestUrl: '${_dio.options.baseUrl}${path.path}');
+      final resp = _getSuccessResponse<T, M>(response: response, requestUrl: '${_dio.options.baseUrl}${path.path}', responseEntityModel: responseEntityModel, responseTime: responseTimeMilliseconds);
+      if (showSuccessResponseSnackBar) _showSuccessResponseSnackBar(messages: resp.messages);
+      return resp;
+    } catch (error) {
+      if (showErrorResponseSnackBar) _showErrorResponseSnackBar(error: error);
+      return _getErrorResponse(error: error, requestUrl: '${_dio.options.baseUrl}${path.path}');
     } finally {
       _loaderManager.hide();
     }
@@ -100,25 +111,25 @@ final class CoreDio with NetworkLoggerMixin {
 
   BaseResponse<T> _getPrimitiveSuccessResponse<T extends Object>({required Response<T> response, required String requestUrl, required int responseTime}) {
     if (kDebugMode) logResponseInfo(response: response, responseTime: responseTime, requestUrl: requestUrl);
-    return BaseResponse<T>(data: response.data, networkError: null);
+    return BaseResponse<T>(data: response.data);
   }
 
-  BaseResponse<T> _getSuccessResponse<T, M extends BaseModel<dynamic>>({required Response<dynamic> response, required String requestUrl, required M responseEntityModel, required int responseTime}) {
+  BaseResponse<T> _getSuccessResponse<T, M extends BaseModel<dynamic>>({required Response<Map<String, dynamic>> response, required String requestUrl, required M responseEntityModel, required int responseTime}) {
     if (kDebugMode) logResponseInfo(response: response, responseTime: responseTime, requestUrl: requestUrl);
-    final data = _getData(jsonResponse: response.data, responseEntityModel: responseEntityModel) as T?;
-    return BaseResponse<T>(data: data, networkError: null);
+    final data = _getData(jsonResponse: response.data?['data'], responseEntityModel: responseEntityModel) as T?;
+    return BaseResponse<T>(data: data, success: response.data?['success'] as bool?, messages: (response.data?['messages'] as List?)?.cast<String>());
   }
 
   BaseResponse<T> _getPrimitiveErrorResponse<T extends Object>({required Object error, required String requestUrl}) {
     final statusCode = error is DioException ? error.response?.statusCode : null;
     if (kDebugMode) logErrorResponseInfo(statusCode: statusCode, error: error, requestUrl: requestUrl);
-    return BaseResponse<T>(data: null, networkError: NetworkError(error: error, statusCode: statusCode ?? -1));
+    return BaseResponse<T>(data: null, requestError: RequestError(error: error, statusCode: statusCode ?? -1));
   }
 
   BaseResponse<T> _getErrorResponse<T>({required Object error, required String requestUrl}) {
     final statusCode = error is DioException ? error.response?.statusCode : null;
     if (kDebugMode) logErrorResponseInfo(statusCode: statusCode, error: error, requestUrl: requestUrl);
-    return BaseResponse<T>(data: null, networkError: NetworkError(error: error, statusCode: statusCode ?? -1));
+    return BaseResponse<T>(data: null, requestError: RequestError(error: error, statusCode: statusCode ?? -1));
   }
 
   T? _getData<T, M extends BaseModel<dynamic>>({required dynamic jsonResponse, required M responseEntityModel}) {
@@ -129,5 +140,58 @@ final class CoreDio with NetworkLoggerMixin {
     } else {
       return null;
     }
+  }
+
+  void _showSuccessResponseSnackBar({required List<String>? messages}) {
+    final scaffoldMessengerState = Locator.find<GlobalKey<ScaffoldMessengerState>>().currentState;
+    assert(scaffoldMessengerState.isNotNull, 'Tried to get scaffoldMessengerState but found null');
+    scaffoldMessengerState!.showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.green,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (messages.isNullOrEmpty)
+              const Text(
+                'Başarılı',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              )
+            else
+              ...messages!.map(
+                (e) => Text(
+                  e,
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showErrorResponseSnackBar({required Object error}) {
+    final scaffoldMessengerState = Locator.find<GlobalKey<ScaffoldMessengerState>>().currentState;
+    assert(scaffoldMessengerState.isNotNull, 'Tried to get scaffoldMessengerState but found null');
+    scaffoldMessengerState!.showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.red,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Hata',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const Blank(6),
+            Text(
+              '$error',
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

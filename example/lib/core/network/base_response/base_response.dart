@@ -1,8 +1,10 @@
 import 'package:dock_flutter_example/product/model/model.dart';
 
 final class BaseResponse<T> {
-  const BaseResponse({required this.data, required this.networkError});
+  const BaseResponse({this.data, this.requestError, this.messages, this.success});
 
   final T? data;
-  final NetworkError? networkError;
+  final bool? success;
+  final List<String>? messages;
+  final RequestError? requestError;
 }

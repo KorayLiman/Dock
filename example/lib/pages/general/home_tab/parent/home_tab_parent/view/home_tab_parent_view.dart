@@ -14,13 +14,13 @@ final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeTabParentViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => const HomeTabParentSuccessWidget(),
+      onSuccess: (context) => const HomeTabParentOnSuccessWidget(),
     );
   }
 }
 
-class HomeTabParentSuccessWidget extends StatelessWidget {
-  const HomeTabParentSuccessWidget({super.key});
+class HomeTabParentOnSuccessWidget extends StatelessWidget {
+  const HomeTabParentOnSuccessWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

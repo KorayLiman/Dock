@@ -1,3 +1,3 @@
 enum RequestPath {
-  products,
+  login,
 }

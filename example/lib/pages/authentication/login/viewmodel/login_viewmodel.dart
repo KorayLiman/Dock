@@ -3,7 +3,11 @@ import 'package:dock_flutter_example/core/navigation/app_router/app_router.gr.da
 import 'package:dock_flutter_example/product/product.dart';
 import 'package:flutter/material.dart';
 
-final class LoginViewModel extends BaseViewModel<LoginViewModel> {
+final class LoginViewModel extends BaseViewModel<LoginViewModel> with ServiceMixin<LoginService> {
+  Future<void> login() async {
+    final result = await service.login();
+  }
+
   void showAndHideLoader() {
     rootLoaderManager.show();
     2.seconds.delay(rootLoaderManager.hide);

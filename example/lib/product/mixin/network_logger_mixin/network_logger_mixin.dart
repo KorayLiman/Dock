@@ -44,7 +44,7 @@ Response Time: $responseTime milliseconds
 Headers: ${response.requestOptions.headers}
 Response Status Code: ${response.statusCode}
 Response Status Message: ${response.statusMessage ?? "null"}
-Response Data: ${response.data}
+Response Data: ${jsonEncode(response.data, toEncodable: (Object? unEncodable) => "Unencodable value of type ->${unEncodable.runtimeType}<-")}
 <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-""";
     Logger.logMsg(msg: responseLog);
   }

@@ -1,14 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/base/model/model.dart';
 import 'package:dock_flutter_example/core/network/network.dart';
 import 'package:dock_flutter_example/product/enums/enums.dart';
-import 'package:flutter/material.dart';
 
 abstract base class BaseService {
   const BaseService();
 
   NetworkManager get _networkManager => NetworkManager.instance;
+  static const _connectTimeout = Duration(seconds: 25);
+  static const _receiveTimeout = Duration(seconds: 25);
+  static const _sendTimeout = Duration(seconds: 25);
+  static const _showLoader = false;
+  static const _showErrorResponseSnackBar = true;
+  static const _showSuccessResponseSnackBar = true;
 
   Future<BaseResponse<T>> request<T, M extends BaseModel<dynamic>>({
     required RequestPath path,
@@ -19,11 +23,12 @@ abstract base class BaseService {
     BaseModel<dynamic>? queryParameters,
     String? pathSuffix,
     String? contentType,
-    Duration connectTimeout = const Duration(milliseconds: 15000), // 15 sec
-    Duration receiveTimeout = const Duration(milliseconds: 15000), // 15 sec
-    Duration sendTimeout = const Duration(milliseconds: 15000), // 15 sec
-    bool showResponseErrorSnackBar = true,
-    bool showLoader = false,
+    Duration connectTimeout = _connectTimeout,
+    Duration receiveTimeout = _receiveTimeout,
+    Duration sendTimeout = _sendTimeout,
+    bool showErrorResponseSnackBar = _showErrorResponseSnackBar,
+    bool showSuccessResponseSnackBar = _showSuccessResponseSnackBar,
+    bool showLoader = _showLoader,
   }) async {
     final response = await _networkManager.coreDio.request<T, M>(
       path: path,
@@ -38,9 +43,11 @@ abstract base class BaseService {
       receiveTimeout: receiveTimeout,
       sendTimeout: sendTimeout,
       showLoader: showLoader,
+      showErrorResponseSnackBar: showErrorResponseSnackBar,
+      showSuccessResponseSnackBar: showSuccessResponseSnackBar,
       headers: _generateHeaders(path: path),
     );
-    if (showResponseErrorSnackBar) _showResponseErrorSnackBar(baseResponse: response);
+
     return response;
   }
 
@@ -52,11 +59,12 @@ abstract base class BaseService {
     BaseModel<dynamic>? queryParameters,
     String? pathSuffix,
     String? contentType,
-    Duration connectTimeout = const Duration(milliseconds: 15000), // 15 sec
-    Duration receiveTimeout = const Duration(milliseconds: 15000), // 15 sec
-    Duration sendTimeout = const Duration(milliseconds: 15000), // 15 sec
-    bool showResponseErrorSnackBar = true,
-    bool showLoader = false,
+    Duration connectTimeout = _connectTimeout,
+    Duration receiveTimeout = _receiveTimeout,
+    Duration sendTimeout = _sendTimeout,
+    bool showErrorResponseSnackBar = _showErrorResponseSnackBar,
+    bool showSuccessResponseSnackBar = _showSuccessResponseSnackBar,
+    bool showLoader = _showLoader,
   }) async {
     final response = await _networkManager.coreDio.primitiveRequest<T>(
       path: path,
@@ -70,35 +78,11 @@ abstract base class BaseService {
       receiveTimeout: receiveTimeout,
       sendTimeout: sendTimeout,
       showLoader: showLoader,
+      showErrorResponseSnackBar: showErrorResponseSnackBar,
+      showSuccessResponseSnackBar: showSuccessResponseSnackBar,
       headers: _generateHeaders(path: path),
     );
-    if (showResponseErrorSnackBar) _showResponseErrorSnackBar(baseResponse: response);
     return response;
-  }
-
-  void _showResponseErrorSnackBar({required BaseResponse<dynamic> baseResponse}) {
-    if (baseResponse.networkError != null) {
-      final scaffoldMessengerState = Locator.find<GlobalKey<ScaffoldMessengerState>>().currentState;
-      assert(scaffoldMessengerState.isNotNull, 'Tried to get scaffoldMessengerState but found null');
-      scaffoldMessengerState!.showSnackBar(
-        SnackBar(
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Error',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                baseResponse.networkError!.error.toString(),
-                style: const TextStyle(fontSize: 14),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
   }
 
   Map<String, dynamic> _generateHeaders({required RequestPath path}) {

@@ -19,6 +19,8 @@ dependencies:
   auto_route: ^7.8.4
   dio: ^5.4.0
   envied: ^0.5.2
+  json_serializable: ^6.7.1
+  json_annotation: ^4.8.1
 
 
 dev_dependencies:

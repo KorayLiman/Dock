@@ -11,13 +11,13 @@ final class HomeListChildView extends BaseView<HomeListChildViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeListChildViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => HomeListChildSuccessWidget(viewModel: viewModel),
+      onSuccess: (context) => HomeListChildOnSuccessWidget(viewModel: viewModel),
     );
   }
 }
 
-class HomeListChildSuccessWidget extends StatelessWidget {
-  const HomeListChildSuccessWidget({required this.viewModel, super.key});
+class HomeListChildOnSuccessWidget extends StatelessWidget {
+  const HomeListChildOnSuccessWidget({required this.viewModel, super.key});
 
   final HomeListChildViewModel viewModel;
 
