@@ -1,6 +1,6 @@
 name: dock_flutter
 description: A software kit for developing Flutter apps easy and fast.
-version: 0.1.0-dev.2
+version: 0.1.0-dev.3
 repository: https://github.com/KorayLiman/Dock
 issue_tracker: https://github.com/KorayLiman/Dock/issues
 
@@ -14,6 +14,7 @@ dependencies:
 
   flutter_web_plugins:
     sdk: flutter
+  intl: ^0.18.1
   plugin_platform_interface: ^2.0.2
 
 dev_dependencies:

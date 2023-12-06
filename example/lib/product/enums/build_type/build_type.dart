@@ -1,0 +1,4 @@
+enum BuildType {
+  test,
+  live,
+}

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 final class Docker<T extends BaseViewModel> extends StatelessWidget {
   const Docker({required this.id, required this.builder, this.viewModel, super.key});
 
-  final String id;
+  final Object id;
   final T? viewModel;
   final DockerBuilderFn<T> builder;
 

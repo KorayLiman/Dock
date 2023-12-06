@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/navigation/app_router/app_router.gr.dart';
 import 'package:dock_flutter_example/pages/general/home_tab/parent/home_tab_parent/viewmodel/home_tab_parent_viewmodel.dart';
-import 'package:dock_flutter_example/product/enums/route_paths.dart';
+import 'package:dock_flutter_example/product/enums/route_paths/route_paths.dart';
 import 'package:dock_flutter_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -14,11 +14,16 @@ final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeTabParentViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => _onSuccess(context: context),
+      onSuccess: (context) => const HomeTabParentOnSuccessWidget(),
     );
   }
+}
 
-  Widget _onSuccess({required BuildContext context}) {
+class HomeTabParentOnSuccessWidget extends StatelessWidget {
+  const HomeTabParentOnSuccessWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return AutoTabsRouter(
       routes: [
         HomeMainChildRoute(),

@@ -1,7 +1,7 @@
 import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/navigation/app_router/app_router.dart';
 import 'package:dock_flutter_example/core/navigation/navigation_observer/navigation_observer.dart';
-import 'package:dock_flutter_example/product/constants/app_constants.dart';
+import 'package:dock_flutter_example/product/constants/app_constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     final appRouter = Locator.isRegistered<AppRouter>()
         ? Locator.find<AppRouter>()
         : Locator.register<AppRouter>(
-            AppRouter(),
+            AppRouter.create(),
           );
 
     return MaterialApp.router(
@@ -32,6 +32,9 @@ class MyApp extends StatelessWidget {
         ],
       ),
       theme: AppConstants.themeConstants.material3,
+      scaffoldMessengerKey: Locator.register<GlobalKey<ScaffoldMessengerState>>(
+        GlobalKey<ScaffoldMessengerState>(),
+      ),
     );
   }
 }

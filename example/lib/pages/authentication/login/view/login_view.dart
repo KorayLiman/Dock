@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/pages/authentication/login/viewmodel/login_viewmodel.dart';
 import 'package:dock_flutter_example/product/components/appbars/appbars.dart';
-import 'package:dock_flutter_example/product/enums/route_paths.dart';
+import 'package:dock_flutter_example/product/enums/route_paths/route_paths.dart';
 import 'package:dock_flutter_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -14,19 +14,13 @@ final class LoginView extends BaseView<LoginViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<LoginViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => const Scaffold(
-        appBar: DefaultAppBar(
-          title: 'Login',
-        ),
-        body: _LoginViewBody(),
-        floatingActionButton: _LoginViewFloatingActionButton(),
-      ),
+      onSuccess: (context) => const LoginViewOnSuccessWidget(),
     );
   }
 }
 
-class _LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
-  const _LoginViewFloatingActionButton();
+class LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
+  const LoginViewFloatingActionButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,36 +30,39 @@ class _LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         FloatingActionButton.extended(
-          heroTag: "0",
+          heroTag: '0',
           onPressed: viewModel.showCustomOverlay,
           label: const Text('Show custom overlay'),
           icon: const Icon(Icons.info_outline),
         ),
-        const SizedBox(
-          height: 12,
-        ),
+        const Blank(12),
         FloatingActionButton.extended(
-          heroTag: "1",
+          heroTag: '1',
           onPressed: viewModel.showDefaultToast,
           label: const Text('Show default toast'),
           icon: const Icon(Icons.info_outline),
         ),
-        const SizedBox(
-          height: 12,
-        ),
+        const Blank(12),
         FloatingActionButton.extended(
-          heroTag: "2",
+          heroTag: '2',
           onPressed: viewModel.showAndHideLoader,
           label: const Text('Show loader'),
           icon: const Icon(Icons.refresh),
+        ),
+        const Blank(12),
+        FloatingActionButton.extended(
+          heroTag: '3',
+          onPressed: viewModel.login,
+          label: const Text('Login'),
+          icon: const Icon(Icons.login),
         ),
       ],
     );
   }
 }
 
-class _LoginViewBody extends DockAccess<LoginViewModel> {
-  const _LoginViewBody();
+class LoginViewBody extends DockAccess<LoginViewModel> {
+  const LoginViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +72,21 @@ class _LoginViewBody extends DockAccess<LoginViewModel> {
         label: const Text('Login'),
         icon: const Icon(Icons.navigate_next),
       ),
+    );
+  }
+}
+
+class LoginViewOnSuccessWidget extends StatelessWidget {
+  const LoginViewOnSuccessWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      appBar: DefaultAppBar(
+        title: 'Login',
+      ),
+      body: LoginViewBody(),
+      floatingActionButton: LoginViewFloatingActionButton(),
     );
   }
 }

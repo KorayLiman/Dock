@@ -30,23 +30,23 @@ base mixin _BaseViewModelStateMixin {
   }
 
   /// Map holds [Docker] id's and updaters bound to this viewmodel
-  Map<String, DockerUpdater>? _dockerUpdaters;
+  Map<Object, DockerUpdater>? _dockerUpdaters;
 
   /// Checks if any [Docker] exits with given id
-  bool _containsDockerUpdater({required String id}) {
+  bool _containsDockerUpdater({required Object id}) {
     return _dockerUpdaters!.containsKey(id);
   }
 
   /// Updates [Docker] bound to this viewmodel with given id
-  void update({required String id}) {
+  void update({required Object id}) {
     assert(_dockerUpdaters?.containsKey(id) ?? false, "You called update() method on Docker doesn't exist or disposed");
     final updater = _dockerUpdaters!.entries.where((element) => element.key == id).toList()[0].value;
     updater.call();
   }
 
   /// Updates [Docker]s bound to this viewmodel with given ids
-  void updateMany({required List<String> ids}) {
-    final notFoundIds = <String>[];
+  void updateMany({required List<Object> ids}) {
+    final notFoundIds = <Object>[];
     assert(
       () {
         for (final id in ids) {
