@@ -47,7 +47,7 @@ final class CoreDio with NetworkLoggerMixin {
         data: dioFormData ?? data?.toJson(),
         options: Options(
           method: type.type,
-          headers: headers,
+          headers: _generateHeaders(path: path),
           contentType: contentType,
         ),
       );
@@ -92,7 +92,7 @@ final class CoreDio with NetworkLoggerMixin {
         data: dioFormData ?? data?.toJson(),
         options: Options(
           method: type.type,
-          headers: headers,
+          headers: _generateHeaders(path: path),
           contentType: contentType,
         ),
       );
@@ -109,6 +109,11 @@ final class CoreDio with NetworkLoggerMixin {
     }
   }
 
+  Map<String, dynamic> _generateHeaders({required RequestPath path}) {
+    // Generate header here i.e Bearer Token
+    return {};
+  }
+
   BaseResponse<T> _getPrimitiveSuccessResponse<T extends Object>({required Response<T> response, required String requestUrl, required int responseTime}) {
     if (kDebugMode) logResponseInfo(response: response, responseTime: responseTime, requestUrl: requestUrl);
     return BaseResponse<T>(data: response.data);
@@ -123,13 +128,13 @@ final class CoreDio with NetworkLoggerMixin {
   BaseResponse<T> _getPrimitiveErrorResponse<T extends Object>({required Object error, required String requestUrl}) {
     final statusCode = error is DioException ? error.response?.statusCode : null;
     if (kDebugMode) logErrorResponseInfo(statusCode: statusCode, error: error, requestUrl: requestUrl);
-    return BaseResponse<T>(data: null, requestError: RequestError(error: error, statusCode: statusCode ?? -1));
+    return BaseResponse<T>(requestError: RequestError(error: error, statusCode: statusCode ?? -1));
   }
 
   BaseResponse<T> _getErrorResponse<T>({required Object error, required String requestUrl}) {
     final statusCode = error is DioException ? error.response?.statusCode : null;
     if (kDebugMode) logErrorResponseInfo(statusCode: statusCode, error: error, requestUrl: requestUrl);
-    return BaseResponse<T>(data: null, requestError: RequestError(error: error, statusCode: statusCode ?? -1));
+    return BaseResponse<T>(requestError: RequestError(error: error, statusCode: statusCode ?? -1));
   }
 
   T? _getData<T, M extends BaseModel<dynamic>>({required dynamic jsonResponse, required M responseEntityModel}) {
