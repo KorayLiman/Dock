@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 part '../../../product/state/primitive/docker/docker_stateless_element.dart';
+part '../../widget/default_appbar/default_appbar.dart';
+part '../../widget/state_builder/state_builder_mixin.dart';
 part '../mixins/base_viewmodel_mixin.dart';
 part '../mixins/base_viewmodel_state_mixin.dart';
 
@@ -20,6 +22,7 @@ enum PageState { success, loading, empty, error, offline }
 abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _BaseViewModelStateMixin {
   /// Called when View is created
   @mustCallSuper
+  @protected
   void onInit(BuildContext element) {
     _assertStateBuilderInitialized();
     Dock
@@ -29,6 +32,7 @@ abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _B
 
   /// Called after onInit and when dependencies of this object change
   @mustCallSuper
+  @protected
   void onDependenciesChange() {
     _assertStateBuilderInitialized();
   }
@@ -37,18 +41,21 @@ abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _B
   ///
   /// Handle network requests, navigation etc. here
   @mustCallSuper
+  @protected
   void onPostFrame(Duration timeStamp) {
     _assertStateBuilderInitialized();
   }
 
   /// Called at the beginning of the second frame of page render
   @mustCallSuper
+  @protected
   void onNextFrame(Duration timeStamp) {
     _assertStateBuilderInitialized();
   }
 
   /// Called when view is getting disposed
   @mustCallSuper
+  @protected
   void onDispose() {
     _assertStateBuilderInitialized();
   }

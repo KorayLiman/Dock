@@ -1,14 +1,8 @@
 import 'package:dock_flutter/core/base/viewmodel/base_viewmodel.dart';
-import 'package:dock_flutter/core/dock/dock_main.dart';
-import 'package:dock_flutter/core/locator/locator.dart';
 import 'package:dock_flutter/product/extensions/extensions.dart';
 import 'package:dock_flutter/product/state/reactive/observer/observer.dart';
-import 'package:dock_flutter/product/utils/logger/logger.dart';
 import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
-
-part '../default_appbar/default_appbar.dart';
-part 'state_builder_mixin.dart';
 
 /// A SMART AND EASY [Widget] FOR MANAGING [PageState]
 final class StateBuilder<T extends BaseViewModel> extends StatefulWidget {
@@ -31,7 +25,7 @@ class _StateBuilderState<T extends BaseViewModel> extends State<StateBuilder> wi
     return GestureDetector(
       onTap: context.closeKeyboard,
       child: Observer(
-        builder: _buildPage,
+        builder: builder,
       ),
     );
   }
