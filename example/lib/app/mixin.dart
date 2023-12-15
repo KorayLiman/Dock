@@ -18,7 +18,7 @@ mixin class _AppMixin {
   }
 
   ThemeData get theme {
-    return AppConstants.themeConstants.material3;
+    return AppConstants.themeConstants.light;
   }
 
   /// [Navigator] Observers

@@ -3,12 +3,11 @@ import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/pages/authentication/login/viewmodel/login_viewmodel.dart';
 import 'package:dock_flutter_example/product/components/appbars/appbars.dart';
 import 'package:dock_flutter_example/product/enums/route_paths/route_paths.dart';
-import 'package:dock_flutter_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
 final class LoginView extends BaseView<LoginViewModel> {
-  LoginView({super.arguments}) : super(viewModel: LoginViewModel(), key: ValueKey<String>(RoutePaths.login.rawValue));
+  LoginView({super.arguments}) : super(viewModel: LoginViewModel(), key: ValueKey<String>(RoutePaths.login.path));
 
   @override
   StateBuilder build(BuildContext context) {

@@ -3,12 +3,11 @@ import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/navigation/app_router/app_router.gr.dart';
 import 'package:dock_flutter_example/pages/general/home_tab/parent/home_tab_parent/viewmodel/home_tab_parent_viewmodel.dart';
 import 'package:dock_flutter_example/product/enums/route_paths/route_paths.dart';
-import 'package:dock_flutter_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
 final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
-  HomeTabParentView({super.arguments}) : super(viewModel: HomeTabParentViewModel(), key: ValueKey<String>(RoutePaths.homeTab.rawValue));
+  HomeTabParentView({super.arguments}) : super(viewModel: HomeTabParentViewModel(), key: ValueKey<String>(RoutePaths.homeTab.path));
 
   @override
   StateBuilder build(BuildContext context) {

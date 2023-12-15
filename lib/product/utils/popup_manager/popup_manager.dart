@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 /// A [DialogRoute] shows [CircularProgressIndicator] in center
 final class LoaderRoute extends DialogRoute<dynamic> {
+  @visibleForTesting
   LoaderRoute({
     required super.context,
     required super.builder,
@@ -14,23 +15,23 @@ final class LoaderRoute extends DialogRoute<dynamic> {
   final Object? id;
 }
 
-/// Helper class for showing loader dialog
+/// Helper class for showing popups
 ///
 /// [NavigatorState] key is required either of Root's or Nested Navigator's
-///
-/// Override [loaderBuilder] if you want to use custom [Widget]
-final class LoaderManager {
-  LoaderManager(this._key);
+
+final class PopupManager {
+  const PopupManager(this._key);
 
   final GlobalKey<NavigatorState> _key;
   static List<LoaderRoute>? _routes;
-  WidgetCallbackViaContext loaderBuilder = (BuildContext context) => const Center(
+
+  WidgetCallbackViaContext get _loaderBuilder => (BuildContext context) => const Center(
         child: CircularProgressIndicator(),
       );
 
   /// Shows loader dialog
   /// Provide [id] id if you have multiple loaders and want to close a specific one
-  void show({Object? id, bool barrierDismissible = false}) {
+  void showLoader({Object? id, bool barrierDismissible = false}) {
     assert(_key.currentState.isNotNull, 'Tried to show dialog but navigatorState was null. Key was :$_key');
     final navigatorState = _key.currentState!;
     _routes ??= <LoaderRoute>[];
@@ -43,7 +44,7 @@ final class LoaderManager {
       id: id,
       barrierDismissible: barrierDismissible,
       context: navigatorState.context,
-      builder: loaderBuilder,
+      builder: _loaderBuilder,
     );
 
     _routes!.add(route);
@@ -52,7 +53,7 @@ final class LoaderManager {
 
   /// If [id] is provided closes loader with given [id]
   /// If not closes latest shown loader
-  void hide({Object? id}) {
+  void hideLoader({Object? id}) {
     if (_routes.isNull) {
       Logger.logMsg(
         msg: 'There is no loader to hide',

@@ -4,21 +4,17 @@ import 'package:dock_flutter_example/core/base/model/model.dart';
 import 'package:dock_flutter_example/core/navigation/app_router/app_router.dart';
 import 'package:dock_flutter_example/core/network/network.dart';
 import 'package:dock_flutter_example/product/enums/enums.dart';
-import 'package:dock_flutter_example/product/extensions/extension.dart';
 import 'package:dock_flutter_example/product/mixin/mixin.dart';
 import 'package:dock_flutter_example/product/model/model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 final class CoreDio with NetworkLoggerMixin {
-  CoreDio({required BaseOptions baseOptions}) {
-    _baseOptions = baseOptions;
-    _dio = Dio(_baseOptions);
-  }
+  const CoreDio(this._dio);
 
-  late final BaseOptions _baseOptions;
-  late final Dio _dio;
-  final LoaderManager _loaderManager = LoaderManager(AppRouter.find.navigatorKey);
+  final Dio _dio;
+
+  PopupManager get _popupManager => PopupManager(AppRouter.find.navigatorKey);
 
   Future<BaseResponse<T>> primitiveRequest<T extends Object>({
     required RequestPath path,
@@ -36,10 +32,11 @@ final class CoreDio with NetworkLoggerMixin {
     Duration? receiveTimeout,
     Duration? sendTimeout,
   }) async {
+    final loaderKey = UniqueKey();
     try {
-      if (showLoader) _loaderManager.show();
+      if (showLoader) _popupManager.showLoader(id: loaderKey);
       if (kDebugMode) logRequestInfo(requestUrl: '${_dio.options.baseUrl}${path.path}', type: type, data: data, pathSuffix: pathSuffix, headers: headers, queryParameters: queryParameters);
-      _dio.options = _baseOptions.copyWith(connectTimeout: connectionTimeout, receiveTimeout: receiveTimeout, sendTimeout: sendTimeout);
+      _dio.options = _dio.options.copyWith(connectTimeout: connectionTimeout, receiveTimeout: receiveTimeout, sendTimeout: sendTimeout);
       final stopwatch = Stopwatch()..start();
       final response = await _dio.request<T>(
         pathSuffix == null ? path.path : '${path.path}/$pathSuffix',
@@ -60,7 +57,7 @@ final class CoreDio with NetworkLoggerMixin {
       if (showErrorResponseSnackBar) _showErrorResponseSnackBar(error: error);
       return _getPrimitiveErrorResponse(error: error, requestUrl: '${_dio.options.baseUrl}${path.path}');
     } finally {
-      _loaderManager.hide();
+      _popupManager.hideLoader(id: loaderKey);
     }
   }
 
@@ -81,10 +78,11 @@ final class CoreDio with NetworkLoggerMixin {
     Duration? receiveTimeout,
     Duration? sendTimeout,
   }) async {
+    final loaderKey = UniqueKey();
     try {
-      if (showLoader) _loaderManager.show();
+      if (showLoader) _popupManager.showLoader(id: loaderKey);
       if (kDebugMode) logRequestInfo(requestUrl: '${_dio.options.baseUrl}${path.path}', type: type, data: data, pathSuffix: pathSuffix, headers: headers, queryParameters: queryParameters);
-      _dio.options = _baseOptions.copyWith(connectTimeout: connectionTimeout, receiveTimeout: receiveTimeout, sendTimeout: sendTimeout);
+      _dio.options = _dio.options.copyWith(connectTimeout: connectionTimeout, receiveTimeout: receiveTimeout, sendTimeout: sendTimeout);
       final stopwatch = Stopwatch()..start();
       final response = await _dio.request<Map<String, dynamic>>(
         pathSuffix == null ? path.path : '${path.path}$pathSuffix',
@@ -105,7 +103,7 @@ final class CoreDio with NetworkLoggerMixin {
       if (showErrorResponseSnackBar) _showErrorResponseSnackBar(error: error);
       return _getErrorResponse(error: error, requestUrl: '${_dio.options.baseUrl}${path.path}');
     } finally {
-      _loaderManager.hide();
+      _popupManager.hideLoader(id: loaderKey);
     }
   }
 

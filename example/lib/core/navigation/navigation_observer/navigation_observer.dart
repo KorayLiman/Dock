@@ -6,7 +6,7 @@ class CustomNavigationObserver extends AutoRouterObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
-    _setOverlayStateOnPush(route, previousRoute);
+    _setPopupStateOnPush(route, previousRoute);
     if (!_isDialogOrModalBottomSheetRoute(route)) {
       Logger.logMsg(msg: '---> Pushed Route: (${route.data?.name})  &  Previous: (${previousRoute?.data?.name})', color: LogColors.magenta);
     }
@@ -15,7 +15,7 @@ class CustomNavigationObserver extends AutoRouterObserver {
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
-    _setOverlayStateOnPop(route, previousRoute);
+    _setPopupStateOnPop(route, previousRoute);
     if (!_isDialogOrModalBottomSheetRoute(route)) {
       Logger.logMsg(msg: '<--- Popped To: (${previousRoute?.data?.name})  &  Previous: (${route.data?.name})', color: LogColors.cyan);
     }
@@ -24,7 +24,7 @@ class CustomNavigationObserver extends AutoRouterObserver {
   @override
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didRemove(route, previousRoute);
-    _setOverlayStateOnRemove(route, previousRoute);
+    _setPopupStateOnRemove(route, previousRoute);
     if (!_isDialogOrModalBottomSheetRoute(route)) {
       Logger.logMsg(msg: 'Removed Route: ${route.data?.name}', color: LogColors.red);
     }
@@ -42,17 +42,17 @@ class CustomNavigationObserver extends AutoRouterObserver {
     Logger.logMsg(msg: 'Initialized Tab Route: ${route.name}', color: LogColors.magenta);
   }
 
-  void _setOverlayStateOnPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+  void _setPopupStateOnPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     route is DialogRoute ? _isDialogOpen = true : _isDialogOpen = false;
     route is ModalBottomSheetRoute ? _isModalBottomSheetOpen = true : _isModalBottomSheetOpen = false;
   }
 
-  void _setOverlayStateOnPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+  void _setPopupStateOnPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     previousRoute is DialogRoute ? _isDialogOpen = true : _isDialogOpen = false;
     previousRoute is ModalBottomSheetRoute ? _isModalBottomSheetOpen = true : _isModalBottomSheetOpen = false;
   }
 
-  void _setOverlayStateOnRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
+  void _setPopupStateOnRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     previousRoute is DialogRoute ? _isDialogOpen = true : _isDialogOpen = false;
     previousRoute is ModalBottomSheetRoute ? _isModalBottomSheetOpen = true : _isModalBottomSheetOpen = false;
   }

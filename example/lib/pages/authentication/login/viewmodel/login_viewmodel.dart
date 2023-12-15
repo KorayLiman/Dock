@@ -9,8 +9,8 @@ final class LoginViewModel extends BaseViewModel<LoginViewModel> with ServiceMix
   }
 
   void showAndHideLoader() {
-    rootLoaderManager.show();
-    2.seconds.delay(rootLoaderManager.hide);
+    rootPopupManager.showLoader();
+    2.seconds.delay(rootPopupManager.hideLoader);
   }
 
   Future<void> goToHomePage() async {

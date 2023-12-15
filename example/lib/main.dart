@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/navigation/navigation.dart';
@@ -9,6 +11,13 @@ part 'app/configuration.dart';
 part 'app/mixin.dart';
 
 void main() {
-  preConfigure();
-  runApp(const DockApp());
+  runZonedGuarded(
+    () {
+      preConfigure();
+      runApp(const DockApp());
+    },
+    (error, stack) {
+      // Report to Crashlytics
+    },
+  );
 }

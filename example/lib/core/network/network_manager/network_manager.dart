@@ -7,17 +7,21 @@ import 'package:dock_flutter_example/product/constants/constants.dart';
 import 'package:dock_flutter_example/product/enums/enums.dart';
 
 final class NetworkManager {
-  NetworkManager._() {
-    coreDio = CoreDio(
-      baseOptions: BaseOptions(
-        baseUrl: AppConstants.appBuildType.type == BuildType.test ? Env.testBaseUrl : Env.liveBaseUrl,
-      ),
-    );
-  }
+  const NetworkManager._(this.coreDio);
 
-  late final CoreDio coreDio;
+  final CoreDio coreDio;
 
   static NetworkManager? _instance;
 
-  static NetworkManager get instance => _instance ??= NetworkManager._();
+  static NetworkManager get instance => _instance ??= NetworkManager._(_create);
+
+  static CoreDio get _create {
+    return CoreDio(
+      Dio(
+        BaseOptions(
+          baseUrl: AppConstants.appBuildType.type == BuildType.test ? Env.testBaseUrl : Env.liveBaseUrl,
+        ),
+      ),
+    );
+  }
 }

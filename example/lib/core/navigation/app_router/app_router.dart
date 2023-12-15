@@ -3,14 +3,10 @@ import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/navigation/app_router/app_router.gr.dart';
 import 'package:dock_flutter_example/core/navigation/navigation_observer/navigation_observer.dart';
 import 'package:dock_flutter_example/product/enums/route_paths/route_paths.dart';
-import 'package:dock_flutter_example/product/extensions/route_paths_extensions/route_paths_extension.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'View,Route')
 final class AppRouter extends $AppRouter {
-  AppRouter._();
-
-  // ignore: prefer_constructors_over_static_methods
-  static AppRouter create() => AppRouter._();
+  AppRouter.create();
 
   @override
   RouteType get defaultRouteType => const RouteType.adaptive();
@@ -19,28 +15,28 @@ final class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: SplashRoute.page,
-          path: RoutePaths.splash.rawValue,
+          path: RoutePaths.splash.path,
           initial: true,
         ),
         AutoRoute(
           page: LoginRoute.page,
-          path: RoutePaths.login.rawValue,
+          path: RoutePaths.login.path,
         ),
         AutoRoute(
           page: HomeTabParentRoute.page,
-          path: RoutePaths.homeTab.rawValue,
+          path: RoutePaths.homeTab.path,
           children: [
             AutoRoute(
               page: HomeMainChildRoute.page,
-              path: RoutePaths.homeMainChild.rawValue,
+              path: RoutePaths.homeMainChild.path,
             ),
             AutoRoute(
               page: HomeListChildRoute.page,
-              path: RoutePaths.homeListChild.rawValue,
+              path: RoutePaths.homeListChild.path,
             ),
             AutoRoute(
               page: HomeSettingsChildRoute.page,
-              path: RoutePaths.homeSettingsChild.rawValue,
+              path: RoutePaths.homeSettingsChild.path,
             ),
           ],
         ),
