@@ -4,72 +4,114 @@ import 'package:flutter/material.dart';
 part 'dock_toast_mixin.dart';
 
 /// A pretty animated toast widget
-class DockToast extends StatelessWidget with _DockToastMixin {
+class DockToast extends StatelessWidget with _DockToastDefaults {
   const DockToast({
     required this.controller,
+    required this.message,
+    required this.onDismissed,
+    required this.position,
     super.key,
     this.title,
-    this.message,
+    this.titleStyle,
+    this.messageStyle,
+    this.child,
     this.leading,
     this.backgroundColor,
     this.shadowColor,
-    this.child,
-    this.position = DockToastPosition.bottom,
   });
 
   final String? title;
   final String? message;
+  final TextStyle? titleStyle;
+  final TextStyle? messageStyle;
+  final Widget? child;
   final Widget? leading;
+  final ({double bottom, double left, double right}) position;
   final Color? backgroundColor;
   final Color? shadowColor;
   final AnimationController controller;
-  final Widget? child;
-  final DockToastPosition position;
+
+  final ValueChanged<DismissDirection> onDismissed;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (context, _) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: position == DockToastPosition.bottom ? _toastBottomBeginOffset : _toastTopBeginOffset,
-            end: position == DockToastPosition.bottom ? _toastBottomEndOffset : _toastTopEndOffset,
-          ).animate(
-            CurvedAnimation(
-              parent: controller,
-              curve: _forwardAnimCurve,
-              reverseCurve: _reverseAnimCurve,
-            ),
-          ),
-          child: Container(
-            width: context.width,
-            padding: _toastPadding,
-            decoration: BoxDecoration(
-              color: backgroundColor ?? _defaultToastColor,
-              borderRadius: _toastBorderRadius,
-              // boxShadow: [
-              //
-              // ]
-            ),
-            child: child ??
-                Row(
-                  children: [
-                    if (leading != null) ...[
-                      leading!,
-                      const Blank(10),
-                    ],
-                    if (message != null)
-                      Expanded(
-                        child: Text(
-                          message!,
-                        ),
-                      ),
-                  ],
+    return AnimatedPositioned(
+      bottom: position.bottom,
+      right: position.right,
+      left: position.left,
+      curve: Curves.elasticOut,
+      duration: _repositioningDuration,
+      child: AnimatedBuilder(
+        animation: controller,
+        builder: (context, _) {
+          return Dismissible(
+            key: UniqueKey(),
+            onDismissed: onDismissed,
+            child: Material(
+              color: Colors.transparent,
+              child: SlideTransition(
+                position: Tween<Offset>(
+                  begin: _toastBottomBeginOffset,
+                  end: _toastBottomEndOffset,
+                ).animate(
+                  CurvedAnimation(
+                    parent: controller,
+                    curve: _forwardAnimCurve,
+                    reverseCurve: _reverseAnimCurve,
+                  ),
                 ),
-          ),
-        );
-      },
+                child: Container(
+                  width: context.width,
+                  padding: _toastPadding,
+                  decoration: BoxDecoration(
+                    color: backgroundColor ?? _defaultToastColor,
+                    borderRadius: _toastBorderRadius,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: _defaultAboveShadowRadius,
+                        offset: _defaultToastShadowAboveOffset,
+                        color: shadowColor ?? _defaultShadowColor,
+                      ),
+                      BoxShadow(
+                        blurRadius: _defaultBelowShadowRadius,
+                        offset: _defaultTShadowBelowOffset,
+                        color: shadowColor ?? _defaultShadowColor,
+                      ),
+                    ],
+                  ),
+                  child: child ??
+                      Row(
+                        children: [
+                          if (leading.isNotNull) ...[
+                            leading!,
+                            const Blank(10),
+                          ],
+                          if (title.isNotNull || message.isNotNull)
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (title.isNotNull)
+                                    Text(
+                                      title!,
+                                      style: titleStyle ?? _defaultTitleStyle,
+                                    ),
+                                  if (message.isNotNull)
+                                    Text(
+                                      message!,
+                                      style: messageStyle ?? _defaultMessageStyle,
+                                    ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

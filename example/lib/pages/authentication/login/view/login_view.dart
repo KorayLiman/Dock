@@ -1,13 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/pages/authentication/login/viewmodel/login_viewmodel.dart';
-import 'package:dock_flutter_example/product/components/appbars/appbars.dart';
-import 'package:dock_flutter_example/product/enums/route_paths/route_paths.dart';
+import 'package:dock_flutter_example/product/product.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
 final class LoginView extends BaseView<LoginViewModel> {
-  LoginView({super.arguments}) : super(viewModel: LoginViewModel(), key: ValueKey<String>(RoutePaths.login.path));
+  LoginView({super.arguments}) : super(viewModel: LoginViewModel(), key: const AutomationKey(Automation.loginView));
 
   @override
   StateBuilder build(BuildContext context) {
@@ -19,6 +18,7 @@ final class LoginView extends BaseView<LoginViewModel> {
 }
 
 class LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
+  @visibleForTesting
   const LoginViewFloatingActionButton({super.key});
 
   @override
@@ -37,8 +37,8 @@ class LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
         const Blank(12),
         FloatingActionButton.extended(
           heroTag: '1',
-          onPressed: viewModel.showDefaultToast,
-          label: const Text('Show default toast'),
+          onPressed: viewModel.showToast,
+          label: const Text('Show toast'),
           icon: const Icon(Icons.info_outline),
         ),
         const Blank(12),
@@ -61,6 +61,7 @@ class LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
 }
 
 class LoginViewBody extends DockAccess<LoginViewModel> {
+  @visibleForTesting
   const LoginViewBody({super.key});
 
   @override
@@ -76,6 +77,7 @@ class LoginViewBody extends DockAccess<LoginViewModel> {
 }
 
 class LoginViewOnSuccessWidget extends StatelessWidget {
+  @visibleForTesting
   const LoginViewOnSuccessWidget({super.key});
 
   @override

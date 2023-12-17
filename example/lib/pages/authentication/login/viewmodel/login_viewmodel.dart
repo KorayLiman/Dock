@@ -17,8 +17,8 @@ final class LoginViewModel extends BaseViewModel<LoginViewModel> with ServiceMix
     await rootRouter.push(HomeTabParentRoute());
   }
 
-  void showDefaultToast() {
-    rootOverlayManager.showToast('Default toast, ' * 10);
+  void showToast() {
+    rootOverlayManager.showToast(message: 'Example toast' * 10, title: 'Hata');
   }
 
   void showCustomOverlay() {

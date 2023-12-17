@@ -13,65 +13,23 @@ final class OverlayManager {
   /// Holds active overlays and controllers
   static final _overlayRecordList = <({OverlayEntry entry, AnimationController controller})>[];
 
-  // double _getHorizontalPosition(Size size) => size.width * 0.12;
-  //
-  // double _getVerticalPosition(Size size) => size.width * 0.1;
-  //
-  // final _defaultToastColor = Colors.grey.shade500;
-  // final _toastRadius = 16.0;
-  // final _overlayDuration = 2.seconds;
-  // final _defaultFadeInDuration = 400.milliseconds;
-  // final _defaultFadeInDelay = 25.milliseconds;
-  final _defaultAnimDuration = 500.milliseconds;
+  /// Max stackable toast count
+  static const double _maxStackCount = 3;
 
-  /// Shows simple Toast with given [message]
-  void showToast(String message) {
-    // assert(_key.currentState?.overlay != null, 'Tried to show toast but overlayState was null. Key was :$_key');
-    // assert(_defaultFadeInDuration + _defaultFadeInDelay <= _overlayDuration, '''
-    // _defaultFadeInDelay + _defaultFadeDuration must be less than or equal to _overlayDuration''');
-    // final currentOpacity = 0.observable;
-    // Positioned widgetBuilder(BuildContext context) {
-    //   final size = context.mediaQuerySize;
-    //   return Positioned(
-    //     top: toastPosition == ToastPosition.top ? context.mediaQueryViewPadding.top + _getVerticalPosition(size) : null,
-    //     bottom: toastPosition == ToastPosition.bottom ? context.mediaQueryViewPadding.bottom + _getVerticalPosition(size) : null,
-    //     left: _getHorizontalPosition(size),
-    //     right: _getHorizontalPosition(size),
-    //     child: Observer(
-    //       builder: (context) {
-    //         return AnimatedOpacity(
-    //           opacity: currentOpacity.value.toDouble(),
-    //           duration: _defaultFadeInDuration,
-    //           child: Material(
-    //             color: _defaultToastColor,
-    //             borderRadius: BorderRadius.circular(_toastRadius),
-    //             child: Center(
-    //               child: Padding(
-    //                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-    //                 child: Text(
-    //                   message,
-    //                   style: const TextStyle(color: Colors.white),
-    //                   textAlign: TextAlign.center,
-    //                 ),
-    //               ),
-    //             ),
-    //           ),
-    //         );
-    //       },
-    //     ),
-    //   );
-    // }
-    //
-    // final overlayEntry = OverlayEntry(builder: widgetBuilder);
-    // _key.currentState!.overlay!.insert(overlayEntry);
-    // _defaultFadeInDelay.delay(() {
-    //   currentOpacity.value = 1;
-    // });
-    // _overlayDuration.delay(() {
-    //   overlayEntry
-    //     ..remove()
-    //     ..dispose();
-    // });
+  /// Gap between stacked toasts
+  static const double _gapBetween = 12;
+
+  /// Reduced horizontal margin step of stacked below toast
+  static const double _reducedHorizontalMarginStep = 8;
+
+  /// Default toast bottom margin
+  static const double _defaultToastBottomMargin = 40;
+
+  /// Default toast horizontal margin
+  static const double _defaultHorizontalMargin = 10;
+
+  void showToast({Key? key, String? title, String? message, Widget? leading}) {
+    _presentOverlay(key: key, title: title, message: message, leading: leading);
   }
 
   /// Shows custom [Overlay] with given [Widget]
@@ -115,46 +73,71 @@ final class OverlayManager {
   }
 
   void _insertAndForward(AnimationController controller, OverlayEntry entry, OverlayState overlayState) {
-    _overlayRecordList.add((entry: entry, controller: controller));
+    final record = (entry: entry, controller: controller);
+    _overlayRecordList.insert(0, record);
     overlayState.insert(entry);
     controller.forward();
   }
 
-  void _reverseAndRemove(OverlayState overlayState) {
-    final overlayRecord = _overlayRecordList.first;
+  void _reverseAndRemove(AnimationController controller, OverlayEntry entry, OverlayState overlayState) {
+    final elementIndex = _overlayRecordList.indexOf((entry: entry, controller: controller));
+    final overlayRecord = _overlayRecordList[elementIndex];
     overlayRecord.controller.reverse().then((_) {
-      overlayRecord.controller.dispose();
       overlayRecord.entry.remove();
       overlayRecord.entry.dispose();
+      overlayRecord.controller.dispose();
+      _overlayRecordList.removeLast();
     });
-    _overlayRecordList.remove(overlayRecord);
-    // controller.reverse().then((value) {
-
-    // final index = _activeAnimationControllers.indexOf(controller);
-    // _activeAnimationControllers.removeAt(index);
-    // _activeOverlays.remove(index);
-    // overlayEntry
-    //   ..remove()
-    //   ..dispose();
-    // });
   }
 
-  void _presentOverlay() {
+  void _presentOverlay({Key? key, String? title, Widget? leading, String? message}) {
     final overlayState = _key.currentState?.overlay;
     assert(overlayState.isNotNull, 'Tried to show toast but overlayState was null. Key was :$_key');
 
     final overlayEntryAnimController = AnimationController(
       vsync: overlayState!,
-      duration: _defaultAnimDuration,
-      reverseDuration: _defaultAnimDuration,
+      duration: 500.milliseconds,
+      reverseDuration: 500.milliseconds,
     );
-    final overlayEntry = OverlayEntry(builder: (context) {
-      return const SizedBox();
-    });
+    late final OverlayEntry? overlayEntry;
+    var isPendingRemoval = true;
+    overlayEntry = OverlayEntry(
+      builder: (context) {
+        return DockToast(
+          controller: overlayEntryAnimController,
+          position: _getToastPosition(overlayEntry, overlayEntryAnimController),
+          leading: leading,
+          title: title,
+          message: message,
+          onDismissed: (direction) {
+            if (isPendingRemoval) {
+              isPendingRemoval = false;
+              _overlayRecordList.remove((entry: overlayEntry!, controller: overlayEntryAnimController));
+              overlayEntry
+                ..remove()
+                ..dispose();
+              overlayEntryAnimController.dispose();
+            }
+          },
+        );
+      },
+    );
+
     _insertAndForward(overlayEntryAnimController, overlayEntry, overlayState);
     2.seconds.delay(() {
-      _reverseAndRemove(overlayState);
+      if (isPendingRemoval) {
+        _reverseAndRemove(overlayEntryAnimController, overlayEntry!, overlayState);
+      }
     });
+  }
+
+  ({double bottom, double left, double right}) _getToastPosition(OverlayEntry? overlayEntry, AnimationController controller) {
+    final overlayIndex = _overlayRecordList.indexOf((entry: overlayEntry!, controller: controller));
+
+    final bottomPosition = overlayIndex > (_maxStackCount - 1) ? _gapBetween * (_maxStackCount - 1) + _defaultToastBottomMargin : _gapBetween * overlayIndex + _defaultToastBottomMargin;
+    final horizontalPosition = overlayIndex > (_maxStackCount - 1) ? _reducedHorizontalMarginStep * (_maxStackCount - 1) + _defaultHorizontalMargin : _reducedHorizontalMarginStep * overlayIndex + _defaultHorizontalMargin;
+    print(bottomPosition);
+    return (bottom: bottomPosition, left: horizontalPosition, right: horizontalPosition);
   }
 
 //   /// Gets [OverlayManager] of nearest [Navigator].

@@ -1,13 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/pages/launch/splash/viewmodel/splash_viewmodel.dart';
-import 'package:dock_flutter_example/product/components/appbars/appbars.dart';
-import 'package:dock_flutter_example/product/enums/route_paths/route_paths.dart';
+import 'package:dock_flutter_example/product/product.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
 final class SplashView extends BaseView<SplashViewModel> {
-  SplashView({super.arguments}) : super(viewModel: SplashViewModel(), key: ValueKey<String>(RoutePaths.splash.path));
+  SplashView({super.arguments}) : super(viewModel: SplashViewModel(), key: const AutomationKey(Automation.splashView));
 
   @override
   StateBuilder build(BuildContext context) {
@@ -19,6 +18,7 @@ final class SplashView extends BaseView<SplashViewModel> {
 }
 
 class SplashViewOnSuccessWidget extends DockAccess<SplashViewModel> {
+  @visibleForTesting
   const SplashViewOnSuccessWidget({super.key});
 
   @override
