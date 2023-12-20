@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
 /// [BuildContext] EXTENSION
@@ -46,8 +47,8 @@ extension ContextExtension on BuildContext {
   /// Equivalent to MediaQuery.devicePixelRatioOf(context)
   double get devicePixelRatio => MediaQuery.devicePixelRatioOf(this);
 
-  /// Equivalent to MediaQuery.textScaleFactorOf(context)
-  double get textScaleFactor => MediaQuery.textScaleFactorOf(this);
+  /// Equivalent to MediaQuery.textScalerOf(context)
+  TextScaler get textScaler => MediaQuery.textScalerOf(this);
 
   /// Equivalent to MediaQuery.sizeOf(context).shortestSide
   double get mediaQueryShortestSide => mediaQuerySize.shortestSide;
@@ -63,6 +64,10 @@ extension ContextExtension on BuildContext {
 
   /// Checks if keyboard is open
   bool get isKeyboardOpen => FocusManager.instance.primaryFocus?.hasFocus ?? false || flutterView.viewInsets.bottom > 0.0;
+
+  // TODO(KorayLiman): This is experimental. Needs to be tested and also be considered if it's useful or not.
+  /// Rebuilds widget with given context in the next frame
+  void rebuildWidget() => Dock.safeMarkNeedsBuild(this as Element);
 
   /// Closes keyboard if open
   void closeKeyboard() {

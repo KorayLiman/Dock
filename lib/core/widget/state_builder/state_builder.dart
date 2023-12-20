@@ -1,11 +1,18 @@
-import 'package:dock_flutter/core/base/viewmodel/base_viewmodel.dart';
-import 'package:dock_flutter/product/extensions/extensions.dart';
-import 'package:dock_flutter/product/state/reactive/observer/observer.dart';
+import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
 /// A SMART AND EASY [Widget] FOR MANAGING [PageState]
-final class StateBuilder<T extends BaseViewModel> extends StatefulWidget {
-  const StateBuilder({required this.viewModel, required this.onSuccess, super.key, this.onEmpty, this.onError, this.onLoading, this.onOffline});
+class StateBuilder<T extends BaseViewModel> extends StatefulWidget {
+  const StateBuilder({
+    required this.viewModel,
+    required this.onSuccess,
+    super.key,
+    this.onEmpty,
+    this.onError,
+    this.onLoading,
+    this.onOffline,
+    this.refreshConfig,
+  });
 
   final T viewModel;
   final WidgetBuilder onSuccess;
@@ -13,6 +20,7 @@ final class StateBuilder<T extends BaseViewModel> extends StatefulWidget {
   final WidgetBuilder? onEmpty;
   final WidgetBuilder? onError;
   final WidgetBuilder? onOffline;
+  final RefreshConfig? refreshConfig;
 
   @override
   State<StateBuilder> createState() => _StateBuilderState<T>();

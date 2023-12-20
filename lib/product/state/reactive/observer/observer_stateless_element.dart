@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:dock_flutter/core/dock/dock_main.dart';
 import 'package:dock_flutter/product/state/reactive/notifier/notify_data.dart';
 import 'package:dock_flutter/product/state/reactive/observable/observable.dart';
 import 'package:dock_flutter/typedefs.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 /// A [StatelessElement] of Observer for updating it's [Widget]
 final class ObserverStatelessElement extends StatelessElement {
@@ -31,8 +31,7 @@ final class ObserverStatelessElement extends StatelessElement {
   /// Schedules widget to rebuilt in the next frame
   void updateElement() {
     if (_disposers != null) {
-      final schedulerPhase = SchedulerBinding.instance.schedulerPhase;
-      if (schedulerPhase == SchedulerPhase.idle || schedulerPhase == SchedulerPhase.postFrameCallbacks) {
+      if (Dock.isInSafeSchedulerPhase) {
         markNeedsBuild();
       } else {
         scheduleMicrotask(markNeedsBuild);

@@ -7,7 +7,7 @@ mixin StateBuilderMixin<T extends BaseViewModel> on State<StateBuilder> {
 
   /// Builds page according to [PageState]
   Widget builder(BuildContext context) {
-    return switch (widget.viewModel.pageState) {
+    final child = switch (widget.viewModel.pageState) {
       PageState.success => widget.onSuccess(context),
       PageState.loading => widget.onLoading != null
           ? widget.onLoading!(context)
@@ -60,6 +60,28 @@ mixin StateBuilderMixin<T extends BaseViewModel> on State<StateBuilder> {
                   ),
                 ),
     };
+
+    if (widget.refreshConfig.isNotNull) {
+      return RefreshIndicator(
+        onRefresh: () async {
+          await widget.refreshConfig!.onRefresh();
+          await Dock.safeMarkNeedsBuild(context as Element);
+        },
+        key: widget.refreshConfig!.key,
+        color: widget.refreshConfig!.color,
+        backgroundColor: widget.refreshConfig!.backgroundColor,
+        semanticsLabel: widget.refreshConfig!.semanticsLabel,
+        semanticsValue: widget.refreshConfig!.semanticsValue,
+        notificationPredicate: widget.refreshConfig!.notificationPredicate,
+        displacement: widget.refreshConfig!.displacement,
+        edgeOffset: widget.refreshConfig!.edgeOffset,
+        strokeWidth: widget.refreshConfig!.strokeWidth,
+        triggerMode: widget.refreshConfig!.triggerMode,
+        child: child,
+      );
+    } else {
+      return child;
+    }
   }
 
   /* BEGIN WIDGET LIFECYCLES

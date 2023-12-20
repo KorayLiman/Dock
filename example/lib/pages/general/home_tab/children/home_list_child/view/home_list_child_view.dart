@@ -13,6 +13,12 @@ final class HomeListChildView extends BaseView<HomeListChildViewModel> {
     return StateBuilder<HomeListChildViewModel>(
       viewModel: viewModel,
       onSuccess: (context) => HomeListChildOnSuccessWidget(viewModel: viewModel),
+      refreshConfig: RefreshConfig.pullToRefresh(
+        onRefresh: () async {
+          await 2.seconds.delay();
+        },
+        displacement: 80,
+      ),
     );
   }
 }
@@ -26,11 +32,16 @@ class HomeListChildOnSuccessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () => viewModel.navigateToSettings(context: context),
-          child: const Text('Navigate to settings'),
-        ),
+      appBar: const DefaultAppBar(
+        title: 'Home List Child',
+      ),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('Item $index'),
+          );
+        },
+        itemCount: 99,
       ),
     );
   }

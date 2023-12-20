@@ -10,6 +10,3 @@ typedef DockerUpdater = void Function();
 
 // DEPENDENCY INJECTION
 typedef InstanceBuilder<T extends Object> = T Function();
-
-// FRAME
-typedef FrameCallback = void Function(Duration timeStamp);
