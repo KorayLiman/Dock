@@ -59,10 +59,10 @@ extension ContextExtension on BuildContext {
   bool get isTablet => mediaQueryShortestSide >= 600;
 
   /// Equivalent to View.of(context)
-  FlutterView get view => View.of(this);
+  FlutterView get flutterView => View.of(this);
 
   /// Checks if keyboard is open
-  bool get isKeyboardOpen => FocusManager.instance.primaryFocus?.hasFocus ?? false || view.viewInsets.bottom > 0.0;
+  bool get isKeyboardOpen => FocusManager.instance.primaryFocus?.hasFocus ?? false || flutterView.viewInsets.bottom > 0.0;
 
   /// Closes keyboard if open
   void closeKeyboard() {

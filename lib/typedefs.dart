@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // STATE
 typedef Updater = void Function();
 typedef Disposer = void Function();
-typedef WidgetCallbackViaContext = Widget Function(BuildContext context);
 typedef ChangeGenericValue<T> = void Function(T object);
 typedef WidgetCallback = Widget Function();
 typedef DockerBuilderFn<T> = Widget Function(BuildContext context, T viewModel);

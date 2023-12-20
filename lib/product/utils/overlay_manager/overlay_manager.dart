@@ -2,34 +2,63 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
 typedef PositionedBuilder = Positioned Function(BuildContext context);
+typedef ToastPosition = ({double bottom, double left, double right});
+typedef ToastOverlayInfo = ({OverlayEntry entry, AnimationController controller});
 
 /// Advanced [OverlayManager] for showing toasts or custom overlays.
-final class OverlayManager {
+@immutable
+class OverlayManager {
   OverlayManager(this._key);
 
   /// [NavigatorState] key of desired [Navigator]
   final GlobalKey<NavigatorState> _key;
 
   /// Holds active overlays and controllers
-  static final _overlayRecordList = <({OverlayEntry entry, AnimationController controller})>[];
+  final _overlayInfoList = <ToastOverlayInfo>[];
 
   /// Max stackable toast count
-  static const double _maxStackCount = 3;
+  final _maxStackCount = 3;
 
   /// Gap between stacked toasts
-  static const double _gapBetween = 12;
+  final _gapBetween = 12.0;
 
-  /// Reduced horizontal margin step of stacked below toast
-  static const double _reducedHorizontalMarginStep = 8;
+  /// Reduced horizontal margin step of stacked toast below
+  final _reducedHorizontalMarginStep = 8.0;
 
   /// Default toast bottom margin
-  static const double _defaultToastBottomMargin = 40;
+  final _defaultToastBottomMargin = 40.0;
 
   /// Default toast horizontal margin
-  static const double _defaultHorizontalMargin = 10;
+  final _defaultHorizontalMargin = 10.0;
 
-  void showToast({Key? key, String? title, String? message, Widget? leading}) {
-    _presentOverlay(key: key, title: title, message: message, leading: leading);
+  /// Default toast duration
+  final _defaultToastDuration = const Duration(milliseconds: 2000);
+
+  /// Shows a highly customizable toast with animation
+  void showToast({
+    Key? key,
+    String? title,
+    String? message,
+    TextStyle? titleStyle,
+    TextStyle? messageStyle,
+    Color? backgroundColor,
+    Color? shadowColor,
+    Widget? leading,
+    Duration? toastDuration,
+    Widget? child,
+  }) {
+    _presentToast(
+      key: key,
+      title: title,
+      message: message,
+      leading: leading,
+      toastDuration: toastDuration,
+      child: child,
+      backgroundColor: backgroundColor,
+      messageStyle: messageStyle,
+      shadowColor: shadowColor,
+      titleStyle: titleStyle,
+    );
   }
 
   /// Shows custom [Overlay] with given [Widget]
@@ -72,25 +101,21 @@ final class OverlayManager {
     // });
   }
 
-  void _insertAndForward(AnimationController controller, OverlayEntry entry, OverlayState overlayState) {
-    final record = (entry: entry, controller: controller);
-    _overlayRecordList.insert(0, record);
-    overlayState.insert(entry);
-    controller.forward();
-  }
-
-  void _reverseAndRemove(AnimationController controller, OverlayEntry entry, OverlayState overlayState) {
-    final elementIndex = _overlayRecordList.indexOf((entry: entry, controller: controller));
-    final overlayRecord = _overlayRecordList[elementIndex];
-    overlayRecord.controller.reverse().then((_) {
-      overlayRecord.entry.remove();
-      overlayRecord.entry.dispose();
-      overlayRecord.controller.dispose();
-      _overlayRecordList.removeLast();
-    });
-  }
-
-  void _presentOverlay({Key? key, String? title, Widget? leading, String? message}) {
+  /// Inserts toast into overlay state entries list and schedules for removal after [toastDuration]
+  ///
+  /// This is the function actually shows the toast
+  void _presentToast({
+    Key? key,
+    String? title,
+    String? message,
+    TextStyle? titleStyle,
+    TextStyle? messageStyle,
+    Duration? toastDuration,
+    Widget? leading,
+    Widget? child,
+    Color? backgroundColor,
+    Color? shadowColor,
+  }) {
     final overlayState = _key.currentState?.overlay;
     assert(overlayState.isNotNull, 'Tried to show toast but overlayState was null. Key was :$_key');
 
@@ -104,6 +129,7 @@ final class OverlayManager {
     overlayEntry = OverlayEntry(
       builder: (context) {
         return DockToast(
+          key: key,
           controller: overlayEntryAnimController,
           position: _getToastPosition(overlayEntry, overlayEntryAnimController),
           leading: leading,
@@ -112,31 +138,53 @@ final class OverlayManager {
           onDismissed: (direction) {
             if (isPendingRemoval) {
               isPendingRemoval = false;
-              _overlayRecordList.remove((entry: overlayEntry!, controller: overlayEntryAnimController));
+              _overlayInfoList.remove((entry: overlayEntry!, controller: overlayEntryAnimController));
               overlayEntry
                 ..remove()
                 ..dispose();
               overlayEntryAnimController.dispose();
             }
           },
+          backgroundColor: backgroundColor,
+          shadowColor: shadowColor,
+          titleStyle: titleStyle,
+          messageStyle: messageStyle,
+          child: child,
         );
       },
     );
 
-    _insertAndForward(overlayEntryAnimController, overlayEntry, overlayState);
-    2.seconds.delay(() {
-      if (isPendingRemoval) {
-        _reverseAndRemove(overlayEntryAnimController, overlayEntry!, overlayState);
-      }
+    _insertToast(overlayEntryAnimController, overlayEntry, overlayState);
+    _scheduleToastForRemoval(toastDuration ?? _defaultToastDuration, overlayEntryAnimController, overlayEntry, overlayState);
+  }
+
+  /// Inserts toast into overlay entries and forwards the animation
+  void _insertToast(AnimationController controller, OverlayEntry entry, OverlayState overlayState) {
+    final overlayInfo = (entry: entry, controller: controller);
+    _overlayInfoList.insert(0, overlayInfo);
+    overlayState.insert(entry);
+    controller.forward();
+  }
+
+  /// Reverses the animation after [schedule] and removes toast when animation is completed
+  void _scheduleToastForRemoval(Duration schedule, AnimationController controller, OverlayEntry entry, OverlayState overlayState) {
+    schedule.delay(() {
+      final elementIndex = _overlayInfoList.indexOf((entry: entry, controller: controller));
+      final overlayInfo = _overlayInfoList[elementIndex];
+      overlayInfo.controller.reverse().then((_) {
+        overlayInfo.entry.remove();
+        overlayInfo.entry.dispose();
+        overlayInfo.controller.dispose();
+        _overlayInfoList.remove(overlayInfo);
+      });
     });
   }
 
-  ({double bottom, double left, double right}) _getToastPosition(OverlayEntry? overlayEntry, AnimationController controller) {
-    final overlayIndex = _overlayRecordList.indexOf((entry: overlayEntry!, controller: controller));
-
+  /// A function that returns a Dart [Record] that calculates position of the toast
+  ToastPosition _getToastPosition(OverlayEntry? overlayEntry, AnimationController controller) {
+    final overlayIndex = _overlayInfoList.indexOf((entry: overlayEntry!, controller: controller));
     final bottomPosition = overlayIndex > (_maxStackCount - 1) ? _gapBetween * (_maxStackCount - 1) + _defaultToastBottomMargin : _gapBetween * overlayIndex + _defaultToastBottomMargin;
     final horizontalPosition = overlayIndex > (_maxStackCount - 1) ? _reducedHorizontalMarginStep * (_maxStackCount - 1) + _defaultHorizontalMargin : _reducedHorizontalMarginStep * overlayIndex + _defaultHorizontalMargin;
-    print(bottomPosition);
     return (bottom: bottomPosition, left: horizontalPosition, right: horizontalPosition);
   }
 

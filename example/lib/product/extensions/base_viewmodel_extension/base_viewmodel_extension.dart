@@ -2,9 +2,9 @@ import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/core.dart';
 
 extension LoaderAndOverlayExtension on BaseViewModel {
-  PopupManager get rootPopupManager => PopupManager(rootRouter.navigatorKey);
+  PopupManager get rootPopupManager => Locator.find<PopupManager>();
 
-  OverlayManager get rootOverlayManager => OverlayManager(rootRouter.navigatorKey);
+  OverlayManager get rootOverlayManager => Locator.find<OverlayManager>();
 }
 
 extension NavigationExtension on BaseViewModel {
