@@ -33,10 +33,8 @@ mixin class _AppMixin {
     ];
   }
 
-  /// ScaffoldMessengerKey
+  /// ScaffoldMessengerStateKey
   GlobalKey<ScaffoldMessengerState> get scaffoldMessengerKey {
-    return Locator.register<GlobalKey<ScaffoldMessengerState>>(
-      GlobalKey<ScaffoldMessengerState>(),
-    );
+    return AppKeys.stateKeys.rootScaffoldMessengerStateKey;
   }
 }

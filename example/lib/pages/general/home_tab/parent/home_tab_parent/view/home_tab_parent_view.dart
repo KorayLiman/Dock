@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/navigation/app_router/app_router.gr.dart';
 import 'package:dock_flutter_example/pages/general/home_tab/parent/home_tab_parent/viewmodel/home_tab_parent_viewmodel.dart';
+import 'package:dock_flutter_example/product/keys/keys.dart';
 import 'package:dock_flutter_example/product/product.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +19,14 @@ final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
   }
 }
 
-class HomeTabParentOnSuccessWidget extends StatelessWidget {
+class HomeTabParentOnSuccessWidget extends DockAccess<HomeTabParentViewModel> {
   @visibleForTesting
   const HomeTabParentOnSuccessWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
+      key: AppKeys.stateKeys.homeTabRouterStateKey,
       routes: [
         HomeMainChildRoute(),
         HomeListChildRoute(),

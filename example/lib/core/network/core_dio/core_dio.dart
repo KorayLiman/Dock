@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/base/model/model.dart';
-import 'package:dock_flutter_example/core/navigation/app_router/app_router.dart';
 import 'package:dock_flutter_example/core/network/network.dart';
 import 'package:dock_flutter_example/product/enums/enums.dart';
+import 'package:dock_flutter_example/product/keys/keys.dart';
 import 'package:dock_flutter_example/product/mixin/mixin.dart';
 import 'package:dock_flutter_example/product/model/model.dart';
 import 'package:flutter/foundation.dart';
@@ -14,7 +14,7 @@ final class CoreDio with NetworkLoggerMixin {
 
   final Dio _dio;
 
-  PopupManager get _popupManager => PopupManager(AppRouter.find.navigatorKey);
+  PopupManager get _popupManager => Locator.find<PopupManager>();
 
   Future<BaseResponse<T>> primitiveRequest<T extends Object>({
     required RequestPath path,
@@ -33,11 +33,12 @@ final class CoreDio with NetworkLoggerMixin {
     Duration? sendTimeout,
   }) async {
     final loaderKey = UniqueKey();
+    final stopwatch = Stopwatch();
     try {
       if (showLoader) _popupManager.showLoader(id: loaderKey);
       if (kDebugMode) logRequestInfo(requestUrl: '${_dio.options.baseUrl}${path.path}', type: type, data: data, pathSuffix: pathSuffix, headers: headers, queryParameters: queryParameters);
       _dio.options = _dio.options.copyWith(connectTimeout: connectionTimeout, receiveTimeout: receiveTimeout, sendTimeout: sendTimeout);
-      final stopwatch = Stopwatch()..start();
+      stopwatch.start();
       final response = await _dio.request<T>(
         pathSuffix == null ? path.path : '${path.path}/$pathSuffix',
         queryParameters: queryParameters?.toJson(),
@@ -48,12 +49,17 @@ final class CoreDio with NetworkLoggerMixin {
           contentType: contentType,
         ),
       );
-      stopwatch.stop();
+      stopwatch
+        ..stop()
+        ..reset();
       final responseTimeMilliseconds = stopwatch.elapsedMilliseconds;
       final resp = _getPrimitiveSuccessResponse(response: response, requestUrl: '${_dio.options.baseUrl}${path.path}', responseTime: responseTimeMilliseconds);
       if (showSuccessResponseSnackBar) _showSuccessResponseSnackBar(messages: resp.messages);
       return resp;
     } catch (error) {
+      stopwatch
+        ..stop()
+        ..reset();
       if (showErrorResponseSnackBar) _showErrorResponseSnackBar(error: error);
       return _getPrimitiveErrorResponse(error: error, requestUrl: '${_dio.options.baseUrl}${path.path}');
     } finally {
@@ -79,11 +85,13 @@ final class CoreDio with NetworkLoggerMixin {
     Duration? sendTimeout,
   }) async {
     final loaderKey = UniqueKey();
+    final stopwatch = Stopwatch();
     try {
+      stopwatch.start();
       if (showLoader) _popupManager.showLoader(id: loaderKey);
       if (kDebugMode) logRequestInfo(requestUrl: '${_dio.options.baseUrl}${path.path}', type: type, data: data, pathSuffix: pathSuffix, headers: headers, queryParameters: queryParameters);
       _dio.options = _dio.options.copyWith(connectTimeout: connectionTimeout, receiveTimeout: receiveTimeout, sendTimeout: sendTimeout);
-      final stopwatch = Stopwatch()..start();
+
       final response = await _dio.request<Map<String, dynamic>>(
         pathSuffix == null ? path.path : '${path.path}$pathSuffix',
         queryParameters: queryParameters?.toJson(),
@@ -94,12 +102,17 @@ final class CoreDio with NetworkLoggerMixin {
           contentType: contentType,
         ),
       );
-      stopwatch.stop();
+      stopwatch
+        ..stop()
+        ..reset();
       final responseTimeMilliseconds = stopwatch.elapsedMilliseconds;
       final resp = _getSuccessResponse<T, M>(response: response, requestUrl: '${_dio.options.baseUrl}${path.path}', responseEntityModel: responseEntityModel, responseTime: responseTimeMilliseconds);
       if (showSuccessResponseSnackBar) _showSuccessResponseSnackBar(messages: resp.messages);
       return resp;
     } catch (error) {
+      stopwatch
+        ..stop()
+        ..reset();
       if (showErrorResponseSnackBar) _showErrorResponseSnackBar(error: error);
       return _getErrorResponse(error: error, requestUrl: '${_dio.options.baseUrl}${path.path}');
     } finally {
@@ -146,9 +159,9 @@ final class CoreDio with NetworkLoggerMixin {
   }
 
   void _showSuccessResponseSnackBar({required List<String>? messages}) {
-    final scaffoldMessengerState = Locator.find<GlobalKey<ScaffoldMessengerState>>().currentState;
-    assert(scaffoldMessengerState.isNotNull, 'Tried to get scaffoldMessengerState but found null');
-    scaffoldMessengerState!.showSnackBar(
+    final rootScaffoldMessengerState = AppKeys.stateKeys.rootScaffoldMessengerStateKey.currentState;
+    assert(rootScaffoldMessengerState.isNotNull, 'Tried to get scaffoldMessengerState but found null');
+    rootScaffoldMessengerState!.showSnackBar(
       SnackBar(
         backgroundColor: Colors.green,
         content: Column(
@@ -174,9 +187,9 @@ final class CoreDio with NetworkLoggerMixin {
   }
 
   void _showErrorResponseSnackBar({required Object error}) {
-    final scaffoldMessengerState = Locator.find<GlobalKey<ScaffoldMessengerState>>().currentState;
-    assert(scaffoldMessengerState.isNotNull, 'Tried to get scaffoldMessengerState but found null');
-    scaffoldMessengerState!.showSnackBar(
+    final rootScaffoldMessengerState = AppKeys.stateKeys.rootScaffoldMessengerStateKey.currentState;
+    assert(rootScaffoldMessengerState.isNotNull, 'Tried to get scaffoldMessengerState but found null');
+    rootScaffoldMessengerState!.showSnackBar(
       SnackBar(
         backgroundColor: Colors.red,
         content: Column(

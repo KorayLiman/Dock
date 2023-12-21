@@ -6,7 +6,7 @@ final class _TestViewModel extends BaseViewModel<_TestViewModel> {
   final order = <int>[];
 
   @override
-  void onInit(BuildContext element) {
+  void onInit() {
     Dock
       ..registerPostFrameCallback((timeStamp) {
         order.add(0);
@@ -14,7 +14,7 @@ final class _TestViewModel extends BaseViewModel<_TestViewModel> {
       ..registerNextFrameCallback((timeStamp) {
         order.add(1);
       });
-    super.onInit(element);
+    super.onInit();
   }
 }
 
@@ -38,7 +38,7 @@ final class _TestViewModel2 extends BaseViewModel<_TestViewModel2> {
   final order = <int>[];
 
   @override
-  void onInit(BuildContext element) {
+  void onInit() {
     Dock.registerPostFrameCallback((timeStamp) {
       order.add(0);
     });
@@ -47,7 +47,7 @@ final class _TestViewModel2 extends BaseViewModel<_TestViewModel2> {
     });
     Dock.cancelRegisteredFrameCallback(id);
 
-    super.onInit(element);
+    super.onInit();
   }
 }
 

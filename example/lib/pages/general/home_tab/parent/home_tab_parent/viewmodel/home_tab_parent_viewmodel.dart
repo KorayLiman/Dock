@@ -2,18 +2,13 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
 final class HomeTabParentViewModel extends BaseViewModel<HomeTabParentViewModel> with DockSingleTickerProviderMixin {
-  late final BuildContext _context;
   late final TabController tabController;
 
   @override
-  BuildContext get context => _context;
-
-  @override
-  void onInit(BuildContext element) {
-    _context = element;
+  void onInit() {
     tabController = TabController(length: 4, vsync: this);
     setPageState(PageState.loading);
-    super.onInit(element);
+    super.onInit();
   }
 
   @override

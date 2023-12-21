@@ -8,8 +8,6 @@ import 'package:flutter/scheduler.dart';
 base mixin DockSingleTickerProviderMixin<T extends BaseViewModel> on BaseViewModel<T> implements TickerProvider {
   Ticker? _ticker;
 
-  BuildContext get context;
-
   @override
   Ticker createTicker(TickerCallback onTick) {
     //ignore: prefer_asserts_with_message
@@ -69,7 +67,7 @@ base mixin DockSingleTickerProviderMixin<T extends BaseViewModel> on BaseViewMod
   }
 
   void _updateTickerModeNotifier() {
-    final newNotifier = TickerMode.getNotifier(context);
+    final newNotifier = TickerMode.getNotifier(stateBuilderContext);
     if (newNotifier == _tickerModeNotifier) {
       return;
     }

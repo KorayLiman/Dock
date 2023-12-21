@@ -91,7 +91,8 @@ mixin StateBuilderMixin<T extends BaseViewModel> on State<StateBuilder> {
   @override
   void initState() {
     widget.viewModel.markStateBuilderInitialized(widget);
-    widget.viewModel.onInit(context);
+    widget.viewModel.stateBuilderContext = context;
+    widget.viewModel.onInit();
     super.initState();
   }
 

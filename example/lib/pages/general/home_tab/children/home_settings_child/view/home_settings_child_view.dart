@@ -28,7 +28,7 @@ class HomeSettingsChildOnSuccessWidget extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: () => viewModel.navigateToMain(context: context),
+          onPressed: viewModel.navigateToMain,
           child: const Text('Navigate to main'),
         ),
       ),
