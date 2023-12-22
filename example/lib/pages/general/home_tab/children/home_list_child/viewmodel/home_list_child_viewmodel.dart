@@ -1,7 +1,7 @@
 import 'package:dock_flutter/dock.dart';
-import 'package:dock_flutter_example/pages/general/home_tab/extensions/home_tabs_router_extension.dart';
+import 'package:dock_flutter_example/pages/general/home_tab/mixin/home_tabs_router_mixin.dart';
 
-final class HomeListChildViewModel extends BaseViewModel<HomeListChildViewModel> {
+final class HomeListChildViewModel extends BaseViewModel with HomeTabsRouterMixin {
   void navigateToSettings() {
     homeTabsRouter.setActiveIndex(2);
   }

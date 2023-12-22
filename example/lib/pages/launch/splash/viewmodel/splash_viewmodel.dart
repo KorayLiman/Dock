@@ -2,7 +2,7 @@ import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/navigation/app_router/app_router.gr.dart';
 import 'package:dock_flutter_example/product/product.dart';
 
-final class SplashViewModel extends BaseViewModel<SplashViewModel> with ServiceMixin<SplashService> {
+final class SplashViewModel extends BaseViewModel with ServiceMixin<SplashService> {
   @override
   void onInit() {
     _registerDependencies();

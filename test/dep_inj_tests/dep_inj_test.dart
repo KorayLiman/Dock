@@ -1,11 +1,11 @@
 import 'package:dock_flutter/dock.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-final class _TestViewModel extends BaseViewModel<_TestViewModel> {}
+final class _TestViewModel extends BaseViewModel {}
 
-final class _TestViewModel2 extends BaseViewModel<_TestViewModel2> {}
+final class _TestViewModel2 extends BaseViewModel {}
 
-final class _TestViewModel3 extends BaseViewModel<_TestViewModel3> {}
+final class _TestViewModel3 extends BaseViewModel {}
 
 void main() {
   test(

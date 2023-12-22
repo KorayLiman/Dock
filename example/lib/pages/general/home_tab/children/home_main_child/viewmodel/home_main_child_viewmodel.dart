@@ -1,6 +1,6 @@
 import 'package:dock_flutter/dock.dart';
 
-final class HomeMainChildViewModel extends BaseViewModel<HomeMainChildViewModel> {
+final class HomeMainChildViewModel extends BaseViewModel {
   final count = 0.observable;
   final weight = 80.observable;
   int age = 26;

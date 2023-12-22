@@ -56,13 +56,13 @@ void main() {
   );
 }
 
-final class _TestViewModel extends BaseViewModel<_TestViewModel> {}
+final class _TestViewModel extends BaseViewModel {}
 
-final class _TestViewModel2 extends BaseViewModel<_TestViewModel2> {}
+final class _TestViewModel2 extends BaseViewModel {}
 
-final class _TestViewModel3 extends BaseViewModel<_TestViewModel3> {}
+final class _TestViewModel3 extends BaseViewModel {}
 
-final class _TestViewModel4 extends BaseViewModel<_TestViewModel4> {
+final class _TestViewModel4 extends BaseViewModel {
   @override
   void onInit() {
     setPageState(PageState.loading);

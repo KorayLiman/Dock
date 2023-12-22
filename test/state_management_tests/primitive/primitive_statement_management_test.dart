@@ -2,7 +2,7 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-final class _TestViewModel extends BaseViewModel<_TestViewModel> {
+final class _TestViewModel extends BaseViewModel {
   int counter = 0;
   int counter2 = 0;
 }

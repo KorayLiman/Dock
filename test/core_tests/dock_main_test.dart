@@ -2,7 +2,7 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-final class _TestViewModel extends BaseViewModel<_TestViewModel> {
+final class _TestViewModel extends BaseViewModel {
   final order = <int>[];
 
   @override
@@ -34,7 +34,7 @@ final class _TestView extends BaseView<_TestViewModel> {
   }
 }
 
-final class _TestViewModel2 extends BaseViewModel<_TestViewModel2> {
+final class _TestViewModel2 extends BaseViewModel {
   final order = <int>[];
 
   @override

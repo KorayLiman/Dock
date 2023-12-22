@@ -1,7 +1,7 @@
 import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
-final class HomeTabParentViewModel extends BaseViewModel<HomeTabParentViewModel> with DockSingleTickerProviderMixin {
+final class HomeTabParentViewModel extends BaseViewModel with DockSingleTickerProviderMixin {
   late final TabController tabController;
 
   @override

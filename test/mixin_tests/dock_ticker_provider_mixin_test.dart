@@ -4,7 +4,7 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-final class _TestViewModel extends BaseViewModel<_TestViewModel> with DockTickerProviderMixin {
+final class _TestViewModel extends BaseViewModel with DockTickerProviderMixin {
   late final AnimationController animationController;
   late final AnimationController rotationAnimationController;
 

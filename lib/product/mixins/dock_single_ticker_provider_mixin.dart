@@ -5,7 +5,7 @@ import 'package:flutter/scheduler.dart';
 
 /// FLUTTER'S DEFAULT [SingleTickerProviderStateMixin] SUITABLE FOR VIEWMODELS EXTEND FROM [BaseViewModel]
 @optionalTypeArgs
-base mixin DockSingleTickerProviderMixin<T extends BaseViewModel> on BaseViewModel<T> implements TickerProvider {
+base mixin DockSingleTickerProviderMixin on BaseViewModel implements TickerProvider {
   Ticker? _ticker;
 
   @override

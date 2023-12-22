@@ -23,7 +23,6 @@ class SplashViewOnSuccessWidget extends DockAccess<SplashViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    viewModel.onInit();
     return Scaffold(
       appBar: const DefaultAppBar(
         title: 'Splash',

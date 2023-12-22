@@ -18,7 +18,7 @@ enum PageState { success, loading, empty, error, offline }
 /// AIM OF THIS CLASS IS LEAVING UI THINGS TO VIEW AND PUTTING ALL THE METHODS HERE.
 ///
 /// YOU WILL HAVE FULL CONTROL OVER STATE OF VIEW
-abstract base class BaseViewModel<T extends Object> with _BaseViewModelMixin, _BaseViewModelStateMixin {
+abstract base class BaseViewModel with _BaseViewModelMixin, _BaseViewModelStateMixin {
   /// Called when View is created
   @mustCallSuper
   @protected
