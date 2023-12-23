@@ -26,7 +26,7 @@ class DockToast extends StatelessWidget with _DockToastDefaults {
   final TextStyle? messageStyle;
   final Widget? child;
   final Widget? leading;
-  final ({double bottom, double left, double right}) position;
+  final ToastPosition position;
   final Color? backgroundColor;
   final Color? shadowColor;
   final AnimationController controller;
