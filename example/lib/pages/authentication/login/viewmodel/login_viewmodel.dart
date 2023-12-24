@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 final class LoginViewModel extends BaseViewModel with ServiceMixin<LoginService> {
   Future<void> login() async {
-    final result = await service.login();
+    await service.login();
   }
 
   void showAndHideLoader() {
@@ -29,26 +29,6 @@ final class LoginViewModel extends BaseViewModel with ServiceMixin<LoginService>
       leading: const Icon(
         Icons.check_circle,
         color: Colors.white,
-      ),
-    );
-  }
-
-  void showCustomOverlay() {
-    rootOverlayManager.showOverlay(
-      positionedBuilder: (context) => const Positioned(
-        height: 120,
-        bottom: 40,
-        left: 40,
-        right: 40,
-        child: ColoredBox(
-          color: Colors.red,
-          child: Center(
-            child: Text(
-              'Custom Overlay',
-              style: TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -130,7 +130,7 @@ void main() {
   test(
     'Throw Conditional Test',
     () async {
-      expect(() => Dock.throwConditional(exception: Exception(), throwIf: true), throwsException);
+      expect(() => Dock.throwConditionalException(exception: Exception(), throwIf: true), throwsException);
     },
   );
 }

@@ -29,13 +29,6 @@ class LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         FloatingActionButton.extended(
-          heroTag: '0',
-          onPressed: viewModel.showCustomOverlay,
-          label: const Text('Show custom overlay'),
-          icon: const Icon(Icons.info_outline),
-        ),
-        const Blank(12),
-        FloatingActionButton.extended(
           heroTag: '1',
           onPressed: viewModel.showToast,
           label: const Text('Show toast'),

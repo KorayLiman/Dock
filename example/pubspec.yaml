@@ -4,7 +4,7 @@ description: Demonstrates how to use the dock plugin.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: '>=3.1.3 <4.0.0'
+  sdk: '>=3.2.0 <4.0.0'
 
 
 dependencies:

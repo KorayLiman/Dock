@@ -35,8 +35,13 @@ final class _Dock extends DockBase {
   }
 
   /// Throws [exception] if given condition [throwIf] is satisfied
-  void throwConditional({required Exception exception, required bool throwIf}) {
+  void throwConditionalException({required Exception exception, required bool throwIf}) {
     if (throwIf) throw exception;
+  }
+
+  /// Throws [error] if given condition [throwIf] is satisfied
+  void throwConditionalError({required Error error, required bool throwIf}) {
+    if (throwIf) throw error;
   }
 
   /// Checks if the current phase of the scheduler is safe
@@ -60,8 +65,9 @@ final class _Dock extends DockBase {
   /// without throwing "setState() or markNeedsBuild() called during build" error
   ///
   /// Checks also if the [element] is mounted
-  Future<void> safeMarkNeedsBuild(Element element) async {
-    await waitUntilEndOfFrame();
-    if (element.mounted) element.markNeedsBuild();
+  void safeMarkNeedsBuild(Element element) {
+    waitUntilEndOfFrame().then((value) {
+      if (element.mounted) element.markNeedsBuild();
+    });
   }
 }

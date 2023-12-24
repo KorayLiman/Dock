@@ -5,7 +5,7 @@ repository: https://github.com/KorayLiman/Dock
 issue_tracker: https://github.com/KorayLiman/Dock/issues
 
 environment:
-  sdk: '>=3.1.3 <4.0.0'
+  sdk: '>=3.2.0 <4.0.0'
   flutter: '>=3.3.0'
 
 dependencies:

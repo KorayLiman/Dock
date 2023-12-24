@@ -6,7 +6,7 @@ typedef ToastPositionRecord = ({double? top, double? bottom, double? left, doubl
 /// A pretty animated toast widget
 class DockToast extends StatelessWidget {
   const DockToast({
-    required this.controller,
+    required this.slideAnimationController,
     required this.message,
     required this.onDismissed,
     required this.toastPosition,
@@ -14,6 +14,8 @@ class DockToast extends StatelessWidget {
     this.title,
     this.titleStyle,
     this.messageStyle,
+    this.messageMaxLines,
+    this.dismissDirection,
     this.child,
     this.leading,
     this.backgroundColor,
@@ -24,11 +26,13 @@ class DockToast extends StatelessWidget {
   final String? message;
   final TextStyle? titleStyle;
   final TextStyle? messageStyle;
+  final int? messageMaxLines;
+  final DismissDirection? dismissDirection;
   final Widget? child;
   final Widget? leading;
   final Color? backgroundColor;
   final Color? shadowColor;
-  final AnimationController controller;
+  final AnimationController slideAnimationController;
   final ToastPosition toastPosition;
   final ValueChanged<DismissDirection> onDismissed;
 
@@ -86,10 +90,11 @@ class DockToast extends StatelessWidget {
       left: position.left,
       top: position.top,
       child: AnimatedBuilder(
-        animation: controller,
+        animation: slideAnimationController,
         builder: (context, _) {
           return Dismissible(
             key: UniqueKey(),
+            direction: dismissDirection ?? DismissDirection.horizontal,
             onDismissed: onDismissed,
             child: Material(
               color: Colors.transparent,
@@ -99,7 +104,7 @@ class DockToast extends StatelessWidget {
                   end: _toastEndOffset,
                 ).animate(
                   CurvedAnimation(
-                    parent: controller,
+                    parent: slideAnimationController,
                     curve: _forwardAnimCurve,
                     reverseCurve: _reverseAnimCurve,
                   ),
@@ -133,6 +138,7 @@ class DockToast extends StatelessWidget {
                           if (title.isNotNull || message.isNotNull)
                             Expanded(
                               child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   if (title.isNotNull)
@@ -144,6 +150,8 @@ class DockToast extends StatelessWidget {
                                     Text(
                                       message!,
                                       style: messageStyle ?? _defaultMessageStyle,
+                                      maxLines: messageMaxLines,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                 ],
                               ),
