@@ -1,5 +1,4 @@
 import 'package:dock_flutter/core/base/dock_base/dock_base.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -58,7 +57,7 @@ final class _Dock extends DockBase {
 
   /// Waits until the end of the current frame
   Future<void> waitUntilEndOfFrame() async {
-    if (isInSafeSchedulerPhase) return SynchronousFuture<void>(null);
+    if (isInSafeSchedulerPhase) return;
     await SchedulerBinding.instance.endOfFrame;
   }
 
