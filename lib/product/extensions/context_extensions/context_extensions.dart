@@ -30,10 +30,10 @@ extension ContextExtension on BuildContext {
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 
   /// Equivalent to MediaQuery.viewPaddingOf(context)
-  EdgeInsets get mediaQueryViewPadding => MediaQuery.viewPaddingOf(this);
+  EdgeInsets get viewPadding => MediaQuery.viewPaddingOf(this);
 
   /// Equivalent to MediaQuery.viewInsetsOf(context)
-  EdgeInsets get mediaQueryViewInsets => MediaQuery.viewInsetsOf(this);
+  EdgeInsets get viewInsets => MediaQuery.viewInsetsOf(this);
 
   /// Equivalent to MediaQuery.orientationOf(context)
   Orientation get orientation => MediaQuery.orientationOf(this);

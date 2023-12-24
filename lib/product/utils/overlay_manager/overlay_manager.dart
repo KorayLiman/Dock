@@ -2,8 +2,12 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
 typedef PositionedBuilder = Positioned Function(BuildContext context);
-typedef ToastPosition = ({double bottom, double left, double right});
 typedef ToastOverlayInfo = ({OverlayEntry entry, AnimationController controller});
+
+enum ToastPosition {
+  top,
+  bottom,
+}
 
 /// Advanced [OverlayManager] for showing toasts or custom overlays.
 @immutable
@@ -16,21 +20,6 @@ class OverlayManager {
   /// Holds active overlays and controllers
   final _overlayInfoList = <ToastOverlayInfo>[];
 
-  /// Max stackable toast count
-  final _maxStackCount = 3;
-
-  /// Gap between stacked toasts
-  final _gapBetween = 12.0;
-
-  /// Reduced horizontal margin step of stacked toast below
-  final _reducedHorizontalMarginStep = 8.0;
-
-  /// Default toast bottom margin
-  final _defaultToastBottomMargin = 40.0;
-
-  /// Default toast horizontal margin
-  final _defaultHorizontalMargin = 10.0;
-
   /// Default toast duration
   final _defaultToastDuration = const Duration(milliseconds: 2000);
 
@@ -41,6 +30,7 @@ class OverlayManager {
     String? message,
     TextStyle? titleStyle,
     TextStyle? messageStyle,
+    ToastPosition toastPosition = ToastPosition.bottom,
     Color? backgroundColor,
     Color? shadowColor,
     Widget? leading,
@@ -53,6 +43,7 @@ class OverlayManager {
       message: message,
       leading: leading,
       toastDuration: toastDuration,
+      toastPosition: toastPosition,
       child: child,
       backgroundColor: backgroundColor,
       messageStyle: messageStyle,
@@ -105,6 +96,7 @@ class OverlayManager {
   ///
   /// This is the function actually shows the toast
   void _presentToast({
+    required ToastPosition toastPosition,
     Key? key,
     String? title,
     String? message,
@@ -124,21 +116,21 @@ class OverlayManager {
       duration: 500.milliseconds,
       reverseDuration: 500.milliseconds,
     );
-    late final OverlayEntry? overlayEntry;
+    late final OverlayEntry overlayEntry;
     var isPendingRemoval = true;
     overlayEntry = OverlayEntry(
       builder: (context) {
         return DockToast(
           key: key,
           controller: overlayEntryAnimController,
-          position: _getToastPosition(overlayEntry, overlayEntryAnimController),
+          toastPosition: toastPosition,
           leading: leading,
           title: title,
           message: message,
           onDismissed: (direction) {
             if (isPendingRemoval) {
               isPendingRemoval = false;
-              _overlayInfoList.remove((entry: overlayEntry!, controller: overlayEntryAnimController));
+              _overlayInfoList.remove((entry: overlayEntry, controller: overlayEntryAnimController));
               overlayEntry
                 ..remove()
                 ..dispose();
@@ -178,14 +170,6 @@ class OverlayManager {
         _overlayInfoList.remove(overlayInfo);
       });
     });
-  }
-
-  /// A function that returns a Dart [Record] that calculates position of the toast
-  ToastPosition _getToastPosition(OverlayEntry? overlayEntry, AnimationController controller) {
-    final overlayIndex = _overlayInfoList.indexOf((entry: overlayEntry!, controller: controller));
-    final bottomPosition = overlayIndex > (_maxStackCount - 1) ? _gapBetween * (_maxStackCount - 1) + _defaultToastBottomMargin : _gapBetween * overlayIndex + _defaultToastBottomMargin;
-    final horizontalPosition = overlayIndex > (_maxStackCount - 1) ? _reducedHorizontalMarginStep * (_maxStackCount - 1) + _defaultHorizontalMargin : _reducedHorizontalMarginStep * overlayIndex + _defaultHorizontalMargin;
-    return (bottom: bottomPosition, left: horizontalPosition, right: horizontalPosition);
   }
 
 //   /// Gets [OverlayManager] of nearest [Navigator].

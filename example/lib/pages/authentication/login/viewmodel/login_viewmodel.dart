@@ -18,7 +18,19 @@ final class LoginViewModel extends BaseViewModel with ServiceMixin<LoginService>
   }
 
   void showToast() {
-    rootOverlayManager.showToast(message: 'Example toast' * 10, title: 'Hata');
+    rootOverlayManager.showToast(
+      message: 'İşlem başarılı bir şekilde gerçekleşti 🥂!',
+      messageStyle: const TextStyle(
+        color: Colors.white,
+        fontSize: 14,
+      ),
+      backgroundColor: Colors.green,
+      shadowColor: Colors.green.shade500,
+      leading: const Icon(
+        Icons.check_circle,
+        color: Colors.white,
+      ),
+    );
   }
 
   void showCustomOverlay() {
