@@ -1,40 +1,24 @@
+import 'dart:async';
+
+import 'package:auto_route/auto_route.dart';
 import 'package:dock_flutter/dock.dart';
-import 'package:dock_flutter_example/core/navigation/app_router/app_router.dart';
-import 'package:dock_flutter_example/core/navigation/navigation_observer/navigation_observer.dart';
-import 'package:dock_flutter_example/product/constants/app_constants/app_constants.dart';
+import 'package:dock_flutter_example/core/navigation/navigation.dart';
+import 'package:dock_flutter_example/product/constants/constants.dart';
+import 'package:dock_flutter_example/product/keys/keys.dart';
 import 'package:flutter/material.dart';
 
+part 'app/app.dart';
+part 'app/configuration.dart';
+part 'app/mixin.dart';
+
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final appRouter = Locator.isRegistered<AppRouter>()
-        ? Locator.find<AppRouter>()
-        : Locator.register<AppRouter>(
-            AppRouter.create(),
-          );
-
-    return MaterialApp.router(
-      routerConfig: appRouter.config(
-        navigatorObservers: () => [
-          if (Locator.isRegistered<CustomNavigationObserver>())
-            Locator.find<CustomNavigationObserver>()
-          else
-            Locator.register<CustomNavigationObserver>(
-              CustomNavigationObserver(),
-            ),
-        ],
-      ),
-      theme: AppConstants.themeConstants.material3,
-      scaffoldMessengerKey: Locator.register<GlobalKey<ScaffoldMessengerState>>(
-        GlobalKey<ScaffoldMessengerState>(),
-      ),
-    );
-  }
+  runZonedGuarded(
+    () {
+      preConfigure();
+      runApp(const DockApp());
+    },
+    (error, stack) {
+      // Report to Crashlytics
+    },
+  );
 }

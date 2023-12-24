@@ -5,10 +5,8 @@ import 'package:flutter/scheduler.dart';
 
 /// FLUTTER'S DEFAULT [TickerProviderStateMixin] SUITABLE FOR VIEWMODEL'S EXTEND FROM [BaseViewModel]
 @optionalTypeArgs
-base mixin DockTickerProviderMixin<T extends BaseViewModel> on BaseViewModel<T> implements TickerProvider {
+base mixin DockTickerProviderMixin on BaseViewModel implements TickerProvider {
   Set<Ticker>? _tickers;
-
-  BuildContext get context;
 
   @override
   Ticker createTicker(TickerCallback onTick) {
@@ -41,7 +39,7 @@ base mixin DockTickerProviderMixin<T extends BaseViewModel> on BaseViewModel<T> 
   }
 
   void _updateTickerModeNotifier() {
-    final newNotifier = TickerMode.getNotifier(context);
+    final newNotifier = TickerMode.getNotifier(stateBuilderContext);
     if (newNotifier == _tickerModeNotifier) {
       return;
     }

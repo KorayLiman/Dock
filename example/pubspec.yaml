@@ -21,6 +21,7 @@ dependencies:
   envied: ^0.5.2
   json_serializable: ^6.7.1
   json_annotation: ^4.8.1
+  meta: ^1.9.1
 
 
 dev_dependencies:

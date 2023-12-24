@@ -1,9 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:dock_flutter/dock.dart';
-import 'package:flutter/material.dart';
+import 'package:dock_flutter_example/pages/general/home_tab/mixin/home_tabs_router_mixin.dart';
 
-final class HomeSettingsChildViewModel extends BaseViewModel<HomeSettingsChildViewModel> {
-  void navigateToMain({required BuildContext context}) {
-    AutoTabsRouter.of(context).setActiveIndex(0);
+final class HomeSettingsChildViewModel extends BaseViewModel with HomeTabsRouterMixin {
+  void navigateToMain() {
+    homeTabsRouter.setActiveIndex(0);
   }
 }

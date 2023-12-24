@@ -35,7 +35,7 @@ void main() {
       await tester.tap(find.text('pop'));
       await tester.pumpAndSettle();
       expect(Locator.tryFind<_TestViewModel3>(), isNull);
-      expect(() => _TestViewModel2().onInit(StatelessElement(const _DummyStatelessWidget())), throwsAssertionError);
+      expect(() => _TestViewModel2().onInit(), throwsAssertionError);
 
       await tester.pumpWidget(
         MaterialApp(
@@ -56,17 +56,17 @@ void main() {
   );
 }
 
-final class _TestViewModel extends BaseViewModel<_TestViewModel> {}
+final class _TestViewModel extends BaseViewModel {}
 
-final class _TestViewModel2 extends BaseViewModel<_TestViewModel2> {}
+final class _TestViewModel2 extends BaseViewModel {}
 
-final class _TestViewModel3 extends BaseViewModel<_TestViewModel3> {}
+final class _TestViewModel3 extends BaseViewModel {}
 
-final class _TestViewModel4 extends BaseViewModel<_TestViewModel4> {
+final class _TestViewModel4 extends BaseViewModel {
   @override
-  void onInit(BuildContext element) {
+  void onInit() {
     setPageState(PageState.loading);
-    super.onInit(element);
+    super.onInit();
   }
 }
 
@@ -106,15 +106,6 @@ class _Body extends DockAccess<_TestViewModel> {
         ),
       ],
     );
-  }
-}
-
-class _DummyStatelessWidget extends StatelessWidget {
-  const _DummyStatelessWidget();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
 

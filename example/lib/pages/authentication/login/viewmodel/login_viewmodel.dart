@@ -3,22 +3,34 @@ import 'package:dock_flutter_example/core/navigation/app_router/app_router.gr.da
 import 'package:dock_flutter_example/product/product.dart';
 import 'package:flutter/material.dart';
 
-final class LoginViewModel extends BaseViewModel<LoginViewModel> with ServiceMixin<LoginService> {
+final class LoginViewModel extends BaseViewModel with ServiceMixin<LoginService> {
   Future<void> login() async {
     final result = await service.login();
   }
 
   void showAndHideLoader() {
-    rootLoaderManager.show();
-    2.seconds.delay(rootLoaderManager.hide);
+    rootPopupManager.showLoader();
+    2.seconds.delay(rootPopupManager.hideLoader);
   }
 
   Future<void> goToHomePage() async {
     await rootRouter.push(HomeTabParentRoute());
   }
 
-  void showDefaultToast() {
-    rootOverlayManager.showToast('Default toast, ' * 10);
+  void showToast() {
+    rootOverlayManager.showToast(
+      message: 'İşlem başarılı bir şekilde gerçekleşti 🥂!',
+      messageStyle: const TextStyle(
+        color: Colors.white,
+        fontSize: 14,
+      ),
+      backgroundColor: Colors.green,
+      shadowColor: Colors.green.shade500,
+      leading: const Icon(
+        Icons.check_circle,
+        color: Colors.white,
+      ),
+    );
   }
 
   void showCustomOverlay() {

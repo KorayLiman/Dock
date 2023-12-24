@@ -2,19 +2,16 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-final class _TestViewModel extends BaseViewModel<_TestViewModel> with DockSingleTickerProviderMixin {
-  late BuildContext _element;
+final class _TestViewModel extends BaseViewModel with DockSingleTickerProviderMixin {
   late final AnimationController animationController;
   late final Animation<double> tweenAnimation;
 
   @override
-  void onInit(BuildContext element) {
-    _element = element;
-
+  void onInit() {
     animationController = AnimationController(vsync: this, duration: 3.seconds);
     tweenAnimation = Tween<double>(begin: 10, end: 100).animate(animationController);
 
-    super.onInit(element);
+    super.onInit();
   }
 
   @override
@@ -22,9 +19,6 @@ final class _TestViewModel extends BaseViewModel<_TestViewModel> with DockSingle
     animationController.forward(from: 0);
     super.onNextFrame(timeStamp);
   }
-
-  @override
-  BuildContext get context => _element;
 }
 
 void main() {

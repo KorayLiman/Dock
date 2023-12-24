@@ -20,7 +20,7 @@ final class AutoResizeText extends StatelessWidget {
     this.textAlign,
     this.textDirection,
     this.textHeightBehavior,
-    this.textScaleFactor,
+    this.textScaler,
     this.textWidthBasis,
   });
 
@@ -43,7 +43,7 @@ final class AutoResizeText extends StatelessWidget {
   final TextAlign? textAlign;
   final TextDirection? textDirection;
   final TextHeightBehavior? textHeightBehavior;
-  final double? textScaleFactor;
+  final TextScaler? textScaler;
   final TextWidthBasis? textWidthBasis;
 
   @visibleForTesting
@@ -74,9 +74,14 @@ final class AutoResizeText extends StatelessWidget {
     required BoxConstraints constraints,
     required DefaultTextStyle defaultStyle,
     required TextStyle currentStyle,
-    required double defaultTextScaleFactor,
+    required TextScaler defaultTextScaler,
   }) {
-    if (_checkIfFits(currentStyle: currentStyle, defaultStyle: defaultStyle, defaultTextScaleFactor: defaultTextScaleFactor, constraints: constraints)) {
+    if (_checkIfFits(
+      currentStyle: currentStyle,
+      defaultStyle: defaultStyle,
+      defaultTextScaler: defaultTextScaler,
+      constraints: constraints,
+    )) {
       return (fontSize: currentStyle.fontSize!, iterationCount: 0);
     } else {
       var iterationCount = 0;
@@ -92,7 +97,12 @@ final class AutoResizeText extends StatelessWidget {
         iterationCount++;
         current = (max + min) / 2;
         currentStyle = currentStyle.copyWith(fontSize: current);
-        if (!_checkIfFits(currentStyle: currentStyle, defaultTextScaleFactor: defaultTextScaleFactor, defaultStyle: defaultStyle, constraints: constraints)) {
+        if (!_checkIfFits(
+          currentStyle: currentStyle,
+          defaultTextScaler: defaultTextScaler,
+          defaultStyle: defaultStyle,
+          constraints: constraints,
+        )) {
           max = current;
         } else {
           min = current;
@@ -103,7 +113,12 @@ final class AutoResizeText extends StatelessWidget {
   }
 
   /// Checks if text fits with given style
-  bool _checkIfFits({required TextStyle currentStyle, required DefaultTextStyle defaultStyle, required double defaultTextScaleFactor, required BoxConstraints constraints}) {
+  bool _checkIfFits({
+    required TextStyle currentStyle,
+    required DefaultTextStyle defaultStyle,
+    required TextScaler defaultTextScaler,
+    required BoxConstraints constraints,
+  }) {
     final textPainter = TextPainter(
       text: TextSpan(
         text: data,
@@ -115,7 +130,7 @@ final class AutoResizeText extends StatelessWidget {
       textHeightBehavior: textHeightBehavior ?? defaultStyle.textHeightBehavior,
       textDirection: textDirection ?? TextDirection.ltr,
       strutStyle: strutStyle,
-      textScaleFactor: textScaleFactor ?? defaultTextScaleFactor,
+      textScaler: textScaler ?? defaultTextScaler,
       maxLines: maxLines ?? defaultStyle.maxLines,
       textAlign: textAlign ?? defaultStyle.textAlign ?? TextAlign.start,
     )..layout(maxWidth: constraints.maxWidth);
@@ -154,7 +169,7 @@ final class AutoResizeText extends StatelessWidget {
             constraints: constraints,
             defaultStyle: defaultStyle,
             currentStyle: currentStyle,
-            defaultTextScaleFactor: MediaQuery.textScaleFactorOf(context),
+            defaultTextScaler: MediaQuery.textScalerOf(context),
           );
           currentStyle = currentStyle.copyWith(fontSize: result.fontSize);
           if (stopwatch.isNotNull) {
@@ -179,7 +194,7 @@ final class AutoResizeText extends StatelessWidget {
           strutStyle: strutStyle,
           textDirection: textDirection,
           textHeightBehavior: textHeightBehavior,
-          textScaleFactor: textScaleFactor,
+          textScaler: textScaler,
           textWidthBasis: textWidthBasis,
         );
       },

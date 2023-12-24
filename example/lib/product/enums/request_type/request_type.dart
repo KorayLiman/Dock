@@ -1,6 +1,10 @@
 enum RequestType {
-  get,
-  post,
-  delete,
-  put,
+  get('GET'),
+  post('POST'),
+  delete('PUT'),
+  put('DELETE');
+
+  const RequestType(this.type);
+
+  final String type;
 }

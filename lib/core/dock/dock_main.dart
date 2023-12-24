@@ -1,5 +1,6 @@
 import 'package:dock_flutter/core/base/dock_base/dock_base.dart';
-import 'package:dock_flutter/typedefs.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 /// GLOBAL INSTANCE OF [_Dock] CLASS
 // ignore: non_constant_identifier_names
@@ -36,5 +37,31 @@ final class _Dock extends DockBase {
   /// Throws [exception] if given condition [throwIf] is satisfied
   void throwConditional({required Exception exception, required bool throwIf}) {
     if (throwIf) throw exception;
+  }
+
+  /// Checks if the current phase of the scheduler is safe
+  ///
+  /// Means that if the scheduler is idle or in post frame callbacks
+  /// it's safe to rebuild widgets
+  ///
+  /// This is a precaution to "setState() or markNeedsBuild() called during build" error
+  bool get isInSafeSchedulerPhase {
+    final schedulerPhase = SchedulerBinding.instance.schedulerPhase;
+    return schedulerPhase == SchedulerPhase.idle || schedulerPhase == SchedulerPhase.postFrameCallbacks;
+  }
+
+  /// Waits until the end of the current frame
+  Future<void> waitUntilEndOfFrame() async {
+    if (isInSafeSchedulerPhase) return;
+    await SchedulerBinding.instance.endOfFrame;
+  }
+
+  /// Marks given [element] as needing to build in the next frame
+  /// without throwing "setState() or markNeedsBuild() called during build" error
+  ///
+  /// Checks also if the [element] is mounted
+  Future<void> safeMarkNeedsBuild(Element element) async {
+    await waitUntilEndOfFrame();
+    if (element.mounted) element.markNeedsBuild();
   }
 }

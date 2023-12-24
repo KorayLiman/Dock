@@ -21,7 +21,6 @@ import 'package:dock_flutter_example/pages/general/home_tab/parent/home_tab_pare
     as _i4;
 import 'package:dock_flutter_example/pages/launch/splash/view/splash_view.dart'
     as _i6;
-import 'package:flutter/material.dart' as _i8;
 
 abstract class $AppRouter extends _i7.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -33,10 +32,7 @@ abstract class $AppRouter extends _i7.RootStackRouter {
           orElse: () => const HomeListChildRouteArgs());
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i1.HomeListChildView(
-          arguments: args.arguments,
-          key: args.key,
-        ),
+        child: _i1.HomeListChildView(arguments: args.arguments),
       );
     },
     HomeMainChildRoute.name: (routeData) {
@@ -44,10 +40,7 @@ abstract class $AppRouter extends _i7.RootStackRouter {
           orElse: () => const HomeMainChildRouteArgs());
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.HomeMainChildView(
-          arguments: args.arguments,
-          key: args.key,
-        ),
+        child: _i2.HomeMainChildView(arguments: args.arguments),
       );
     },
     HomeSettingsChildRoute.name: (routeData) {
@@ -55,10 +48,7 @@ abstract class $AppRouter extends _i7.RootStackRouter {
           orElse: () => const HomeSettingsChildRouteArgs());
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.HomeSettingsChildView(
-          arguments: args.arguments,
-          key: args.key,
-        ),
+        child: _i3.HomeSettingsChildView(arguments: args.arguments),
       );
     },
     HomeTabParentRoute.name: (routeData) {
@@ -93,14 +83,10 @@ abstract class $AppRouter extends _i7.RootStackRouter {
 class HomeListChildRoute extends _i7.PageRouteInfo<HomeListChildRouteArgs> {
   HomeListChildRoute({
     dynamic arguments,
-    _i8.Key? key,
     List<_i7.PageRouteInfo>? children,
   }) : super(
           HomeListChildRoute.name,
-          args: HomeListChildRouteArgs(
-            arguments: arguments,
-            key: key,
-          ),
+          args: HomeListChildRouteArgs(arguments: arguments),
           initialChildren: children,
         );
 
@@ -111,18 +97,13 @@ class HomeListChildRoute extends _i7.PageRouteInfo<HomeListChildRouteArgs> {
 }
 
 class HomeListChildRouteArgs {
-  const HomeListChildRouteArgs({
-    this.arguments,
-    this.key,
-  });
+  const HomeListChildRouteArgs({this.arguments});
 
   final dynamic arguments;
 
-  final _i8.Key? key;
-
   @override
   String toString() {
-    return 'HomeListChildRouteArgs{arguments: $arguments, key: $key}';
+    return 'HomeListChildRouteArgs{arguments: $arguments}';
   }
 }
 
@@ -131,14 +112,10 @@ class HomeListChildRouteArgs {
 class HomeMainChildRoute extends _i7.PageRouteInfo<HomeMainChildRouteArgs> {
   HomeMainChildRoute({
     dynamic arguments,
-    _i8.Key? key,
     List<_i7.PageRouteInfo>? children,
   }) : super(
           HomeMainChildRoute.name,
-          args: HomeMainChildRouteArgs(
-            arguments: arguments,
-            key: key,
-          ),
+          args: HomeMainChildRouteArgs(arguments: arguments),
           initialChildren: children,
         );
 
@@ -149,18 +126,13 @@ class HomeMainChildRoute extends _i7.PageRouteInfo<HomeMainChildRouteArgs> {
 }
 
 class HomeMainChildRouteArgs {
-  const HomeMainChildRouteArgs({
-    this.arguments,
-    this.key,
-  });
+  const HomeMainChildRouteArgs({this.arguments});
 
   final dynamic arguments;
 
-  final _i8.Key? key;
-
   @override
   String toString() {
-    return 'HomeMainChildRouteArgs{arguments: $arguments, key: $key}';
+    return 'HomeMainChildRouteArgs{arguments: $arguments}';
   }
 }
 
@@ -170,14 +142,10 @@ class HomeSettingsChildRoute
     extends _i7.PageRouteInfo<HomeSettingsChildRouteArgs> {
   HomeSettingsChildRoute({
     dynamic arguments,
-    _i8.Key? key,
     List<_i7.PageRouteInfo>? children,
   }) : super(
           HomeSettingsChildRoute.name,
-          args: HomeSettingsChildRouteArgs(
-            arguments: arguments,
-            key: key,
-          ),
+          args: HomeSettingsChildRouteArgs(arguments: arguments),
           initialChildren: children,
         );
 
@@ -188,18 +156,13 @@ class HomeSettingsChildRoute
 }
 
 class HomeSettingsChildRouteArgs {
-  const HomeSettingsChildRouteArgs({
-    this.arguments,
-    this.key,
-  });
+  const HomeSettingsChildRouteArgs({this.arguments});
 
   final dynamic arguments;
 
-  final _i8.Key? key;
-
   @override
   String toString() {
-    return 'HomeSettingsChildRouteArgs{arguments: $arguments, key: $key}';
+    return 'HomeSettingsChildRouteArgs{arguments: $arguments}';
   }
 }
 

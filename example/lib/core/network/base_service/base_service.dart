@@ -45,7 +45,6 @@ abstract base class BaseService {
       showLoader: showLoader,
       showErrorResponseSnackBar: showErrorResponseSnackBar,
       showSuccessResponseSnackBar: showSuccessResponseSnackBar,
-      headers: _generateHeaders(path: path),
     );
 
     return response;
@@ -80,13 +79,7 @@ abstract base class BaseService {
       showLoader: showLoader,
       showErrorResponseSnackBar: showErrorResponseSnackBar,
       showSuccessResponseSnackBar: showSuccessResponseSnackBar,
-      headers: _generateHeaders(path: path),
     );
     return response;
-  }
-
-  Map<String, dynamic> _generateHeaders({required RequestPath path}) {
-    // Generate header here i.e Bearer Token
-    return {};
   }
 }

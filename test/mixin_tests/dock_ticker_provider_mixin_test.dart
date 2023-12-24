@@ -4,8 +4,7 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-final class _TestViewModel extends BaseViewModel<_TestViewModel> with DockTickerProviderMixin {
-  late BuildContext _element;
+final class _TestViewModel extends BaseViewModel with DockTickerProviderMixin {
   late final AnimationController animationController;
   late final AnimationController rotationAnimationController;
 
@@ -13,15 +12,13 @@ final class _TestViewModel extends BaseViewModel<_TestViewModel> with DockTicker
   late final Animation<double> tweenRotationAnimation;
 
   @override
-  void onInit(BuildContext element) {
-    _element = element;
-
+  void onInit() {
     animationController = AnimationController(vsync: this, duration: 3.seconds);
     tweenAnimation = Tween<double>(begin: 10, end: 100).animate(animationController);
     rotationAnimationController = AnimationController(vsync: this, duration: 3.seconds);
     tweenRotationAnimation = Tween<double>(begin: 0, end: pi * 1.5).animate(rotationAnimationController);
 
-    super.onInit(element);
+    super.onInit();
   }
 
   @override
@@ -30,9 +27,6 @@ final class _TestViewModel extends BaseViewModel<_TestViewModel> with DockTicker
     rotationAnimationController.forward(from: 0);
     super.onNextFrame(timeStamp);
   }
-
-  @override
-  BuildContext get context => _element;
 }
 
 void main() {

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
 /// [BuildContext] EXTENSION
@@ -29,10 +30,10 @@ extension ContextExtension on BuildContext {
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 
   /// Equivalent to MediaQuery.viewPaddingOf(context)
-  EdgeInsets get mediaQueryViewPadding => MediaQuery.viewPaddingOf(this);
+  EdgeInsets get viewPadding => MediaQuery.viewPaddingOf(this);
 
   /// Equivalent to MediaQuery.viewInsetsOf(context)
-  EdgeInsets get mediaQueryViewInsets => MediaQuery.viewInsetsOf(this);
+  EdgeInsets get viewInsets => MediaQuery.viewInsetsOf(this);
 
   /// Equivalent to MediaQuery.orientationOf(context)
   Orientation get orientation => MediaQuery.orientationOf(this);
@@ -46,8 +47,8 @@ extension ContextExtension on BuildContext {
   /// Equivalent to MediaQuery.devicePixelRatioOf(context)
   double get devicePixelRatio => MediaQuery.devicePixelRatioOf(this);
 
-  /// Equivalent to MediaQuery.textScaleFactorOf(context)
-  double get textScaleFactor => MediaQuery.textScaleFactorOf(this);
+  /// Equivalent to MediaQuery.textScalerOf(context)
+  TextScaler get textScaler => MediaQuery.textScalerOf(this);
 
   /// Equivalent to MediaQuery.sizeOf(context).shortestSide
   double get mediaQueryShortestSide => mediaQuerySize.shortestSide;
@@ -59,10 +60,14 @@ extension ContextExtension on BuildContext {
   bool get isTablet => mediaQueryShortestSide >= 600;
 
   /// Equivalent to View.of(context)
-  FlutterView get view => View.of(this);
+  FlutterView get flutterView => View.of(this);
 
   /// Checks if keyboard is open
-  bool get isKeyboardOpen => FocusManager.instance.primaryFocus?.hasFocus ?? false || view.viewInsets.bottom > 0.0;
+  bool get isKeyboardOpen => FocusManager.instance.primaryFocus?.hasFocus ?? false || flutterView.viewInsets.bottom > 0.0;
+
+  // TODO(KorayLiman): This is experimental. Needs to be tested and also be considered if it's useful or not.
+  /// Rebuilds widget with given context in the next frame
+  void rebuildWidget() => Dock.safeMarkNeedsBuild(this as Element);
 
   /// Closes keyboard if open
   void closeKeyboard() {

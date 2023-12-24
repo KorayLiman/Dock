@@ -32,8 +32,7 @@ final class DockerStatelessElement extends StatelessElement {
   void updateElement() {
     assert(dockerUpdaters.isNotNull, "You called update() method on Docker doesn't exist or disposed");
     if (dockerWidget.vModel._containsDockerUpdater(id: dockerWidget.id)) {
-      final schedulerPhase = SchedulerBinding.instance.schedulerPhase;
-      if (schedulerPhase == SchedulerPhase.idle || schedulerPhase == SchedulerPhase.postFrameCallbacks) {
+      if (Dock.isInSafeSchedulerPhase) {
         markNeedsBuild();
       } else {
         scheduleMicrotask(markNeedsBuild);
