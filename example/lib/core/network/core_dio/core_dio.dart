@@ -3,7 +3,6 @@ import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter_example/core/base/model/model.dart';
 import 'package:dock_flutter_example/core/network/network.dart';
 import 'package:dock_flutter_example/product/enums/enums.dart';
-import 'package:dock_flutter_example/product/keys/keys.dart';
 import 'package:dock_flutter_example/product/mixin/mixin.dart';
 import 'package:dock_flutter_example/product/model/model.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +14,8 @@ final class CoreDio with NetworkLoggerMixin {
   final Dio _dio;
 
   PopupManager get _popupManager => Locator.find<PopupManager>();
+
+  OverlayManager get _overlayManager => Locator.find<OverlayManager>();
 
   Future<BaseResponse<T>> primitiveRequest<T extends Object>({
     required RequestPath path,
@@ -54,13 +55,13 @@ final class CoreDio with NetworkLoggerMixin {
         ..reset();
       final responseTimeMilliseconds = stopwatch.elapsedMilliseconds;
       final resp = _getPrimitiveSuccessResponse(response: response, requestUrl: '${_dio.options.baseUrl}${path.path}', responseTime: responseTimeMilliseconds);
-      if (showSuccessResponseSnackBar) _showSuccessResponseSnackBar(messages: resp.messages);
+      if (showSuccessResponseSnackBar) _showSuccessResponseToast(messages: resp.messages);
       return resp;
     } catch (error) {
       stopwatch
         ..stop()
         ..reset();
-      if (showErrorResponseSnackBar) _showErrorResponseSnackBar(error: error);
+      if (showErrorResponseSnackBar) _showErrorResponseToast(error: error);
       return _getPrimitiveErrorResponse(error: error, requestUrl: '${_dio.options.baseUrl}${path.path}');
     } finally {
       _popupManager.hideLoader(id: loaderKey);
@@ -107,13 +108,13 @@ final class CoreDio with NetworkLoggerMixin {
         ..reset();
       final responseTimeMilliseconds = stopwatch.elapsedMilliseconds;
       final resp = _getSuccessResponse<T, M>(response: response, requestUrl: '${_dio.options.baseUrl}${path.path}', responseEntityModel: responseEntityModel, responseTime: responseTimeMilliseconds);
-      if (showSuccessResponseSnackBar) _showSuccessResponseSnackBar(messages: resp.messages);
+      if (showSuccessResponseSnackBar) _showSuccessResponseToast(messages: resp.messages);
       return resp;
     } catch (error) {
       stopwatch
         ..stop()
         ..reset();
-      if (showErrorResponseSnackBar) _showErrorResponseSnackBar(error: error);
+      if (showErrorResponseSnackBar) _showErrorResponseToast(error: error);
       return _getErrorResponse(error: error, requestUrl: '${_dio.options.baseUrl}${path.path}');
     } finally {
       _popupManager.hideLoader(id: loaderKey);
@@ -158,56 +159,32 @@ final class CoreDio with NetworkLoggerMixin {
     }
   }
 
-  void _showSuccessResponseSnackBar({required List<String>? messages}) {
-    final rootScaffoldMessengerState = AppKeys.stateKeys.rootScaffoldMessengerStateKey.currentState;
-    assert(rootScaffoldMessengerState.isNotNull, 'Tried to get scaffoldMessengerState but found null');
-    rootScaffoldMessengerState!.showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.green,
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (messages.isNullOrEmpty)
-              const Text(
-                'Başarılı',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              )
-            else
-              ...messages!.map(
-                (e) => Text(
-                  e,
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                ),
-              ),
-          ],
-        ),
+  void _showSuccessResponseToast({required List<String>? messages}) {
+    _overlayManager.showToast(
+      message: messages.isNullOrEmpty ? 'İşlem başarılı bir şekilde gerçekleşti 🥂!' : messages!.join('\n'),
+      messageStyle: const TextStyle(
+        color: Colors.white,
+        fontSize: 14,
+      ),
+      backgroundColor: Colors.green,
+      shadowColor: Colors.green.shade500,
+      leading: const Icon(
+        Icons.check_circle,
+        color: Colors.white,
       ),
     );
   }
 
-  void _showErrorResponseSnackBar({required Object error}) {
-    final rootScaffoldMessengerState = AppKeys.stateKeys.rootScaffoldMessengerStateKey.currentState;
-    assert(rootScaffoldMessengerState.isNotNull, 'Tried to get scaffoldMessengerState but found null');
-    rootScaffoldMessengerState!.showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.red,
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Hata',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const Blank(6),
-            Text(
-              '$error',
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-      ),
+  void _showErrorResponseToast({required Object error}) {
+    _overlayManager.showToast(
+      title: 'Hata: ${error is DioException ? error.response?.statusCode : ''}',
+      titleStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+      message: '$error',
+      messageMaxLines: 5,
+      toastPosition: ToastPosition.top,
+      dismissDirection: DismissDirection.up,
+      toastDuration: 2500.milliseconds,
+      messageStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dock_flutter/core/base/dock_base/dock_base.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -35,8 +36,13 @@ final class _Dock extends DockBase {
   }
 
   /// Throws [exception] if given condition [throwIf] is satisfied
-  void throwConditional({required Exception exception, required bool throwIf}) {
+  void throwConditionalException({required Exception exception, required bool throwIf}) {
     if (throwIf) throw exception;
+  }
+
+  /// Throws [error] if given condition [throwIf] is satisfied
+  void throwConditionalError({required Error error, required bool throwIf}) {
+    if (throwIf) throw error;
   }
 
   /// Checks if the current phase of the scheduler is safe
@@ -52,7 +58,7 @@ final class _Dock extends DockBase {
 
   /// Waits until the end of the current frame
   Future<void> waitUntilEndOfFrame() async {
-    if (isInSafeSchedulerPhase) return;
+    if (isInSafeSchedulerPhase) return SynchronousFuture<void>(null);
     await SchedulerBinding.instance.endOfFrame;
   }
 
@@ -60,8 +66,9 @@ final class _Dock extends DockBase {
   /// without throwing "setState() or markNeedsBuild() called during build" error
   ///
   /// Checks also if the [element] is mounted
-  Future<void> safeMarkNeedsBuild(Element element) async {
-    await waitUntilEndOfFrame();
-    if (element.mounted) element.markNeedsBuild();
+  void safeMarkNeedsBuild(Element element) {
+    waitUntilEndOfFrame().then((value) {
+      if (element.mounted) element.markNeedsBuild();
+    });
   }
 }

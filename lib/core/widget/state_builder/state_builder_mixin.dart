@@ -65,7 +65,7 @@ mixin StateBuilderMixin<T extends BaseViewModel> on State<StateBuilder> {
       return RefreshIndicator(
         onRefresh: () async {
           await widget.refreshConfig!.onRefresh();
-          await Dock.safeMarkNeedsBuild(context as Element);
+          Dock.safeMarkNeedsBuild(context as Element);
         },
         key: widget.refreshConfig!.key,
         color: widget.refreshConfig!.color,

@@ -2,7 +2,7 @@ import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
 typedef PositionedBuilder = Positioned Function(BuildContext context);
-typedef ToastOverlayInfo = ({OverlayEntry entry, AnimationController controller});
+typedef ToastOverlayInfo = ({OverlayEntry entry, AnimationController slideAnimationController});
 
 enum ToastPosition {
   top,
@@ -23,6 +23,9 @@ class OverlayManager {
   /// Default toast duration
   final _defaultToastDuration = const Duration(milliseconds: 2000);
 
+  /// Default toast slide animation duration
+  final _slideAnimationDuration = const Duration(milliseconds: 500);
+
   /// Shows a highly customizable toast with animation
   void showToast({
     Key? key,
@@ -30,11 +33,15 @@ class OverlayManager {
     String? message,
     TextStyle? titleStyle,
     TextStyle? messageStyle,
+    int? messageMaxLines,
     ToastPosition toastPosition = ToastPosition.bottom,
     Color? backgroundColor,
     Color? shadowColor,
+    DismissDirection? dismissDirection,
     Widget? leading,
     Duration? toastDuration,
+    Duration? animationDuration,
+    Duration? reverseAnimationDuration,
     Widget? child,
   }) {
     _presentToast(
@@ -43,53 +50,17 @@ class OverlayManager {
       message: message,
       leading: leading,
       toastDuration: toastDuration,
+      animationDuration: animationDuration,
+      reverseAnimationDuration: reverseAnimationDuration,
       toastPosition: toastPosition,
+      dismissDirection: dismissDirection,
       child: child,
       backgroundColor: backgroundColor,
       messageStyle: messageStyle,
+      messageMaxLines: messageMaxLines,
       shadowColor: shadowColor,
       titleStyle: titleStyle,
     );
-  }
-
-  /// Shows custom [Overlay] with given [Widget]
-  void showOverlay({required PositionedBuilder positionedBuilder}) {
-    // assert(_key.currentState?.overlay != null, 'Tried to show overlay but overlayState was null. Key was :$_key');
-    // assert(_defaultFadeInDuration + _defaultFadeInDelay <= _overlayDuration, '''
-    // _defaultFadeInDelay + _defaultFadeDuration must be less than or equal to _overlayDuration''');
-    // final currentOpacity = 0.observable;
-    //
-    // Positioned widgetBuilder(BuildContext context) {
-    //   final pos = positionedBuilder(context);
-    //   return Positioned(
-    //     height: pos.height,
-    //     width: pos.width,
-    //     top: pos.top,
-    //     bottom: pos.bottom,
-    //     left: pos.left,
-    //     right: pos.right,
-    //     child: Observer(
-    //       builder: (context) => AnimatedOpacity(
-    //         opacity: currentOpacity.value.toDouble(),
-    //         duration: _defaultFadeInDuration,
-    //         child: Material(
-    //           child: pos.child,
-    //         ),
-    //       ),
-    //     ),
-    //   );
-    // }
-    //
-    // final overlayEntry = OverlayEntry(builder: widgetBuilder);
-    // _key.currentState!.overlay!.insert(overlayEntry);
-    // _defaultFadeInDelay.delay(() {
-    //   currentOpacity.value = 1;
-    // });
-    // _overlayDuration.delay(() {
-    //   overlayEntry
-    //     ..remove()
-    //     ..dispose();
-    // });
   }
 
   /// Inserts toast into overlay state entries list and schedules for removal after [toastDuration]
@@ -103,6 +74,10 @@ class OverlayManager {
     TextStyle? titleStyle,
     TextStyle? messageStyle,
     Duration? toastDuration,
+    Duration? animationDuration,
+    Duration? reverseAnimationDuration,
+    int? messageMaxLines,
+    DismissDirection? dismissDirection,
     Widget? leading,
     Widget? child,
     Color? backgroundColor,
@@ -110,11 +85,15 @@ class OverlayManager {
   }) {
     final overlayState = _key.currentState?.overlay;
     assert(overlayState.isNotNull, 'Tried to show toast but overlayState was null. Key was :$_key');
+    Dock.throwConditionalError(
+      error: MisUsageToastError('If child is specified; leading, title and message must be null'),
+      throwIf: child.isNotNull && (leading.isNotNull || title.isNotNull || message.isNotNull),
+    );
 
-    final overlayEntryAnimController = AnimationController(
+    final slideAnimationController = AnimationController(
       vsync: overlayState!,
-      duration: 500.milliseconds,
-      reverseDuration: 500.milliseconds,
+      duration: animationDuration ?? _slideAnimationDuration,
+      reverseDuration: reverseAnimationDuration ?? _slideAnimationDuration,
     );
     late final OverlayEntry overlayEntry;
     var isPendingRemoval = true;
@@ -122,19 +101,21 @@ class OverlayManager {
       builder: (context) {
         return DockToast(
           key: key,
-          controller: overlayEntryAnimController,
+          slideAnimationController: slideAnimationController,
           toastPosition: toastPosition,
           leading: leading,
           title: title,
           message: message,
+          messageMaxLines: messageMaxLines,
+          dismissDirection: dismissDirection,
           onDismissed: (direction) {
             if (isPendingRemoval) {
               isPendingRemoval = false;
-              _overlayInfoList.remove((entry: overlayEntry, controller: overlayEntryAnimController));
+              _overlayInfoList.remove((entry: overlayEntry, slideAnimationController: slideAnimationController));
               overlayEntry
                 ..remove()
                 ..dispose();
-              overlayEntryAnimController.dispose();
+              slideAnimationController.dispose();
             }
           },
           backgroundColor: backgroundColor,
@@ -146,31 +127,34 @@ class OverlayManager {
       },
     );
 
-    _insertToast(overlayEntryAnimController, overlayEntry, overlayState);
-    _scheduleToastForRemoval(toastDuration ?? _defaultToastDuration, overlayEntryAnimController, overlayEntry, overlayState);
+    _insertToast(slideAnimationController, overlayEntry, overlayState);
+    _scheduleToastForRemoval(toastDuration ?? _defaultToastDuration, slideAnimationController, overlayEntry, overlayState);
   }
 
   /// Inserts toast into overlay entries and forwards the animation
-  void _insertToast(AnimationController controller, OverlayEntry entry, OverlayState overlayState) {
-    final overlayInfo = (entry: entry, controller: controller);
+  void _insertToast(AnimationController slideAnimationController, OverlayEntry entry, OverlayState overlayState) {
+    final overlayInfo = (entry: entry, slideAnimationController: slideAnimationController);
     _overlayInfoList.insert(0, overlayInfo);
     overlayState.insert(entry);
-    controller.forward();
+    slideAnimationController.forward();
   }
 
   /// Reverses the animation after [schedule] and removes toast when animation is completed
-  void _scheduleToastForRemoval(Duration schedule, AnimationController controller, OverlayEntry entry, OverlayState overlayState) {
+  void _scheduleToastForRemoval(Duration schedule, AnimationController slideAnimationController, OverlayEntry entry, OverlayState overlayState) {
     schedule.delay(() {
-      final elementIndex = _overlayInfoList.indexOf((entry: entry, controller: controller));
+      final elementIndex = _overlayInfoList.indexOf((entry: entry, slideAnimationController: slideAnimationController));
       final overlayInfo = _overlayInfoList[elementIndex];
-      overlayInfo.controller.reverse().then((_) {
+      overlayInfo.slideAnimationController.reverse().then((_) {
         overlayInfo.entry.remove();
         overlayInfo.entry.dispose();
-        overlayInfo.controller.dispose();
+        overlayInfo.slideAnimationController.dispose();
         _overlayInfoList.remove(overlayInfo);
       });
     });
   }
+
+  /// THIS MAY BROKE EXISTING IMPLEMENTATION OF [OverlayManager]
+  /// IF IT'S NEEDED, API SHOULD BE REFACTORED
 
 //   /// Gets [OverlayManager] of nearest [Navigator].
 //   ///
@@ -187,4 +171,15 @@ class OverlayManager {
 //     Tried to get Overlay but found null''');
 //     return OverlayManager().._ovState = context.router.navigatorKey.currentState!.overlay;
 //   }
+}
+
+final class MisUsageToastError extends Error {
+  MisUsageToastError(this.message);
+
+  final String message;
+
+  @override
+  String toString() {
+    return 'MisUsageToastError: $message';
+  }
 }
