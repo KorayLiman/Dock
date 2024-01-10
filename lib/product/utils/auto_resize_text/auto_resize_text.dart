@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 /// A Custom [Text] widget resizes to fit parent's constraints
 @immutable
+@Deprecated('AutoResizeText is deprecated. Use AutoSizedText instead.')
 final class AutoResizeText extends StatelessWidget {
+  @Deprecated('AutoResizeText is deprecated. Use AutoSizedText instead.')
   const AutoResizeText(
     this.data, {
     super.key,

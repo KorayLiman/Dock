@@ -50,6 +50,15 @@ extension ContextExtension on BuildContext {
   /// Equivalent to MediaQuery.textScalerOf(context)
   TextScaler get textScaler => MediaQuery.textScalerOf(this);
 
+  /// Equivalent to Directionality.of(context)
+  TextDirection get directionality => Directionality.of(this);
+
+  /// Equivalent to DefaultTextStyle.of(context)
+  DefaultTextStyle get defaultTextStyle => DefaultTextStyle.of(this);
+
+  /// Equivalent to MediaQuery.boldTextOf(context)
+  bool get usingBoldText => MediaQuery.boldTextOf(this);
+
   /// Equivalent to MediaQuery.sizeOf(context).shortestSide
   double get mediaQueryShortestSide => mediaQuerySize.shortestSide;
 
@@ -61,6 +70,12 @@ extension ContextExtension on BuildContext {
 
   /// Equivalent to View.of(context)
   FlutterView get flutterView => View.of(this);
+
+  /// Equivalent to Localizations.localeOf(context)
+  Locale get locale => Localizations.localeOf(this);
+
+  /// Equivalent to Localizations.maybeLocaleOf(context)
+  Locale? get maybeLocale => Localizations.maybeLocaleOf(this);
 
   /// Checks if keyboard is open
   bool get isKeyboardOpen => FocusManager.instance.primaryFocus?.hasFocus ?? false || flutterView.viewInsets.bottom > 0.0;

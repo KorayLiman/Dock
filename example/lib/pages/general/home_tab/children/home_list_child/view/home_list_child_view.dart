@@ -6,13 +6,18 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 final class HomeListChildView extends BaseView<HomeListChildViewModel> {
-  HomeListChildView({super.arguments}) : super(viewModel: HomeListChildViewModel(), viewConfig: const ViewConfig(inject: false), key: const AutomationKey(Automation.homeTabListChildView));
+  HomeListChildView({super.arguments})
+      : super(
+            viewModel: HomeListChildViewModel(),
+            viewConfig: const ViewConfig(inject: false),
+            key: const AutomationKey(Automation.homeTabListChildView));
 
   @override
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeListChildViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => HomeListChildOnSuccessWidget(viewModel: viewModel),
+      onSuccess: (context) =>
+          HomeListChildOnSuccessWidget(viewModel: viewModel),
       refreshConfig: RefreshConfig.pullToRefresh(
         onRefresh: () async {
           await 2.seconds.delay();

@@ -1,12 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dock_flutter/dock.dart';
+import 'package:dock_flutter/product/utils/auto_sized_text/auto_sized_text.dart';
 import 'package:dock_flutter_example/pages/authentication/login/viewmodel/login_viewmodel.dart';
 import 'package:dock_flutter_example/product/product.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
 final class LoginView extends BaseView<LoginViewModel> {
-  LoginView({super.arguments}) : super(viewModel: LoginViewModel(), key: const AutomationKey(Automation.loginView));
+  LoginView({super.arguments})
+      : super(
+            viewModel: LoginViewModel(),
+            key: const AutomationKey(Automation.loginView));
 
   @override
   StateBuilder build(BuildContext context) {
@@ -60,10 +64,26 @@ class LoginViewBody extends DockAccess<LoginViewModel> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ElevatedButton.icon(
-        onPressed: viewModel.goToHomePage,
-        label: const Text('Login'),
-        icon: const Icon(Icons.navigate_next),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 40,
+            width: 120,
+            child: AutoSizedText(
+              'qwdq' * 15,
+              maxLines: 2,
+              style: const TextStyle(fontSize: 40),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: viewModel.goToHomePage,
+            label: const Text('Login'),
+            icon: const Icon(Icons.navigate_next),
+          ),
+        ],
       ),
     );
   }
