@@ -1,7 +1,8 @@
+import 'dart:ui' as ui;
+
 import 'package:dock_flutter/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 /// Unicode of character  ...  (three dots)
@@ -25,12 +26,14 @@ typedef _TextConfiguration = ({
   Locale? locale,
 });
 
+// TODO(KorayLiman): Add documentation, Tests, and examples, softWrap feature, AutoSizedText.rich feature
 class AutoSizedText extends LeafRenderObjectWidget {
   const AutoSizedText(
     this.data, {
     super.key,
     this.minFontSize = _kMinFontSize,
     this.locale,
+    this.iterationCoefficient = 1.0,
     this.textDirection,
     this.textScaler,
     this.maxLines,
@@ -45,6 +48,7 @@ class AutoSizedText extends LeafRenderObjectWidget {
   final String? data;
   final TextStyle? style;
   final double minFontSize;
+  final double iterationCoefficient;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
   final TextOverflow? overflow;
@@ -62,29 +66,23 @@ class AutoSizedText extends LeafRenderObjectWidget {
       effectiveTextStyle = defaultTextStyle.style.merge(style);
     }
     if (context.usingBoldText) {
-      effectiveTextStyle = effectiveTextStyle!
-          .merge(const TextStyle(fontWeight: FontWeight.bold));
+      effectiveTextStyle = effectiveTextStyle!.merge(const TextStyle(fontWeight: FontWeight.bold));
     }
     if (effectiveTextStyle!.fontSize.isNull) {
-      effectiveTextStyle =
-          effectiveTextStyle.merge(const TextStyle(fontSize: _defaultFontSize));
+      effectiveTextStyle = effectiveTextStyle.merge(const TextStyle(fontSize: _defaultFontSize));
     }
 
     final _textScaler = textScaler ?? context.textScaler;
     final _textDirection = textDirection ?? context.directionality;
     final _textWidthBasis = textWidthBasis ?? defaultTextStyle.textWidthBasis;
-    final _textHeightBehavior = textHeightBehavior ??
-        defaultTextStyle.textHeightBehavior ??
-        DefaultTextHeightBehavior.maybeOf(context);
+    final _textHeightBehavior = textHeightBehavior ?? defaultTextStyle.textHeightBehavior ?? DefaultTextHeightBehavior.maybeOf(context);
     final _maxLines = maxLines ?? defaultTextStyle.maxLines;
-    final _overflow =
-        overflow ?? effectiveTextStyle?.overflow ?? defaultTextStyle.overflow;
-    final _textAlign =
-        textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
+    final _overflow = overflow ?? effectiveTextStyle.overflow ?? defaultTextStyle.overflow;
+    final _textAlign = textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
     final _locale = locale ?? context.maybeLocale;
 
     return (
-      style: effectiveTextStyle!,
+      style: effectiveTextStyle,
       textScaler: _textScaler,
       textAlign: _textAlign,
       textDirection: _textDirection,
@@ -112,6 +110,7 @@ class AutoSizedText extends LeafRenderObjectWidget {
       maxLines: textConfig.maxLines,
       overflow: textConfig.overflow,
       minFontSize: minFontSize,
+      iterationCoefficient: iterationCoefficient,
     );
   }
 
@@ -132,7 +131,8 @@ class AutoSizedText extends LeafRenderObjectWidget {
       ..strutStyle = strutStyle
       ..maxLines = textConfig.maxLines
       ..overflow = textConfig.overflow
-      ..minFontSize = minFontSize;
+      ..minFontSize = minFontSize
+      ..iterationCoefficient = iterationCoefficient;
     renderObject._textPainter
       ..text = TextSpan(
         text: data,
@@ -146,8 +146,7 @@ class AutoSizedText extends LeafRenderObjectWidget {
       ..textHeightBehavior = textConfig.textHeightBehavior
       ..strutStyle = strutStyle
       ..maxLines = textConfig.maxLines
-      ..ellipsis =
-          textConfig.overflow == TextOverflow.ellipsis ? _kEllipsis : null;
+      ..ellipsis = textConfig.overflow == TextOverflow.ellipsis ? _kEllipsis : null;
   }
 
   @override
@@ -156,8 +155,7 @@ class AutoSizedText extends LeafRenderObjectWidget {
   }
 }
 
-final class ASTRenderObject extends RenderBox
-    with RelayoutWhenSystemFontsChangeMixin {
+final class ASTRenderObject extends RenderBox with RelayoutWhenSystemFontsChangeMixin {
   ASTRenderObject({
     required this.text,
     required this.style,
@@ -171,6 +169,7 @@ final class ASTRenderObject extends RenderBox
     required this.textHeightBehavior,
     required this.overflow,
     required this.minFontSize,
+    required this.iterationCoefficient,
   }) : _textPainter = TextPainter(
           text: TextSpan(
             text: text,
@@ -186,6 +185,7 @@ final class ASTRenderObject extends RenderBox
           textWidthBasis: textWidthBasis,
           textHeightBehavior: textHeightBehavior,
         );
+
   final TextPainter _textPainter;
 
   double minFontSize;
@@ -200,6 +200,11 @@ final class ASTRenderObject extends RenderBox
   TextWidthBasis textWidthBasis;
   TextHeightBehavior? textHeightBehavior;
   TextOverflow overflow;
+  double iterationCoefficient;
+
+  bool _needsClipping = false;
+  ui.Shader? _overflowShader;
+  int _iterationCount = 0;
 
   @override
   void dispose() {
@@ -213,29 +218,54 @@ final class ASTRenderObject extends RenderBox
     _textPainter.markNeedsLayout();
   }
 
-  bool get _checkIfOverflows {
-    return _textPainter.didExceedMaxLines ||
-        _textPainter.height > constraints.maxHeight ||
-        _textPainter.width > constraints.maxWidth;
+  bool get _checkIfOverflowsFromAllAxis {
+    return _textPainter.didExceedMaxLines || _textPainter.height > constraints.maxHeight || _textPainter.width > constraints.maxWidth;
   }
+
+  bool get _didOverflowWidth => constraints.maxWidth < _textPainter.width;
 
   @override
   void performLayout() {
+    _iterationCount = 0;
     _textPainter.layout(maxWidth: constraints.maxWidth);
-    while (_checkIfOverflows && style.fontSize! > minFontSize) {
-      style = style.copyWith(fontSize: style.fontSize! - 1);
-      _textPainter
-        ..text = TextSpan(
-          text: text,
-          style: style,
-        )
-        ..layout(maxWidth: constraints.maxWidth);
+    var min = minFontSize;
+    var max = style.fontSize!;
+    var current = style.fontSize!;
+    if (_checkIfOverflowsFromAllAxis) {
+      while (true) {
+        _iterationCount++;
+
+        if (max - min < iterationCoefficient) {
+          style = style.copyWith(fontSize: min);
+          _textPainter
+            ..text = TextSpan(
+              text: text,
+              style: style,
+            )
+            ..layout(maxWidth: constraints.maxWidth);
+          break;
+        }
+        current = (max + min) / 2;
+        style = style.copyWith(fontSize: current);
+
+        _textPainter
+          ..text = TextSpan(
+            text: text,
+            style: style,
+          )
+          ..layout(maxWidth: constraints.maxWidth);
+
+        if (_checkIfOverflowsFromAllAxis) {
+          max = current;
+        } else {
+          min = current;
+        }
+      }
     }
     size = constraints.constrain(_textPainter.size);
-/*
-  final bool hasVisualOverflow = didOverflowWidth || didOverflowHeight;
-    if (hasVisualOverflow) {
-      switch (_overflow) {
+
+    if (_checkIfOverflowsFromAllAxis) {
+      switch (overflow) {
         case TextOverflow.visible:
           _needsClipping = false;
           _overflowShader = null;
@@ -245,14 +275,15 @@ final class ASTRenderObject extends RenderBox
           _overflowShader = null;
         case TextOverflow.fade:
           _needsClipping = true;
-          final TextPainter fadeSizePainter = TextPainter(
+          final fadeSizePainter = TextPainter(
             text: TextSpan(style: _textPainter.text!.style, text: '\u2026'),
             textDirection: textDirection,
             textScaler: textScaler,
             locale: locale,
-          )..layout();
-          if (didOverflowWidth) {
-            double fadeEnd, fadeStart;
+          )..layout(maxWidth: constraints.maxWidth);
+          if (_didOverflowWidth) {
+            double fadeEnd;
+            double fadeStart;
             switch (textDirection) {
               case TextDirection.rtl:
                 fadeEnd = 0.0;
@@ -262,16 +293,16 @@ final class ASTRenderObject extends RenderBox
                 fadeStart = fadeEnd - fadeSizePainter.width;
             }
             _overflowShader = ui.Gradient.linear(
-              Offset(fadeStart, 0.0),
-              Offset(fadeEnd, 0.0),
+              Offset(fadeStart, 0),
+              Offset(fadeEnd, 0),
               <Color>[const Color(0xFFFFFFFF), const Color(0x00FFFFFF)],
             );
           } else {
-            final double fadeEnd = size.height;
-            final double fadeStart = fadeEnd - fadeSizePainter.height / 2.0;
+            final fadeEnd = size.height;
+            final fadeStart = fadeEnd - fadeSizePainter.height / 2.0;
             _overflowShader = ui.Gradient.linear(
-              Offset(0.0, fadeStart),
-              Offset(0.0, fadeEnd),
+              Offset(0, fadeStart),
+              Offset(0, fadeEnd),
               <Color>[const Color(0xFFFFFFFF), const Color(0x00FFFFFF)],
             );
           }
@@ -281,16 +312,36 @@ final class ASTRenderObject extends RenderBox
       _needsClipping = false;
       _overflowShader = null;
     }
-*/
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
+    if (_needsClipping) {
+      final bounds = offset & size;
+      if (_overflowShader != null) {
+        context.canvas.saveLayer(bounds, Paint());
+      } else {
+        context.canvas.save();
+      }
+      context.canvas.clipRect(bounds);
+    }
     _textPainter.paint(context.canvas, offset);
+
+    if (_needsClipping) {
+      if (_overflowShader != null) {
+        context.canvas.translate(offset.dx, offset.dy);
+        final paint = Paint()
+          ..blendMode = BlendMode.modulate
+          ..shader = _overflowShader;
+        context.canvas.drawRect(Offset.zero & size, paint);
+      }
+      context.canvas.restore();
+    }
   }
 
   @override
   void describeSemanticsConfiguration(SemanticsConfiguration config) {
+    super.describeSemanticsConfiguration(config);
     config
       ..textDirection = textDirection
       ..value = text ?? ''
@@ -301,247 +352,20 @@ final class ASTRenderObject extends RenderBox
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(
-        EnumProperty<TextAlign>(
-          'textAlign',
-          textAlign,
-          defaultValue: TextAlign.start,
-        ),
-      )
-      ..add(
-        EnumProperty<TextDirection>(
-          'textDirection',
-          textDirection,
-          defaultValue: null,
-        ),
-      )
+      ..add(EnumProperty<TextAlign>('textAlign', textAlign, defaultValue: TextAlign.start))
+      ..add(EnumProperty<TextDirection>('textDirection', textDirection, defaultValue: null))
       //..add(FlagProperty('softWrap', value: softWrap, ifTrue: 'wrapping at box width', ifFalse: 'no wrapping except at line break characters', showName: true))
-      ..add(
-        EnumProperty<TextOverflow>(
-          'overflow',
-          overflow,
-          defaultValue: TextOverflow.clip,
-        ),
-      )
-      ..add(
-        DiagnosticsProperty<TextScaler>(
-          'textScaler',
-          textScaler,
-          defaultValue: TextScaler.noScaling,
-        ),
-      )
-      ..add(
-        IntProperty('maxLines', maxLines, ifNull: 'unlimited'),
-      )
-      ..add(
-        EnumProperty<TextWidthBasis>(
-          'textWidthBasis',
-          textWidthBasis,
-          defaultValue: TextWidthBasis.parent,
-        ),
-      )
-      ..add(
-        StringProperty('text', _textPainter.text!.toPlainText()),
-      )
-      ..add(
-        DiagnosticsProperty<Locale>('locale', locale, defaultValue: null),
-      )
-      ..add(
-        DiagnosticsProperty<StrutStyle>(
-          'strutStyle',
-          strutStyle,
-          defaultValue: null,
-        ),
-      )
-      ..add(
-        DiagnosticsProperty<TextHeightBehavior>(
-          'textHeightBehavior',
-          textHeightBehavior,
-          defaultValue: null,
-        ),
-      );
+      ..add(EnumProperty<TextOverflow>('overflow', overflow, defaultValue: TextOverflow.clip))
+      ..add(DiagnosticsProperty<TextScaler>('textScaler', textScaler, defaultValue: TextScaler.noScaling))
+      ..add(IntProperty('maxLines', maxLines, ifNull: 'unlimited'))
+      ..add(DoubleProperty('minFontSize', minFontSize))
+      ..add(DoubleProperty('iterationCoefficient', iterationCoefficient))
+      ..add(IntProperty('iteration count', _iterationCount))
+      ..add(EnumProperty<TextWidthBasis>('textWidthBasis', textWidthBasis, defaultValue: TextWidthBasis.parent))
+      ..add(StringProperty('text', _textPainter.text!.toPlainText()))
+      ..add(DiagnosticsProperty<Locale>('locale', locale, defaultValue: null))
+      ..add(DiagnosticsProperty<StrutStyle>('strutStyle', strutStyle, defaultValue: null))
+      ..add(DiagnosticsProperty<TextHeightBehavior>('textHeightBehavior', textHeightBehavior, defaultValue: null))
+      ..add(DiagnosticsProperty('style', style, defaultValue: null));
   }
 }
-
-//
-// @immutable
-// class AutoSizedText extends StatelessWidget {
-//   const AutoSizedText(
-//     this.data, {
-//     super.key,
-//     this.style,
-//     this.textAlign = TextAlign.start,
-//     this.textDirection,
-//     this.semanticsLabel,
-//     this.softWrap = true,
-//     this.overflow = TextOverflow.clip,
-//     this.textScaler = TextScaler.noScaling,
-//     this.maxLines,
-//     this.locale,
-//     this.strutStyle,
-//     this.textWidthBasis = TextWidthBasis.parent,
-//     this.textHeightBehavior,
-//     this.selectionRegistrar,
-//     this.selectionColor,
-//   }) : textSpan = null;
-//
-//   final String? data;
-//   final TextStyle? style;
-//   final TextAlign textAlign;
-//   final TextDirection? textDirection;
-//   final bool softWrap;
-//   final InlineSpan? textSpan;
-//   final TextOverflow overflow;
-//   final TextScaler textScaler;
-//   final int? maxLines;
-//   final Locale? locale;
-//   final StrutStyle? strutStyle;
-//   final TextWidthBasis textWidthBasis;
-//   final TextHeightBehavior? textHeightBehavior;
-//   final SelectionRegistrar? selectionRegistrar;
-//   final Color? selectionColor;
-//   final String? semanticsLabel;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final defaultTextStyle = DefaultTextStyle.of(context);
-//     var effectiveTextStyle = style;
-//     if (style == null || style!.inherit) {
-//       effectiveTextStyle = defaultTextStyle.style.merge(style);
-//     }
-//     if (MediaQuery.boldTextOf(context)) {
-//       effectiveTextStyle = effectiveTextStyle!.merge(const TextStyle(fontWeight: FontWeight.bold));
-//     }
-//     final registrar = SelectionContainer.maybeOf(context);
-//
-//     Widget result = AutoSizedRichTextWidget(
-//       textAlign: textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start,
-//       textDirection: textDirection,
-//       // RichText uses Directionality.of to obtain a default if this is null.
-//       locale: locale,
-//       // RichText uses Localizations.localeOf to obtain a default if this is null
-//       softWrap: softWrap ?? defaultTextStyle.softWrap,
-//       overflow: overflow ?? effectiveTextStyle?.overflow ?? defaultTextStyle.overflow,
-//       textScaler: textScaler,
-//       maxLines: maxLines ?? defaultTextStyle.maxLines,
-//       strutStyle: strutStyle,
-//       textWidthBasis: textWidthBasis ?? defaultTextStyle.textWidthBasis,
-//       textHeightBehavior: textHeightBehavior ?? defaultTextStyle.textHeightBehavior ?? DefaultTextHeightBehavior.maybeOf(context),
-//       selectionRegistrar: registrar,
-//       selectionColor: selectionColor ?? DefaultSelectionStyle.of(context).selectionColor ?? DefaultSelectionStyle.defaultColor,
-//       text: TextSpan(
-//         style: effectiveTextStyle,
-//         text: data,
-//         children: textSpan != null ? <InlineSpan>[textSpan!] : null,
-//       ),
-//     );
-//     if (registrar != null) {
-//       result = MouseRegion(
-//         cursor: DefaultSelectionStyle.of(context).mouseCursor ?? SystemMouseCursors.text,
-//         child: result,
-//       );
-//     }
-//     if (semanticsLabel != null) {
-//       result = Semantics(
-//         textDirection: textDirection,
-//         label: semanticsLabel,
-//         child: ExcludeSemantics(
-//           child: result,
-//         ),
-//       );
-//     }
-//     return result;
-//   }
-// }
-//
-// final class AutoSizedRichTextWidget extends RichText {
-//   @visibleForTesting
-//   AutoSizedRichTextWidget({
-//     required TextSpan super.text,
-//     super.key,
-//     super.textAlign,
-//     super.textDirection,
-//     super.softWrap,
-//     super.overflow,
-//     super.maxLines,
-//     super.locale,
-//     super.strutStyle,
-//     super.textWidthBasis,
-//     super.textHeightBehavior,
-//     super.selectionRegistrar,
-//     super.selectionColor,
-//     super.textScaler,
-//   });
-//
-//   @override
-//   AutoSizedTextRenderParagraph createRenderObject(BuildContext context) {
-//     return AutoSizedTextRenderParagraph(
-//       text,
-//       textDirection: textDirection ?? Directionality.of(context),
-//       textAlign: textAlign,
-//       softWrap: softWrap,
-//       overflow: overflow,
-//       maxLines: maxLines,
-//       locale: locale,
-//       strutStyle: strutStyle,
-//       textWidthBasis: textWidthBasis,
-//       textHeightBehavior: textHeightBehavior,
-//       registrar: selectionRegistrar,
-//       selectionColor: selectionColor,
-//       textScaler: textScaler,
-//     );
-//   }
-// }
-//
-// final class AutoSizedTextRenderParagraph extends RenderParagraph {
-//   AutoSizedTextRenderParagraph(
-//     super.text, {
-//     required super.textDirection,
-//     super.overflow,
-//     super.maxLines,
-//     super.locale,
-//     super.strutStyle,
-//     super.textWidthBasis,
-//     super.textHeightBehavior,
-//     super.selectionColor,
-//     super.textScaler,
-//     super.textAlign,
-//     super.softWrap,
-//     super.registrar,
-//   });
-//
-//   final String _kEllipsis = '\u2026';
-//
-//   @override
-//   void performLayout() {
-//     final parentConstraints = parent?.constraints as BoxConstraints?;
-//     assert(parentConstraints.isNotNull, 'AutoSizedText has no constrained parent');
-//     final temporaryTextPainter = TextPainter(
-//       text: text,
-//       textAlign: textAlign,
-//       textDirection: textDirection,
-//       textScaler: textScaler,
-//       maxLines: maxLines,
-//       ellipsis: overflow == TextOverflow.ellipsis ? _kEllipsis : null,
-//       locale: locale,
-//       strutStyle: strutStyle,
-//       textWidthBasis: textWidthBasis,
-//       textHeightBehavior: textHeightBehavior,
-//     )..layout(maxWidth: parentConstraints!.maxWidth);
-//     var existingSpan = text as TextSpan;
-//     while (temporaryTextPainter.didExceedMaxLines) {
-//       final newSpan = TextSpan(
-//         text: existingSpan.text,
-//         style: existingSpan.style!.copyWith(fontSize: existingSpan.style!.fontSize! - 1),
-//         children: existingSpan.children,
-//       );
-//       existingSpan = newSpan;
-//       temporaryTextPainter
-//         ..text = existingSpan
-//         ..layout(maxWidth: parentConstraints.maxWidth);
-//     }
-//     temporaryTextPainter.dispose();
-//     text = existingSpan;
-//     super.performLayout();
-//   }
-// }

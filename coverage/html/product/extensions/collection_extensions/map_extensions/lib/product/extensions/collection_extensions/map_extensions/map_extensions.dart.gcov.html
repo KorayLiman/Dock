@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryLo">33.3&nbsp;%</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
             <td class="headerCovTableEntry">6</td>
-            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">6</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2023-10-20 15:43:05</td>
+            <td class="headerValue">2024-01-12 14:25:38</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">-</td>
@@ -63,21 +63,21 @@
 <span id="L1"><span class="lineNum">       1</span>              : /// [Map] EXTENSION</span>
 <span id="L2"><span class="lineNum">       2</span>              : extension MapExtension&lt;T, M&gt; on Map&lt;T, M&gt;? {</span>
 <span id="L3"><span class="lineNum">       3</span>              :   /// Returns true if map is null or empty</span>
-<span id="L4"><span class="lineNum">       4</span> <span class="tlaUNC tlaBgUNC">           0 :   bool get isNullOrEmpty =&gt; this == null || this!.isEmpty;</span></span>
+<span id="L4"><span class="lineNum">       4</span> <span class="tlaGNC tlaBgGNC">           2 :   bool get isNullOrEmpty =&gt; this == null || this!.isEmpty;</span></span>
 <span id="L5"><span class="lineNum">       5</span>              : </span>
 <span id="L6"><span class="lineNum">       6</span>              :   /// Returns true if map is not null or not empty</span>
-<span id="L7"><span class="lineNum">       7</span> <span class="tlaUNC">           0 :   bool get isNotNullAndNotEmpty =&gt; this != null &amp;&amp; this!.isNotEmpty;</span></span>
+<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">           2 :   bool get isNotNullAndNotEmpty =&gt; this != null &amp;&amp; this!.isNotEmpty;</span></span>
 <span id="L8"><span class="lineNum">       8</span>              : </span>
 <span id="L9"><span class="lineNum">       9</span>              :   /// Returns true if map doesn't contain given key</span>
-<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC tlaBgGNC">           1 :   bool notContainsKey(T? key) {</span></span>
+<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">           2 :   bool notContainsKey(T? key) {</span></span>
 <span id="L11"><span class="lineNum">      11</span>              :     if (this == null || key == null) return true;</span>
-<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">           1 :     return !this!.containsKey(key);</span></span>
+<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">           2 :     return !this!.containsKey(key);</span></span>
 <span id="L13"><span class="lineNum">      13</span>              :   }</span>
 <span id="L14"><span class="lineNum">      14</span>              : </span>
 <span id="L15"><span class="lineNum">      15</span>              :   /// Returns true if map doesn't contain given value</span>
-<span id="L16"><span class="lineNum">      16</span> <span class="tlaUNC tlaBgUNC">           0 :   bool notContainsValue(M? value) {</span></span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">           1 :   bool notContainsValue(M? value) {</span></span>
 <span id="L17"><span class="lineNum">      17</span>              :     if (this == null || value == null) return true;</span>
-<span id="L18"><span class="lineNum">      18</span> <span class="tlaUNC">           0 :     return !this!.containsValue(value);</span></span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">           1 :     return !this!.containsValue(value);</span></span>
 <span id="L19"><span class="lineNum">      19</span>              :   }</span>
 <span id="L20"><span class="lineNum">      20</span>              : }</span>
         </pre>

@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryMed">89.3&nbsp;%</td>
+            <td class="headerCovTableEntryHi">92.9&nbsp;%</td>
             <td class="headerCovTableEntry">28</td>
-            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntry">26</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2023-10-20 15:43:05</td>
+            <td class="headerValue">2024-01-12 14:25:38</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">-</td>
@@ -68,47 +68,47 @@
 <span id="L6"><span class="lineNum">       6</span>              :   final _pageState = PageState.success.observable;</span>
 <span id="L7"><span class="lineNum">       7</span>              : </span>
 <span id="L8"><span class="lineNum">       8</span>              :   /// Gives current state of [PageState]</span>
-<span id="L9"><span class="lineNum">       9</span> <span class="tlaGNC tlaBgGNC">           6 :   PageState get pageState =&gt; _pageState.value;</span></span>
+<span id="L9"><span class="lineNum">       9</span> <span class="tlaGNC tlaBgGNC">          12 :   PageState get pageState =&gt; _pageState.value;</span></span>
 <span id="L10"><span class="lineNum">      10</span>              : </span>
 <span id="L11"><span class="lineNum">      11</span>              :   /// Sets [PageState]</span>
 <span id="L12"><span class="lineNum">      12</span>              :   //ignore: use_setters_to_change_properties</span>
-<span id="L13"><span class="lineNum">      13</span> <span class="tlaUNC tlaBgUNC">           0 :   void setPageState(PageState newPageState) =&gt; _pageState.value = newPageState;</span></span>
+<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC">           3 :   void setPageState(PageState newPageState) =&gt; _pageState.value = newPageState;</span></span>
 <span id="L14"><span class="lineNum">      14</span>              : </span>
-<span id="L15"><span class="lineNum">      15</span>              :   /// Holds the initialization state of any [DockBuilder] associated with this viewmodel</span>
-<span id="L16"><span class="lineNum">      16</span>              :   bool _isDockBuilderInitialized = false;</span>
+<span id="L15"><span class="lineNum">      15</span>              :   /// Holds the initialization state of any [StateBuilder] associated with this viewmodel</span>
+<span id="L16"><span class="lineNum">      16</span>              :   bool _isStateBuilderInitialized = false;</span>
 <span id="L17"><span class="lineNum">      17</span>              : </span>
-<span id="L18"><span class="lineNum">      18</span>              :   /// Sets the initialization state of created [DockBuilder] associated with this viewmodel</span>
-<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC tlaBgGNC">           2 :   void markDockBuilderInitialized(DockBuilder dockBuilder) {</span></span>
-<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">           2 :     _isDockBuilderInitialized = true;</span></span>
+<span id="L18"><span class="lineNum">      18</span>              :   /// Sets the initialization state of created [StateBuilder] associated with this viewmodel</span>
+<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC">           4 :   void markStateBuilderInitialized(StateBuilder stateBuilder) {</span></span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">           4 :     _isStateBuilderInitialized = true;</span></span>
 <span id="L21"><span class="lineNum">      21</span>              :   }</span>
 <span id="L22"><span class="lineNum">      22</span>              : </span>
 <span id="L23"><span class="lineNum">      23</span>              :   /// If any widget lifecycle method is called by user manually(which shouldn't happen) and</span>
-<span id="L24"><span class="lineNum">      24</span>              :   /// no [DockBuilder] created associated with this viewmodel warn user</span>
-<span id="L25"><span class="lineNum">      25</span> <span class="tlaGNC">           2 :   void _assertDockBuilderInitialized() {</span></span>
+<span id="L24"><span class="lineNum">      24</span>              :   /// no [StateBuilder] created associated with this viewmodel warn user</span>
+<span id="L25"><span class="lineNum">      25</span> <span class="tlaGNC">           4 :   void _assertStateBuilderInitialized() {</span></span>
 <span id="L26"><span class="lineNum">      26</span>              :     assert(</span>
-<span id="L27"><span class="lineNum">      27</span> <span class="tlaGNC">           2 :       _isDockBuilderInitialized,</span></span>
-<span id="L28"><span class="lineNum">      28</span>              :       &quot;You called a widget lifecycle method but didn't create any DockBuilder for current viewmodel.\nAlso it's not sensible calling any widget lifecycle methods manually from outside&quot;,</span>
+<span id="L27"><span class="lineNum">      27</span> <span class="tlaGNC">           4 :       _isStateBuilderInitialized,</span></span>
+<span id="L28"><span class="lineNum">      28</span>              :       &quot;You called a widget lifecycle method but didn't create any StateBuilder for current viewmodel.\nAlso it's not sensible calling any widget lifecycle methods manually from outside&quot;,</span>
 <span id="L29"><span class="lineNum">      29</span>              :     );</span>
 <span id="L30"><span class="lineNum">      30</span>              :   }</span>
 <span id="L31"><span class="lineNum">      31</span>              : </span>
 <span id="L32"><span class="lineNum">      32</span>              :   /// Map holds [Docker] id's and updaters bound to this viewmodel</span>
-<span id="L33"><span class="lineNum">      33</span>              :   Map&lt;String, DockerUpdater&gt;? _dockerUpdaters;</span>
+<span id="L33"><span class="lineNum">      33</span>              :   Map&lt;Object, DockerUpdater&gt;? _dockerUpdaters;</span>
 <span id="L34"><span class="lineNum">      34</span>              : </span>
 <span id="L35"><span class="lineNum">      35</span>              :   /// Checks if any [Docker] exits with given id</span>
-<span id="L36"><span class="lineNum">      36</span> <span class="tlaGNC">           1 :   bool _containsDockerUpdater({required String id}) {</span></span>
+<span id="L36"><span class="lineNum">      36</span> <span class="tlaGNC">           1 :   bool _containsDockerUpdater({required Object id}) {</span></span>
 <span id="L37"><span class="lineNum">      37</span> <span class="tlaGNC">           2 :     return _dockerUpdaters!.containsKey(id);</span></span>
 <span id="L38"><span class="lineNum">      38</span>              :   }</span>
 <span id="L39"><span class="lineNum">      39</span>              : </span>
 <span id="L40"><span class="lineNum">      40</span>              :   /// Updates [Docker] bound to this viewmodel with given id</span>
-<span id="L41"><span class="lineNum">      41</span> <span class="tlaGNC">           1 :   void update({required String id}) {</span></span>
+<span id="L41"><span class="lineNum">      41</span> <span class="tlaGNC">           1 :   void update({required Object id}) {</span></span>
 <span id="L42"><span class="lineNum">      42</span> <span class="tlaGNC">           2 :     assert(_dockerUpdaters?.containsKey(id) ?? false, &quot;You called update() method on Docker doesn't exist or disposed&quot;);</span></span>
 <span id="L43"><span class="lineNum">      43</span> <span class="tlaGNC">           9 :     final updater = _dockerUpdaters!.entries.where((element) =&gt; element.key == id).toList()[0].value;</span></span>
 <span id="L44"><span class="lineNum">      44</span> <span class="tlaGNC">           1 :     updater.call();</span></span>
 <span id="L45"><span class="lineNum">      45</span>              :   }</span>
 <span id="L46"><span class="lineNum">      46</span>              : </span>
 <span id="L47"><span class="lineNum">      47</span>              :   /// Updates [Docker]s bound to this viewmodel with given ids</span>
-<span id="L48"><span class="lineNum">      48</span> <span class="tlaGNC">           1 :   void updateMany({required List&lt;String&gt; ids}) {</span></span>
-<span id="L49"><span class="lineNum">      49</span> <span class="tlaGNC">           1 :     final notFoundIds = &lt;String&gt;[];</span></span>
+<span id="L48"><span class="lineNum">      48</span> <span class="tlaGNC">           1 :   void updateMany({required List&lt;Object&gt; ids}) {</span></span>
+<span id="L49"><span class="lineNum">      49</span> <span class="tlaGNC">           1 :     final notFoundIds = &lt;Object&gt;[];</span></span>
 <span id="L50"><span class="lineNum">      50</span>              :     assert(</span>
 <span id="L51"><span class="lineNum">      51</span> <span class="tlaGNC">           2 :       () {</span></span>
 <span id="L52"><span class="lineNum">      52</span> <span class="tlaGNC">           2 :         for (final id in ids) {</span></span>
