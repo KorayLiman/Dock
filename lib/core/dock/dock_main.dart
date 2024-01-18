@@ -1,4 +1,5 @@
 import 'package:dock_flutter/core/base/dock_base/dock_base.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -50,14 +51,14 @@ final class _Dock extends DockBase {
   /// it's safe to rebuild widgets
   ///
   /// This is a precaution to "setState() or markNeedsBuild() called during build" error
-  bool get isInSafeSchedulerPhase {
+  bool get _isInSafeSchedulerPhase {
     final schedulerPhase = SchedulerBinding.instance.schedulerPhase;
     return schedulerPhase == SchedulerPhase.idle || schedulerPhase == SchedulerPhase.postFrameCallbacks;
   }
 
   /// Waits until the end of the current frame
-  Future<void> waitUntilEndOfFrame() async {
-    if (isInSafeSchedulerPhase) return;
+  Future<void> _waitUntilEndOfFrame() async {
+    if (_isInSafeSchedulerPhase) return SynchronousFuture(null);
     await SchedulerBinding.instance.endOfFrame;
   }
 
@@ -66,7 +67,7 @@ final class _Dock extends DockBase {
   ///
   /// Checks also if the [element] is mounted
   void safeMarkNeedsBuild(Element element) {
-    waitUntilEndOfFrame().then((value) {
+    _waitUntilEndOfFrame().then((value) {
       if (element.mounted) element.markNeedsBuild();
     });
   }
