@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:dock_flutter/core/dock/dock_main.dart';
 import 'package:dock_flutter/product/state/reactive/notifier/notify_data.dart';
 import 'package:dock_flutter/product/state/reactive/observable/observable.dart';
@@ -31,11 +29,7 @@ final class ObserverStatelessElement extends StatelessElement {
   /// Schedules widget to rebuilt in the next frame
   void updateElement() {
     if (_disposers != null) {
-      if (Dock.isInSafeSchedulerPhase) {
-        markNeedsBuild();
-      } else {
-        scheduleMicrotask(markNeedsBuild);
-      }
+      Dock.safeMarkNeedsBuild(this);
     }
   }
 
