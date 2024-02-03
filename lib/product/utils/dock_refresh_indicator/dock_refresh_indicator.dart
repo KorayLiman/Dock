@@ -1,10 +1,14 @@
+import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
-/// A pull to refresh configuration of StateBuilder.
-final class RefreshConfig {
-  const RefreshConfig.pullToRefresh({
+/// A smarter [RefreshIndicator] with autoRebuild feature.
+class DockRefreshIndicator extends StatelessWidget {
+  const DockRefreshIndicator({
+    required this.child,
     required this.onRefresh,
-    this.key,
+    super.key,
+    this.autoRebuild = true,
+    this.indicatorStateKey,
     this.color,
     this.backgroundColor,
     this.semanticsLabel,
@@ -16,8 +20,14 @@ final class RefreshConfig {
     this.triggerMode = RefreshIndicatorTriggerMode.onEdge,
   });
 
+  /// Child widget.
+  final Widget child;
+
+  /// Whether to auto rebuild the widget after refresh.
+  final bool autoRebuild;
+
   /// The key of the refresh indicator state.
-  final GlobalKey<RefreshIndicatorState>? key;
+  final GlobalKey<RefreshIndicatorState>? indicatorStateKey;
 
   /// The color of the refresh indicator.
   final Color? color;
@@ -48,4 +58,32 @@ final class RefreshConfig {
 
   /// The trigger mode of the refresh indicator.
   final RefreshIndicatorTriggerMode triggerMode;
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator.adaptive(
+      onRefresh: () async {
+        await onRefresh();
+        if (autoRebuild) {
+          Dock.safeMarkNeedsBuild(context as Element);
+        }
+      },
+      key: indicatorStateKey,
+      color: color,
+      backgroundColor: backgroundColor,
+      semanticsLabel: semanticsLabel,
+      semanticsValue: semanticsValue,
+      notificationPredicate: notificationPredicate,
+      displacement: displacement,
+      edgeOffset: edgeOffset,
+      strokeWidth: strokeWidth,
+      triggerMode: triggerMode,
+      child: autoRebuild
+          ? KeyedSubtree(
+              key: UniqueKey(),
+              child: child,
+            )
+          : child,
+    );
+  }
 }

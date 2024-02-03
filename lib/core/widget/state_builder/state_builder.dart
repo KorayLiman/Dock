@@ -11,7 +11,6 @@ class StateBuilder<T extends BaseViewModel> extends StatefulWidget {
     this.onError,
     this.onLoading,
     this.onOffline,
-    this.refreshConfig,
   });
 
   final T viewModel;
@@ -20,7 +19,6 @@ class StateBuilder<T extends BaseViewModel> extends StatefulWidget {
   final WidgetBuilder? onEmpty;
   final WidgetBuilder? onError;
   final WidgetBuilder? onOffline;
-  final RefreshConfig? refreshConfig;
 
   @override
   State<StateBuilder> createState() => _StateBuilderState<T>();

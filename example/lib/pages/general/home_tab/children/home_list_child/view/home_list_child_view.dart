@@ -13,12 +13,6 @@ final class HomeListChildView extends BaseView<HomeListChildViewModel> {
     return StateBuilder<HomeListChildViewModel>(
       viewModel: viewModel,
       onSuccess: (context) => HomeListChildOnSuccessWidget(viewModel: viewModel),
-      refreshConfig: RefreshConfig.pullToRefresh(
-        onRefresh: () async {
-          await 2.seconds.delay();
-        },
-        displacement: 80,
-      ),
     );
   }
 }
@@ -35,13 +29,16 @@ class HomeListChildOnSuccessWidget extends StatelessWidget {
       appBar: const DefaultAppBar(
         title: 'Home List Child',
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text('Item $index'),
-          );
-        },
-        itemCount: 99,
+      body: DockRefreshIndicator(
+        onRefresh: viewModel.onRefresh,
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text('Item $index'),
+            );
+          },
+          itemCount: 99,
+        ),
       ),
     );
   }
