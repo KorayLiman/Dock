@@ -1,9 +1,13 @@
 import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
+/// [PositionedBuilder]
 typedef PositionedBuilder = Positioned Function(BuildContext context);
+
+/// Record holds [OverlayEntry] and [AnimationController]
 typedef ToastOverlayInfo = ({OverlayEntry entry, AnimationController slideAnimationController});
 
+/// Position of the toast
 enum ToastPosition {
   top,
   bottom,
@@ -145,8 +149,9 @@ class OverlayManager {
       final elementIndex = _overlayInfoList.indexOf((entry: entry, slideAnimationController: slideAnimationController));
       final overlayInfo = _overlayInfoList[elementIndex];
       overlayInfo.slideAnimationController.reverse().then((_) {
-        overlayInfo.entry.remove();
-        overlayInfo.entry.dispose();
+        overlayInfo.entry
+          ..remove()
+          ..dispose();
         overlayInfo.slideAnimationController.dispose();
         _overlayInfoList.remove(overlayInfo);
       });
@@ -173,9 +178,11 @@ class OverlayManager {
 //   }
 }
 
+/// Error thrown when [OverlayManager] is misused
 final class MisUsageToastError extends Error {
   MisUsageToastError(this.message);
 
+  /// Explanation of the error
   final String message;
 
   @override
