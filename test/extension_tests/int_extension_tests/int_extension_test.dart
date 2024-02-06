@@ -1,4 +1,4 @@
-import 'package:dock_flutter/product/extensions/int_extensions/int_extensions.dart';
+import 'package:dock_flutter/src/product/extensions/int_extensions/int_extensions.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

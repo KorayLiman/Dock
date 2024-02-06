@@ -8,10 +8,10 @@ final class _TestViewModel extends BaseViewModel {
   @override
   void onInit() {
     Dock
-      ..registerPostFrameCallback((timeStamp) {
+      ..addPostFrameCallback((timeStamp) {
         order.add(0);
       })
-      ..registerNextFrameCallback((timeStamp) {
+      ..scheduleFrameCallback((timeStamp) {
         order.add(1);
       });
     super.onInit();
@@ -39,10 +39,10 @@ final class _TestViewModel2 extends BaseViewModel {
 
   @override
   void onInit() {
-    Dock.registerPostFrameCallback((timeStamp) {
+    Dock.addPostFrameCallback((timeStamp) {
       order.add(0);
     });
-    final id = Dock.registerNextFrameCallback((timeStamp) {
+    final id = Dock.scheduleFrameCallback((timeStamp) {
       order.add(1);
     });
     Dock.cancelRegisteredFrameCallback(id);
@@ -79,10 +79,10 @@ void main() {
             body: Builder(
               builder: (context) {
                 Dock
-                  ..registerPostFrameCallback((timeStamp) {
+                  ..addPostFrameCallback((timeStamp) {
                     order.add(0);
                   })
-                  ..registerNextFrameCallback((timeStamp) {
+                  ..scheduleFrameCallback((timeStamp) {
                     order.add(1);
                   });
 
