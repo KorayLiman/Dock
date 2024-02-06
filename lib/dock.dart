@@ -1,5 +1,5 @@
 /// Dock Library
 library dock;
 
-export 'core/core.dart';
-export 'product/product.dart';
+export 'src/core/core.dart';
+export 'src/product/product.dart';

@@ -1,4 +1,4 @@
-import 'package:dock_flutter/product/extensions/extensions.dart';
+import 'package:dock_flutter/src/product/extensions/extensions.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter_test/flutter_test.dart';
 
