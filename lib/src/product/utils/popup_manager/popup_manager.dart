@@ -31,6 +31,10 @@ class PopupManager {
   /// List of [LoaderRoute]s
   final _routes = <LoaderRoute>[];
 
+  /// Unmodifiable list of [LoaderRoute]s for testing
+  @visibleForTesting
+  List<LoaderRoute> get routes => List.unmodifiable(_routes);
+
   /// Shows loader dialog
   /// Provide [id] id if you have multiple loaders and want to close a specific one
   void showLoader({Object? id, bool barrierDismissible = false}) {
