@@ -1,5 +1,5 @@
 export 'animations/animations.dart';
-export 'auto_resize_text/auto_resize_text.dart';
+export 'auto_sized_text/auto_sized_text.dart';
 export 'blank/blank.dart';
 export 'blur/blur.dart';
 export 'dock_refresh_indicator/dock_refresh_indicator.dart';

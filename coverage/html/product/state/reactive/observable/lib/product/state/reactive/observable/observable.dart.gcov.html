@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2023-10-20 15:43:05</td>
+            <td class="headerValue">2024-01-12 14:25:38</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">-</td>
@@ -68,63 +68,63 @@
 <span id="L6"><span class="lineNum">       6</span>              : part '../notifier/notifier.dart';</span>
 <span id="L7"><span class="lineNum">       7</span>              : </span>
 <span id="L8"><span class="lineNum">       8</span>              : final class Observable&lt;T&gt; {</span>
-<span id="L9"><span class="lineNum">       9</span> <span class="tlaGNC tlaBgGNC">           5 :   Observable(this._value);</span></span>
+<span id="L9"><span class="lineNum">       9</span> <span class="tlaGNC tlaBgGNC">           8 :   Observable(this._value);</span></span>
 <span id="L10"><span class="lineNum">      10</span>              : </span>
 <span id="L11"><span class="lineNum">      11</span>              :   List&lt;Updater&gt;? _updaters = [];</span>
 <span id="L12"><span class="lineNum">      12</span>              : </span>
 <span id="L13"><span class="lineNum">      13</span>              :   /// Adds [Updater] function to the list [_updaters]</span>
-<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC">           3 :   void _addUpdater(Updater updater) {</span></span>
-<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">           3 :     _assertObserverNotDisposed();</span></span>
-<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">           6 :     _updaters!.add(updater);</span></span>
+<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC">           5 :   void _addUpdater(Updater updater) {</span></span>
+<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">           5 :     _assertObserverNotDisposed();</span></span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">          10 :     _updaters!.add(updater);</span></span>
 <span id="L17"><span class="lineNum">      17</span>              :   }</span>
 <span id="L18"><span class="lineNum">      18</span>              : </span>
 <span id="L19"><span class="lineNum">      19</span>              :   /// Removes [Updater] function from the list [_updaters]</span>
-<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">           3 :   void _removeUpdater(Updater updater) {</span></span>
-<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">           3 :     _assertObserverNotDisposed();</span></span>
-<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">           6 :     _updaters!.remove(updater);</span></span>
-<span id="L23"><span class="lineNum">      23</span> <span class="tlaGNC">           6 :     if (_updaters!.isEmpty) {</span></span>
-<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">           3 :       _updaters = null;</span></span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">           5 :   void _removeUpdater(Updater updater) {</span></span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">           5 :     _assertObserverNotDisposed();</span></span>
+<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">          10 :     _updaters!.remove(updater);</span></span>
+<span id="L23"><span class="lineNum">      23</span> <span class="tlaGNC">          10 :     if (_updaters!.isEmpty) {</span></span>
+<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">           5 :       _updaters = null;</span></span>
 <span id="L25"><span class="lineNum">      25</span>              :     }</span>
 <span id="L26"><span class="lineNum">      26</span>              :   }</span>
 <span id="L27"><span class="lineNum">      27</span>              : </span>
 <span id="L28"><span class="lineNum">      28</span>              :   /// Checks if given [updater] exists in [_updaters]</span>
-<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC">           3 :   bool _containsUpdater({required Updater updater}) {</span></span>
-<span id="L30"><span class="lineNum">      30</span> <span class="tlaGNC">           6 :     return _updaters?.contains(updater) ?? false;</span></span>
+<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC">           5 :   bool _containsUpdater({required Updater updater}) {</span></span>
+<span id="L30"><span class="lineNum">      30</span> <span class="tlaGNC">          10 :     return _updaters?.contains(updater) ?? false;</span></span>
 <span id="L31"><span class="lineNum">      31</span>              :   }</span>
 <span id="L32"><span class="lineNum">      32</span>              : </span>
 <span id="L33"><span class="lineNum">      33</span>              :   /// This is called when observable's value changes to update</span>
 <span id="L34"><span class="lineNum">      34</span>              :   /// related Observer</span>
 <span id="L35"><span class="lineNum">      35</span>              :   ///</span>
 <span id="L36"><span class="lineNum">      36</span>              :   /// eg. counter.value++;</span>
-<span id="L37"><span class="lineNum">      37</span> <span class="tlaGNC">           1 :   @protected</span></span>
+<span id="L37"><span class="lineNum">      37</span> <span class="tlaGNC">           2 :   @protected</span></span>
 <span id="L38"><span class="lineNum">      38</span>              :   void _notifyToUpdate() {</span>
-<span id="L39"><span class="lineNum">      39</span> <span class="tlaGNC">           1 :     _assertObserverNotDisposed();</span></span>
-<span id="L40"><span class="lineNum">      40</span> <span class="tlaGNC">           3 :     for (final updater in _updaters!) {</span></span>
-<span id="L41"><span class="lineNum">      41</span> <span class="tlaGNC">           1 :       updater.call();</span></span>
+<span id="L39"><span class="lineNum">      39</span> <span class="tlaGNC">           2 :     _assertObserverNotDisposed();</span></span>
+<span id="L40"><span class="lineNum">      40</span> <span class="tlaGNC">           6 :     for (final updater in _updaters!) {</span></span>
+<span id="L41"><span class="lineNum">      41</span> <span class="tlaGNC">           2 :       updater.call();</span></span>
 <span id="L42"><span class="lineNum">      42</span>              :     }</span>
 <span id="L43"><span class="lineNum">      43</span>              :   }</span>
 <span id="L44"><span class="lineNum">      44</span>              : </span>
-<span id="L45"><span class="lineNum">      45</span> <span class="tlaGNC">           6 :   bool get isObserverDisposed =&gt; _updaters == null;</span></span>
+<span id="L45"><span class="lineNum">      45</span> <span class="tlaGNC">          10 :   bool get isObserverDisposed =&gt; _updaters == null;</span></span>
 <span id="L46"><span class="lineNum">      46</span>              : </span>
-<span id="L47"><span class="lineNum">      47</span> <span class="tlaGNC">           3 :   void _assertObserverNotDisposed() {</span></span>
-<span id="L48"><span class="lineNum">      48</span> <span class="tlaGNC">           6 :     assert(!isObserverDisposed, 'An $runtimeType was used after Observers contain $runtimeType already disposed');</span></span>
+<span id="L47"><span class="lineNum">      47</span> <span class="tlaGNC">           5 :   void _assertObserverNotDisposed() {</span></span>
+<span id="L48"><span class="lineNum">      48</span> <span class="tlaGNC">          10 :     assert(!isObserverDisposed, 'An $runtimeType was used after Observers contain $runtimeType already disposed');</span></span>
 <span id="L49"><span class="lineNum">      49</span>              :   }</span>
 <span id="L50"><span class="lineNum">      50</span>              : </span>
 <span id="L51"><span class="lineNum">      51</span>              :   /// Value of [Observable]</span>
 <span id="L52"><span class="lineNum">      52</span>              :   T _value;</span>
 <span id="L53"><span class="lineNum">      53</span>              : </span>
 <span id="L54"><span class="lineNum">      54</span>              :   /// Getter of [_value]</span>
-<span id="L55"><span class="lineNum">      55</span> <span class="tlaGNC">           3 :   T get value {</span></span>
-<span id="L56"><span class="lineNum">      56</span> <span class="tlaGNC">           6 :     Notifier.instance.notifyRead&lt;T&gt;(this);</span></span>
-<span id="L57"><span class="lineNum">      57</span> <span class="tlaGNC">           3 :     return _value;</span></span>
+<span id="L55"><span class="lineNum">      55</span> <span class="tlaGNC">           5 :   T get value {</span></span>
+<span id="L56"><span class="lineNum">      56</span> <span class="tlaGNC">          10 :     Notifier.instance.notifyRead&lt;T&gt;(this);</span></span>
+<span id="L57"><span class="lineNum">      57</span> <span class="tlaGNC">           5 :     return _value;</span></span>
 <span id="L58"><span class="lineNum">      58</span>              :   }</span>
 <span id="L59"><span class="lineNum">      59</span>              : </span>
 <span id="L60"><span class="lineNum">      60</span>              :   /// Setter of [_value]</span>
-<span id="L61"><span class="lineNum">      61</span> <span class="tlaGNC">           1 :   set value(T newValue) {</span></span>
+<span id="L61"><span class="lineNum">      61</span> <span class="tlaGNC">           2 :   set value(T newValue) {</span></span>
 <span id="L62"><span class="lineNum">      62</span>              :     // TODO(KorayLiman): handle complex comparisons</span>
-<span id="L63"><span class="lineNum">      63</span> <span class="tlaGNC">           2 :     if (newValue == _value) return;</span></span>
-<span id="L64"><span class="lineNum">      64</span> <span class="tlaGNC">           1 :     _value = newValue;</span></span>
-<span id="L65"><span class="lineNum">      65</span> <span class="tlaGNC">           1 :     _notifyToUpdate();</span></span>
+<span id="L63"><span class="lineNum">      63</span> <span class="tlaGNC">           4 :     if (newValue == _value) return;</span></span>
+<span id="L64"><span class="lineNum">      64</span> <span class="tlaGNC">           2 :     _value = newValue;</span></span>
+<span id="L65"><span class="lineNum">      65</span> <span class="tlaGNC">           2 :     _notifyToUpdate();</span></span>
 <span id="L66"><span class="lineNum">      66</span>              :   }</span>
 <span id="L67"><span class="lineNum">      67</span>              : </span>
 <span id="L68"><span class="lineNum">      68</span>              :   /// Updates [Observable] after provided callback ends.</span>
