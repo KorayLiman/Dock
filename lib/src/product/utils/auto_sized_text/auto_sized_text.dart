@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:dock_flutter/product/product.dart';
+import 'package:dock_flutter/src/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 // ignore_for_file: no_leading_underscores_for_local_identifiers
