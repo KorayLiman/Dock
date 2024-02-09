@@ -60,10 +60,31 @@ class LoginViewBody extends DockAccess<LoginViewModel> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ElevatedButton.icon(
-        onPressed: viewModel.goToHomePage,
-        label: const Text('Login'),
-        icon: const Icon(Icons.navigate_next),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 200,
+            width: context.width * 0.7,
+            child: const Row(
+              children: [
+                Expanded(
+                  child: AutoSizedText(
+                    'This is a very long text that should be shrinked to fit the screen',
+                    maxLines: 3,
+                    style: TextStyle(fontSize: 150),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: viewModel.goToHomePage,
+            label: const Text('Login'),
+            icon: const Icon(Icons.navigate_next),
+          ),
+        ],
       ),
     );
   }

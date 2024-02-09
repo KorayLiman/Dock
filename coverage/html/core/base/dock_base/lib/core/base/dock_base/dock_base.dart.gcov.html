@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2023-10-20 15:43:05</td>
+            <td class="headerValue">2024-01-12 14:25:38</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">-</td>
@@ -60,26 +60,29 @@
               <td>
 <pre class="sourceHeading">            Line data    Source code</pre>
 <pre class="source">
-<span id="L1"><span class="lineNum">       1</span>              : import 'package:dock_flutter/typedefs.dart';</span>
-<span id="L2"><span class="lineNum">       2</span>              : import 'package:flutter/material.dart';</span>
-<span id="L3"><span class="lineNum">       3</span>              : </span>
-<span id="L4"><span class="lineNum">       4</span>              : /// DOCK ABSTRACT BASE CLASS</span>
-<span id="L5"><span class="lineNum">       5</span>              : abstract base class DockBase {</span>
-<span id="L6"><span class="lineNum">       6</span>              :   /// [WidgetsBinding] instance</span>
-<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC tlaBgGNC">           4 :   WidgetsBinding get widgetsBinding =&gt; WidgetsBinding.instance;</span></span>
-<span id="L8"><span class="lineNum">       8</span>              : </span>
-<span id="L9"><span class="lineNum">       9</span>              :   /// Default on loading widget builder</span>
-<span id="L10"><span class="lineNum">      10</span>              :   WidgetCallback? defaultOnLoadingWidgetBuilder;</span>
+<span id="L1"><span class="lineNum">       1</span>              : import 'package:flutter/material.dart';</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : /// DOCK ABSTRACT BASE CLASS</span>
+<span id="L4"><span class="lineNum">       4</span>              : abstract base class DockBase {</span>
+<span id="L5"><span class="lineNum">       5</span>              :   /// [WidgetsBinding] instance</span>
+<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC tlaBgGNC">          11 :   WidgetsBinding get widgetsBinding =&gt; testBindings ?? WidgetsFlutterBinding.ensureInitialized();</span></span>
+<span id="L7"><span class="lineNum">       7</span>              : </span>
+<span id="L8"><span class="lineNum">       8</span>              :   /// [WidgetsBinding] only for testing</span>
+<span id="L9"><span class="lineNum">       9</span>              :   @visibleForTesting</span>
+<span id="L10"><span class="lineNum">      10</span>              :   WidgetsBinding? testBindings;</span>
 <span id="L11"><span class="lineNum">      11</span>              : </span>
-<span id="L12"><span class="lineNum">      12</span>              :   ///  Default on empty widget builder</span>
-<span id="L13"><span class="lineNum">      13</span>              :   WidgetCallback? defaultOnEmptyWidgetBuilder;</span>
+<span id="L12"><span class="lineNum">      12</span>              :   /// Default on loading widget builder</span>
+<span id="L13"><span class="lineNum">      13</span>              :   WidgetBuilder? defaultOnLoadingWidgetBuilder;</span>
 <span id="L14"><span class="lineNum">      14</span>              : </span>
-<span id="L15"><span class="lineNum">      15</span>              :   ///  Default on error widget builder</span>
-<span id="L16"><span class="lineNum">      16</span>              :   WidgetCallback? defaultOnErrorWidgetBuilder;</span>
+<span id="L15"><span class="lineNum">      15</span>              :   /// Default on empty widget builder</span>
+<span id="L16"><span class="lineNum">      16</span>              :   WidgetBuilder? defaultOnEmptyWidgetBuilder;</span>
 <span id="L17"><span class="lineNum">      17</span>              : </span>
-<span id="L18"><span class="lineNum">      18</span>              :   ///  Default on offline widget builder</span>
-<span id="L19"><span class="lineNum">      19</span>              :   WidgetCallback? defaultOnOfflineWidgetBuilder;</span>
-<span id="L20"><span class="lineNum">      20</span>              : }</span>
+<span id="L18"><span class="lineNum">      18</span>              :   /// Default on error widget builder</span>
+<span id="L19"><span class="lineNum">      19</span>              :   WidgetBuilder? defaultOnErrorWidgetBuilder;</span>
+<span id="L20"><span class="lineNum">      20</span>              : </span>
+<span id="L21"><span class="lineNum">      21</span>              :   /// Default on offline widget builder</span>
+<span id="L22"><span class="lineNum">      22</span>              :   WidgetBuilder? defaultOnOfflineWidgetBuilder;</span>
+<span id="L23"><span class="lineNum">      23</span>              : }</span>
         </pre>
               </td>
             </tr>
