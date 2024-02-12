@@ -45,7 +45,7 @@ base mixin _BaseViewModelStateMixin {
   }
 
   /// Updates [Docker]s bound to this viewmodel with given ids
-  void updateMany({required List<Object> ids}) {
+  void updateAll({required List<Object> ids}) {
     final notFoundIds = <Object>[];
     assert(
       () {

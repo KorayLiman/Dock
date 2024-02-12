@@ -56,7 +56,7 @@ void main() {
       expect(find.text('2'), findsOneWidget);
       viewModel.counter++;
       viewModel.counter2++;
-      viewModel.updateMany(ids: ['0', '1']);
+      viewModel.updateAll(ids: ['0', '1']);
       await tester.pump();
       expect(find.text('3'), findsOneWidget);
       expect(find.text('1'), findsOneWidget);

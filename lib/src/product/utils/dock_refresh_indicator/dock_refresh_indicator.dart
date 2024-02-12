@@ -1,7 +1,7 @@
 import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
-/// A smarter [RefreshIndicator] with autoRebuild feature.
+/// A smart [RefreshIndicator] with autoRebuild feature.
 class DockRefreshIndicator extends StatelessWidget {
   const DockRefreshIndicator({
     required this.child,
