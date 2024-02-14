@@ -29,8 +29,8 @@ final class _Dock extends DockBase {
     return widgetsBinding.scheduleFrameCallback(callBack);
   }
 
-  /// Cancels registered [FrameCallback] with given [id]
-  void cancelRegisteredFrameCallback(int id) {
+  /// Cancels scheduled [FrameCallback] with given [id]
+  void cancelScheduledFrameCallback(int id) {
     return widgetsBinding.cancelFrameCallbackWithId(id);
   }
 

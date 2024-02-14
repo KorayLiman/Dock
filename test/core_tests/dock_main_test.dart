@@ -45,7 +45,7 @@ final class _TestViewModel2 extends BaseViewModel {
     final id = Dock.scheduleFrameCallback((timeStamp) {
       order.add(1);
     });
-    Dock.cancelRegisteredFrameCallback(id);
+    Dock.cancelScheduledFrameCallback(id);
 
     super.onInit();
   }
