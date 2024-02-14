@@ -1,20 +1,6 @@
 import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
-/// A [DialogRoute] shows [CircularProgressIndicator] in center
-final class LoaderRoute extends DialogRoute<Object> {
-  @visibleForTesting
-  LoaderRoute({
-    required super.context,
-    required super.builder,
-    this.id,
-    super.barrierDismissible,
-  });
-
-  /// [id] of the [LoaderRoute]
-  final Object? id;
-}
-
 /// Helper class for showing popups
 ///
 /// [NavigatorState] key is required either of Root's or Nested Navigator's
@@ -28,12 +14,12 @@ class PopupManager {
   /// [WidgetBuilder] for loader
   final WidgetBuilder? widgetBuilder;
 
-  /// List of [LoaderRoute]s
-  final _routes = <LoaderRoute>[];
+  /// List of [_LoaderRoute]s
+  final _routes = <_LoaderRoute>[];
 
-  /// Unmodifiable list of [LoaderRoute]s for testing
+  /// Unmodifiable list of [_LoaderRoute]s for testing
   @visibleForTesting
-  List<LoaderRoute> get routes => List.unmodifiable(_routes);
+  List<_LoaderRoute> get routes => List.unmodifiable(_routes);
 
   /// Shows loader dialog
   /// Provide [id] id if you have multiple loaders and want to close a specific one
@@ -45,7 +31,7 @@ class PopupManager {
       'There is already a loader showing with id: $id',
     );
 
-    final route = LoaderRoute(
+    final route = _LoaderRoute(
       id: id,
       barrierDismissible: barrierDismissible,
       context: _key.currentState!.context,
@@ -75,4 +61,18 @@ class PopupManager {
       _key.currentState!.removeRoute(_routes.removeAt(routeIndex));
     }
   }
+}
+
+/// A [DialogRoute] for showing loader
+final class _LoaderRoute extends DialogRoute<Object> {
+  @visibleForTesting
+  _LoaderRoute({
+    required super.context,
+    required super.builder,
+    this.id,
+    super.barrierDismissible,
+  });
+
+  /// [id] of the [_LoaderRoute]
+  final Object? id;
 }
