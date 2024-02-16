@@ -5,7 +5,7 @@ final class HomeListChildViewModel extends BaseViewModel with HomeTabsRouterMixi
   @override
   void onInit() {
     5.seconds.delay(() {
-      stateBuilderContext.rebuildWidget();
+      stateBuilderElement.rebuildWidget();
     });
     super.onInit();
   }

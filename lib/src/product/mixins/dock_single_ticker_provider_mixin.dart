@@ -67,7 +67,7 @@ base mixin DockSingleTickerProviderMixin on BaseViewModel implements TickerProvi
   }
 
   void _updateTickerModeNotifier() {
-    final newNotifier = TickerMode.getNotifier(stateBuilderContext);
+    final newNotifier = TickerMode.getNotifier(stateBuilderElement);
     if (newNotifier == _tickerModeNotifier) {
       return;
     }
