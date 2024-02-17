@@ -2,7 +2,9 @@ import 'package:dock_flutter/src/product/extensions/object_extensions/object_ext
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+@Deprecated('Use horizontalMargin or verticalMargin')
 class Blank extends StatelessWidget {
+  @Deprecated('Use horizontalMargin or verticalMargin')
   const Blank(this.value, {super.key}) : assert(value > 0, 'Value of Blank must be greater than zero');
 
   final double value;
