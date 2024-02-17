@@ -1,8 +1,9 @@
-import 'package:dock_flutter/dock.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 /// A smart [RefreshIndicator] with autoRebuild feature.
-class DockRefreshIndicator extends StatelessWidget {
+class DockRefreshIndicator extends StatefulWidget {
   const DockRefreshIndicator({
     required this.child,
     required this.onRefresh,
@@ -42,7 +43,7 @@ class DockRefreshIndicator extends StatelessWidget {
   final String? semanticsValue;
 
   /// The refresh logic.
-  final Future<void> Function() onRefresh;
+  final FutureOr<void> Function() onRefresh;
 
   /// The displacement of the refresh indicator.
   final double displacement;
@@ -60,30 +61,39 @@ class DockRefreshIndicator extends StatelessWidget {
   final RefreshIndicatorTriggerMode triggerMode;
 
   @override
+  State<DockRefreshIndicator> createState() => _DockRefreshIndicatorState();
+}
+
+class _DockRefreshIndicatorState extends State<DockRefreshIndicator> {
+  var _key = UniqueKey();
+
+  void _renewKey() {
+    _key = UniqueKey();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RefreshIndicator.adaptive(
       onRefresh: () async {
-        await onRefresh();
-        if (autoRebuild) {
-          Dock.safeMarkNeedsBuild(context as Element);
+        await widget.onRefresh();
+        if (widget.autoRebuild) {
+          setState(_renewKey);
         }
       },
-      key: indicatorStateKey,
-      color: color,
-      backgroundColor: backgroundColor,
-      semanticsLabel: semanticsLabel,
-      semanticsValue: semanticsValue,
-      notificationPredicate: notificationPredicate,
-      displacement: displacement,
-      edgeOffset: edgeOffset,
-      strokeWidth: strokeWidth,
-      triggerMode: triggerMode,
-      child: autoRebuild
-          ? KeyedSubtree(
-              key: UniqueKey(),
-              child: child,
-            )
-          : child,
+      key: widget.indicatorStateKey,
+      color: widget.color,
+      backgroundColor: widget.backgroundColor,
+      semanticsLabel: widget.semanticsLabel,
+      semanticsValue: widget.semanticsValue,
+      notificationPredicate: widget.notificationPredicate,
+      displacement: widget.displacement,
+      edgeOffset: widget.edgeOffset,
+      strokeWidth: widget.strokeWidth,
+      triggerMode: widget.triggerMode,
+      child: KeyedSubtree(
+        key: _key,
+        child: widget.child,
+      ),
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+@Deprecated('This is deprecated')
 class SliverBlank extends LeafRenderObjectWidget {
+  @Deprecated('This is deprecated')
   const SliverBlank(this.value, {super.key}) : assert(value > 0, 'Value of Blank must be greater than zero');
 
   final double value;

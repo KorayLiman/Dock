@@ -4,9 +4,9 @@ import 'package:dock_flutter_example/pages/general/home_tab/mixin/home_tabs_rout
 final class HomeListChildViewModel extends BaseViewModel with HomeTabsRouterMixin {
   @override
   void onInit() {
-    5.seconds.delay(() {
-      stateBuilderElement.rebuildWidget();
-    });
+    //  5.seconds.delay(() {
+    //   stateBuilderElement.rebuildWidget();
+    // });
     super.onInit();
   }
 

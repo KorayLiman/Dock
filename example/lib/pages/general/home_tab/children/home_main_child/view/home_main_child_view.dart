@@ -41,7 +41,7 @@ class HomeMainOnSuccessWidget extends StatelessWidget {
             Observer(
               builder: (context) => Text('(Observer) Weight: ${viewModel.weight.value}'),
             ),
-            const Blank(12),
+            verticalMargin12,
             Docker(
               id: '0',
               viewModel: viewModel,
@@ -56,7 +56,7 @@ class HomeMainOnSuccessWidget extends StatelessWidget {
                     delegate: SliverChildListDelegate.fixed(
                       [
                         Center(child: Text('Sliver elem 1')),
-                        Blank(9),
+                        verticalMargin8,
                         Center(child: Text('Sliver elem 2')),
                       ],
                     ),
@@ -102,14 +102,14 @@ class HomeMainFloatingActionButton extends StatelessWidget {
           label: const Text('Increment count'),
           icon: const Icon(Icons.add),
         ),
-        const Blank(12),
+        verticalMargin16,
         FloatingActionButton.extended(
           heroTag: null,
           onPressed: viewModel.incrementWeight,
           label: const Text('Increment weight'),
           icon: const Icon(Icons.add),
         ),
-        const Blank(12),
+        verticalMargin16,
         FloatingActionButton.extended(
           heroTag: null,
           onPressed: viewModel.incrementAge,
