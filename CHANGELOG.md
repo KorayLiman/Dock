@@ -1,3 +1,9 @@
+## 1.0.0
+
+> Note: This release has breaking changes.
+
+- **BREAKING**: This is the stable release that has many breaking changes.
+
 ## 0.1.0-dev.3
 
 - **FEAT**: Added Blank and SliverBlank widgets.
