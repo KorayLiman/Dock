@@ -90,7 +90,7 @@ final class _TestView extends BaseView<_TestViewModel> {
   }
 }
 
-class _Body extends DockAccess<_TestViewModel> {
+class _Body extends DockStatelessWidget<_TestViewModel> {
   const _Body();
 
   @override

@@ -14,14 +14,13 @@ final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeTabParentViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => const HomeTabParentOnSuccessWidget(),
+      onSuccess: (context) => const HomeTabParentOnSuccessWidget._(),
     );
   }
 }
 
-class HomeTabParentOnSuccessWidget extends DockAccess<HomeTabParentViewModel> {
-  @visibleForTesting
-  const HomeTabParentOnSuccessWidget({super.key});
+class HomeTabParentOnSuccessWidget extends DockStatelessWidget<HomeTabParentViewModel> {
+  const HomeTabParentOnSuccessWidget._();
 
   @override
   Widget build(BuildContext context) {

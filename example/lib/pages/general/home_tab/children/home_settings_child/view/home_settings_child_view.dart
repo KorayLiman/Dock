@@ -12,14 +12,13 @@ final class HomeSettingsChildView extends BaseView<HomeSettingsChildViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeSettingsChildViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => HomeSettingsChildOnSuccessWidget(viewModel: viewModel),
+      onSuccess: (context) => HomeSettingsChildOnSuccessWidget._(viewModel: viewModel),
     );
   }
 }
 
 class HomeSettingsChildOnSuccessWidget extends StatelessWidget {
-  @visibleForTesting
-  const HomeSettingsChildOnSuccessWidget({required this.viewModel, super.key});
+  const HomeSettingsChildOnSuccessWidget._({required this.viewModel});
 
   final HomeSettingsChildViewModel viewModel;
 

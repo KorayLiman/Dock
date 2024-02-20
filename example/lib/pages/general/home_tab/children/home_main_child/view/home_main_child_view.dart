@@ -12,14 +12,13 @@ final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeMainChildViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => HomeMainOnSuccessWidget(viewModel: viewModel),
+      onSuccess: (context) => HomeMainOnSuccessWidget._(viewModel: viewModel),
     );
   }
 }
 
 class HomeMainOnSuccessWidget extends StatelessWidget {
-  @visibleForTesting
-  const HomeMainOnSuccessWidget({required this.viewModel, super.key});
+  const HomeMainOnSuccessWidget._({required this.viewModel});
 
   final HomeMainChildViewModel viewModel;
 
@@ -79,14 +78,13 @@ class HomeMainOnSuccessWidget extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: HomeMainFloatingActionButton(viewModel: viewModel),
+      floatingActionButton: HomeMainFloatingActionButton._(viewModel: viewModel),
     );
   }
 }
 
 class HomeMainFloatingActionButton extends StatelessWidget {
-  @visibleForTesting
-  const HomeMainFloatingActionButton({required this.viewModel, super.key});
+  const HomeMainFloatingActionButton._({required this.viewModel});
 
   final HomeMainChildViewModel viewModel;
 
