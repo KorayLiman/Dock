@@ -12,14 +12,13 @@ final class LoginView extends BaseView<LoginViewModel> {
   StateBuilder build(BuildContext context) {
     return StateBuilder<LoginViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) => const LoginViewOnSuccessWidget(),
+      onSuccess: (context) => const LoginViewOnSuccessWidget._(),
     );
   }
 }
 
-class LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
-  @visibleForTesting
-  const LoginViewFloatingActionButton({super.key});
+class LoginViewFloatingActionButton extends DockStatelessWidget<LoginViewModel> {
+  const LoginViewFloatingActionButton._();
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +33,14 @@ class LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
           label: const Text('Show toast'),
           icon: const Icon(Icons.info_outline),
         ),
-        const Blank(12),
+        verticalMargin12,
         FloatingActionButton.extended(
           heroTag: '2',
           onPressed: viewModel.showAndHideLoader,
           label: const Text('Show loader'),
           icon: const Icon(Icons.refresh),
         ),
-        const Blank(12),
+        verticalMargin12,
         FloatingActionButton.extended(
           heroTag: '3',
           onPressed: viewModel.login,
@@ -53,9 +52,8 @@ class LoginViewFloatingActionButton extends DockAccess<LoginViewModel> {
   }
 }
 
-class LoginViewBody extends DockAccess<LoginViewModel> {
-  @visibleForTesting
-  const LoginViewBody({super.key});
+class LoginViewBody extends DockStatelessWidget<LoginViewModel> {
+  const LoginViewBody._();
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +89,7 @@ class LoginViewBody extends DockAccess<LoginViewModel> {
 }
 
 class LoginViewOnSuccessWidget extends StatelessWidget {
-  @visibleForTesting
-  const LoginViewOnSuccessWidget({super.key});
+  const LoginViewOnSuccessWidget._();
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +97,8 @@ class LoginViewOnSuccessWidget extends StatelessWidget {
       appBar: DefaultAppBar(
         title: 'Login',
       ),
-      body: LoginViewBody(),
-      floatingActionButton: LoginViewFloatingActionButton(),
+      body: LoginViewBody._(),
+      floatingActionButton: LoginViewFloatingActionButton._(),
     );
   }
 }

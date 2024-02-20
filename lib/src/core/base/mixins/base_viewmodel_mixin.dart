@@ -6,5 +6,5 @@ base mixin _BaseViewModelMixin {
   late final dynamic arguments;
 
   /// [BuildContext] of [StateBuilder] associated with this viewmodel
-  late final StatefulElement stateBuilderElement;
+  late final BuildContext stateBuilderContext;
 }
