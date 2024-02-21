@@ -1,49 +1,48 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-@Deprecated('This is deprecated')
-class SliverBlank extends LeafRenderObjectWidget {
-  @Deprecated('This is deprecated')
-  const SliverBlank(this.value, {super.key}) : assert(value > 0, 'Value of Blank must be greater than zero');
+class SliverGap extends LeafRenderObjectWidget {
+  const SliverGap(this.value, {super.key})
+      : assert(value > 0, 'Value of SliverGap must be greater than zero');
 
   final double value;
 
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DoubleProperty('value', value));
-    super.debugFillProperties(properties);
-  }
+  RenderObject createRenderObject(BuildContext context) =>
+      _SliverGapRenderBox(value: value);
 
   @override
-  RenderObject createRenderObject(BuildContext context) => _SliverBlankRenderBox(value: value);
+  void updateRenderObject(
+          BuildContext context, _SliverGapRenderBox renderObject) =>
+      renderObject.reEvaluate(value: value);
 
   @override
-  void updateRenderObject(BuildContext context, _SliverBlankRenderBox renderObject) {
-    if (value != renderObject.value) {
-      renderObject._reSize(value: value);
-    }
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return '${describeIdentity(this)} (value: $value)';
   }
 }
 
-final class _SliverBlankRenderBox extends RenderSliver {
-  _SliverBlankRenderBox({required this.value});
+final class _SliverGapRenderBox extends RenderSliver {
+  _SliverGapRenderBox({required this.value});
 
   double value;
-
-  void _reSize({required double value}) {
-    this.value = value;
-    markNeedsLayout();
-  }
 
   @override
   void performLayout() {
     final cacheExtent = calculateCacheOffset(constraints, from: 0, to: value);
     final paintExtent = calculatePaintOffset(constraints, from: 0, to: value);
+
     geometry = SliverGeometry(
+      paintExtent: paintExtent,
+      maxPaintExtent: value,
       cacheExtent: cacheExtent,
       scrollExtent: value,
-      maxPaintExtent: value,
-      paintExtent: paintExtent,
     );
+  }
+
+  // ignore: use_setters_to_change_properties
+  void reEvaluate({required double value}) {
+    this.value = value;
   }
 }

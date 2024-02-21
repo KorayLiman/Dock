@@ -133,7 +133,7 @@ class DockToast extends StatelessWidget {
                         children: [
                           if (leading.isNotNull) ...[
                             leading!,
-                            const Blank(10),
+                            const Gap(10),
                           ],
                           if (title.isNotNull || message.isNotNull)
                             Expanded(

@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 final class LoginView extends BaseView<LoginViewModel> {
-  LoginView({super.arguments}) : super(viewModel: LoginViewModel(), key: const AutomationKey(Automation.loginView));
+  LoginView({super.arguments})
+      : super(
+            viewModel: LoginViewModel(),
+            key: const AutomationKey(Automation.loginView));
 
   @override
   StateBuilder build(BuildContext context) {
@@ -17,7 +20,8 @@ final class LoginView extends BaseView<LoginViewModel> {
   }
 }
 
-class LoginViewFloatingActionButton extends DockStatelessWidget<LoginViewModel> {
+class LoginViewFloatingActionButton
+    extends DockStatelessWidget<LoginViewModel> {
   const LoginViewFloatingActionButton._();
 
   @override
@@ -33,14 +37,14 @@ class LoginViewFloatingActionButton extends DockStatelessWidget<LoginViewModel> 
           label: const Text('Show toast'),
           icon: const Icon(Icons.info_outline),
         ),
-        verticalMargin12,
+        const Gap(12),
         FloatingActionButton.extended(
           heroTag: '2',
           onPressed: viewModel.showAndHideLoader,
           label: const Text('Show loader'),
           icon: const Icon(Icons.refresh),
         ),
-        verticalMargin12,
+        const Gap(12),
         FloatingActionButton.extended(
           heroTag: '3',
           onPressed: viewModel.login,
