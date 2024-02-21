@@ -1,8 +1,8 @@
 export 'animations/animations.dart';
 export 'auto_sized_text/auto_sized_text.dart';
-export 'blank/blank.dart';
 export 'blur/blur.dart';
 export 'dock_refresh_indicator/dock_refresh_indicator.dart';
+export 'gap/gap.dart';
 export 'logger/logger.dart';
 export 'overlay_manager/dock_toast/toast.dart';
 export 'overlay_manager/overlay_manager.dart';
