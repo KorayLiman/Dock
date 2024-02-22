@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+@Deprecated('This is not a great API, and may be removed in the future')
 class Blurred extends StatelessWidget {
+  @Deprecated('This is not a great API, and may be removed in the future')
   const Blurred({
     required this.child,
     this.blur = 10,

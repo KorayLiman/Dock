@@ -2,19 +2,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+/// An empty widget that has a size of given value and
+///
+/// is used to create space between widgets in a [CustomScrollView].
 class SliverGap extends LeafRenderObjectWidget {
-  const SliverGap(this.value, {super.key})
-      : assert(value > 0, 'Value of SliverGap must be greater than zero');
+  const SliverGap(this.value, {super.key}) : assert(value > 0, 'Value of SliverGap must be greater than zero');
 
+  /// The size of the gap
   final double value;
 
   @override
-  RenderObject createRenderObject(BuildContext context) =>
-      _SliverGapRenderBox(value: value);
+  RenderObject createRenderObject(BuildContext context) => _SliverGapRenderBox(value: value);
 
   @override
   void updateRenderObject(
-          BuildContext context, _SliverGapRenderBox renderObject) =>
+    BuildContext context,
+    _SliverGapRenderBox renderObject,
+  ) =>
       renderObject.reEvaluate(value: value);
 
   @override
@@ -23,6 +27,7 @@ class SliverGap extends LeafRenderObjectWidget {
   }
 }
 
+/// A [RenderSliver] that creates a gap of given size
 final class _SliverGapRenderBox extends RenderSliver {
   _SliverGapRenderBox({required this.value});
 
