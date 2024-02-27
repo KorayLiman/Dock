@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 /// DOCK ABSTRACT BASE CLASS
 abstract base class DockBase {
@@ -20,4 +21,6 @@ abstract base class DockBase {
 
   /// Default on offline widget builder
   WidgetBuilder? defaultOnOfflineWidgetBuilder;
+
+  SchedulerBinding get schedulerBinding => SchedulerBinding.instance;
 }
