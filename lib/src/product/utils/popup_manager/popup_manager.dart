@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +21,7 @@ class PopupManager {
 
   /// Unmodifiable list of [_LoaderRoute]s for testing
   @visibleForTesting
-  List<_LoaderRoute> get routes => List.unmodifiable(_routes);
+  UnmodifiableListView<_LoaderRoute> get routes => UnmodifiableListView<_LoaderRoute>(_routes);
 
   /// Shows loader dialog
   /// Provide [id] id if you have multiple loaders and want to close a specific one
