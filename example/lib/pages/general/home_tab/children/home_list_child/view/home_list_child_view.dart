@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 final class HomeListChildView extends BaseView<HomeListChildViewModel> {
-  HomeListChildView({super.arguments}) : super(viewModel: HomeListChildViewModel(), viewConfig: const ViewConfig(inject: false), key: const AutomationKey(Automation.homeTabListChildView));
+  HomeListChildView() : super(viewModel: HomeListChildViewModel(), key: const AutomationKey(Automation.homeTabListChildView));
 
   @override
   StateBuilder build(BuildContext context) {

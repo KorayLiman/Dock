@@ -6,11 +6,7 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
-  HomeMainChildView({super.arguments})
-      : super(
-            viewModel: HomeMainChildViewModel(),
-            viewConfig: const ViewConfig(inject: false),
-            key: const AutomationKey(Automation.homeTabMainChildView));
+  HomeMainChildView() : super(viewModel: HomeMainChildViewModel(), key: const AutomationKey(Automation.homeTabMainChildView));
 
   @override
   StateBuilder build(BuildContext context) {
@@ -39,19 +35,16 @@ class HomeMainOnSuccessWidget extends StatelessWidget {
               width: 40,
             ).fadeIn(curve: Curves.bounceIn).fadeOut(delay: 1.seconds),
             Observer(
-              builder: (context) =>
-                  Text('(Observer) Count: ${viewModel.count.value}'),
+              builder: (context) => Text('(Observer) Count: ${viewModel.count.value}'),
             ),
             Observer(
-              builder: (context) =>
-                  Text('(Observer) Weight: ${viewModel.weight.value}'),
+              builder: (context) => Text('(Observer) Weight: ${viewModel.weight.value}'),
             ),
             const Gap(50),
             Docker(
               id: '0',
               viewModel: viewModel,
-              builder: (context, viewModel) =>
-                  Text('(Docker) Age: ${viewModel.age}'),
+              builder: (context, viewModel) => Text('(Docker) Age: ${viewModel.age}'),
             ),
             const SizedBox(
               height: 100,
@@ -85,8 +78,7 @@ class HomeMainOnSuccessWidget extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton:
-          HomeMainFloatingActionButton._(viewModel: viewModel),
+      floatingActionButton: HomeMainFloatingActionButton._(viewModel: viewModel),
     );
   }
 }

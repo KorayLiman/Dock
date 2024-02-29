@@ -71,7 +71,7 @@ final class _TestViewModel4 extends BaseViewModel {
 }
 
 final class _TestView extends BaseView<_TestViewModel> {
-  _TestView() : super(viewModel: _TestViewModel());
+  _TestView() : super(viewModel: Locator.register(_TestViewModel()));
 
   @override
   StateBuilder build(BuildContext context) {
@@ -110,7 +110,7 @@ class _Body extends DockStatelessWidget<_TestViewModel> {
 }
 
 final class _TestView3 extends BaseView<_TestViewModel3> {
-  _TestView3() : super(viewModel: _TestViewModel3());
+  _TestView3() : super(viewModel: Locator.register(_TestViewModel3()));
 
   @override
   StateBuilder build(BuildContext context) {
@@ -137,7 +137,7 @@ final class _TestView3 extends BaseView<_TestViewModel3> {
 }
 
 final class _TestView4 extends BaseView<_TestViewModel4> {
-  _TestView4() : super(viewModel: _TestViewModel4());
+  _TestView4() : super(viewModel: Locator.register(_TestViewModel4()));
 
   static final _key = UniqueKey();
   static final _key1 = UniqueKey();
