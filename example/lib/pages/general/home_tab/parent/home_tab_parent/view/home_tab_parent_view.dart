@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
-  HomeTabParentView({super.arguments}) : super(viewModel: HomeTabParentViewModel(), key: const AutomationKey(Automation.homeTabParentView));
+  HomeTabParentView() : super(viewModel: Locator.register(HomeTabParentViewModel()), key: const AutomationKey(Automation.homeTabParentView));
 
   @override
   StateBuilder build(BuildContext context) {

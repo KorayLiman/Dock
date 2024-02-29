@@ -6,18 +6,13 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 final class HomeSettingsChildView extends BaseView<HomeSettingsChildViewModel> {
-  HomeSettingsChildView({super.arguments})
-      : super(
-            viewModel: HomeSettingsChildViewModel(),
-            viewConfig: const ViewConfig(inject: false),
-            key: const AutomationKey(Automation.homeTabSettingsChildView));
+  HomeSettingsChildView() : super(viewModel: HomeSettingsChildViewModel(), key: const AutomationKey(Automation.homeTabSettingsChildView));
 
   @override
   StateBuilder build(BuildContext context) {
     return StateBuilder<HomeSettingsChildViewModel>(
       viewModel: viewModel,
-      onSuccess: (context) =>
-          HomeSettingsChildOnSuccessWidget._(viewModel: viewModel),
+      onSuccess: (context) => HomeSettingsChildOnSuccessWidget._(viewModel: viewModel),
     );
   }
 }

@@ -19,7 +19,7 @@ final class _TestViewModel extends BaseViewModel {
 }
 
 final class _TestView extends BaseView<_TestViewModel> {
-  _TestView() : super(viewModel: _TestViewModel());
+  _TestView() : super(viewModel: Locator.register(_TestViewModel()));
 
   @override
   StateBuilder build(BuildContext context) {
@@ -52,7 +52,7 @@ final class _TestViewModel2 extends BaseViewModel {
 }
 
 final class _TestView2 extends BaseView<_TestViewModel2> {
-  _TestView2() : super(viewModel: _TestViewModel2());
+  _TestView2() : super(viewModel: Locator.register(_TestViewModel2()));
 
   @override
   StateBuilder build(BuildContext context) {

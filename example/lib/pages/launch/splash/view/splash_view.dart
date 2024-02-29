@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 final class SplashView extends BaseView<SplashViewModel> {
-  SplashView({super.arguments}) : super(viewModel: SplashViewModel(), key: const AutomationKey(Automation.splashView));
+  SplashView() : super(viewModel: Locator.register(SplashViewModel()), key: const AutomationKey(Automation.splashView));
 
   @override
   StateBuilder build(BuildContext context) {
