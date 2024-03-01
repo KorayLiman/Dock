@@ -1,4 +1,0 @@
-enum BuildType {
-  test,
-  live,
-}
