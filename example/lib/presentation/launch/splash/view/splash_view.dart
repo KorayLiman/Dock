@@ -7,11 +7,8 @@ final class SplashView extends BaseView<SplashViewModel> {
   SplashView({super.key}) : super(viewModel: Locator.registerAsNew(SplashViewModel()));
 
   @override
-  StateBuilder build(BuildContext context) {
-    return StateBuilder<SplashViewModel>(
-      viewModel: viewModel,
-      onSuccess: (context) => const SplashViewOnSuccessWidget._(),
-    );
+  Widget onSuccess(BuildContext context) {
+    throw UnimplementedError();
   }
 }
 

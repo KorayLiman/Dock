@@ -5,7 +5,7 @@ base mixin _BaseViewModelMixin {
   /// Route [arguments]
   late final dynamic arguments;
 
-  /// [BuildContext] of [StateBuilder] associated with this viewmodel
+  /// [BuildContext] of View e.g(LoginView) associated with this viewmodel
   late final BuildContext rootContext;
 
   /// Triggers rebuild for View associated with this ViewModel
