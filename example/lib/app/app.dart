@@ -7,7 +7,7 @@ final class DockApp extends StatelessWidget with _AppMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: routerConfig,
+      routerConfig: rootRouter,
       theme: theme,
       scaffoldMessengerKey: scaffoldMessengerKey,
     );

@@ -1,5 +1,5 @@
 import 'package:dock_flutter_example/core/core.dart';
-import 'package:dock_flutter_example/pages/authentication/login/model/model.dart';
+import 'package:dock_flutter_example/presentation/authentication/login/model/model.dart';
 import 'package:dock_flutter_example/product/product.dart';
 
 final class LoginService extends BaseService {
