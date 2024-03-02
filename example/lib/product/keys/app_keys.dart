@@ -1,11 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppKeys {
-  static final stateKeys = _StateKeys();
+  static final stateKeys = StateKeys._();
 }
 
-final class _StateKeys {
-  final homeTabRouterStateKey = GlobalKey<AutoTabsRouterState>();
+final class StateKeys {
+  StateKeys._();
   final rootScaffoldMessengerStateKey = GlobalKey<ScaffoldMessengerState>();
 }

@@ -4,7 +4,7 @@ description: Demonstrates how to use the dock plugin.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: '>=3.2.6 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
 
 
 dependencies:
@@ -16,19 +16,21 @@ dependencies:
     path: ../
 
   cupertino_icons: ^1.0.2
-  auto_route: ^7.8.4
   dio: ^5.4.0
   envied: ^0.5.3
   json_serializable: ^6.7.1
   json_annotation: ^4.8.1
-  meta: ^1.10.0
+  meta: ^1.11.0
+  dock_router:
+    git:
+      url: git@github.com:KorayLiman/Dock-Router.git
+      ref: main
 
 dev_dependencies:
   integration_test:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  auto_route_generator: ^7.3.2
   build_runner: ^2.4.8
 
   very_good_analysis: ^5.1.0
