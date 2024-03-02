@@ -6,5 +6,8 @@ base mixin _BaseViewModelMixin {
   late final dynamic arguments;
 
   /// [BuildContext] of [StateBuilder] associated with this viewmodel
-  late final BuildContext stateBuilderContext;
+  late final BuildContext rootContext;
+
+  /// Triggers rebuild for View associated with this ViewModel
+  void rebuild() => rootContext.rebuildWidget();
 }

@@ -33,7 +33,7 @@ class HomeTabParentOnSuccessWidget extends DockStatelessWidget<HomeTabParentView
               NavigationDestination(icon: Icon(Icons.list), label: 'List'),
               NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
             ],
-            selectedIndex: state.activeTabIndex,
+            selectedIndex: state.activeIndex,
             onDestinationSelected: state.setActiveIndex,
           ),
         );

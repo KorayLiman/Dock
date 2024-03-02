@@ -19,8 +19,6 @@ enum PageState { success, loading, empty, error, offline }
 abstract base class BaseViewModel with _BaseViewModelMixin, _BaseViewModelStateMixin {
   /// Called when View is created
   @mustCallSuper
-  @protected
-  @visibleForTesting
   void onInit() {
     _assertStateBuilderInitialized();
     Dock
@@ -30,8 +28,6 @@ abstract base class BaseViewModel with _BaseViewModelMixin, _BaseViewModelStateM
 
   /// Called after onInit and when dependencies of this object change
   @mustCallSuper
-  @protected
-  @visibleForTesting
   void onDependenciesChange() {
     _assertStateBuilderInitialized();
   }
@@ -56,8 +52,6 @@ abstract base class BaseViewModel with _BaseViewModelMixin, _BaseViewModelStateM
 
   /// Called when view is getting disposed
   @mustCallSuper
-  @protected
-  @visibleForTesting
   void onDispose() {
     _assertStateBuilderInitialized();
   }
