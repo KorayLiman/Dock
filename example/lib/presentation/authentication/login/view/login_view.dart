@@ -4,16 +4,16 @@ import 'package:dock_flutter_example/product/product.dart';
 import 'package:flutter/material.dart';
 
 final class LoginView extends BaseView<LoginViewModel> {
-  LoginView({super.key})
-      : super(
-          viewModel: Locator.registerAsNew(LoginViewModel()),
-        );
+  LoginView({super.key}) : super(viewModel: Locator.register(LoginViewModel()));
 
   @override
-  StateBuilder build(BuildContext context) {
-    return StateBuilder<LoginViewModel>(
-      viewModel: viewModel,
-      onSuccess: (context) => const LoginViewOnSuccessWidget._(),
+  Widget onSuccess(BuildContext context) {
+    return const Scaffold(
+      appBar: DefaultAppBar(
+        title: 'Login',
+      ),
+      body: LoginViewBody._(),
+      floatingActionButton: LoginViewFloatingActionButton._(),
     );
   }
 }
@@ -65,7 +65,7 @@ class LoginViewBody extends DockStatelessWidget<LoginViewModel> {
         children: [
           SizedBox(
             height: 200,
-            width: context.width * 0.7,
+            width: context.dependOn.width * 0.7,
             child: const Row(
               children: [
                 Expanded(
@@ -85,21 +85,6 @@ class LoginViewBody extends DockStatelessWidget<LoginViewModel> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class LoginViewOnSuccessWidget extends StatelessWidget {
-  const LoginViewOnSuccessWidget._();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: DefaultAppBar(
-        title: 'Login',
-      ),
-      body: LoginViewBody._(),
-      floatingActionButton: LoginViewFloatingActionButton._(),
     );
   }
 }

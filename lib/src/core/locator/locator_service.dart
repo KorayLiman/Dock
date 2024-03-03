@@ -1,7 +1,8 @@
-import 'package:dock_flutter/src/core/dock/dock_main.dart';
-import 'package:dock_flutter/src/product/extensions/object_extensions/object_extensions.dart';
+import 'package:dock_flutter/dock.dart';
 import 'package:dock_flutter/src/typedefs.dart';
 import 'package:flutter/material.dart';
+
+import 'register_strategy.dart';
 
 part 'locator_impl.dart';
 

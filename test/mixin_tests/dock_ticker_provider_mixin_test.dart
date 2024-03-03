@@ -11,6 +11,10 @@ final class _TestViewModel extends BaseViewModel with DockTickerProviderMixin {
   late final Animation<double> tweenAnimation;
   late final Animation<double> tweenRotationAnimation;
 
+  final key = UniqueKey();
+
+  late BoxConstraints boxConstraints;
+
   @override
   void onInit() {
     animationController = AnimationController(vsync: this, duration: 3.seconds);
@@ -29,64 +33,65 @@ final class _TestViewModel extends BaseViewModel with DockTickerProviderMixin {
   }
 }
 
+final class _TestView extends BaseView<_TestViewModel> {
+  _TestView() : super(viewModel: Locator.register(_TestViewModel()));
+
+  final matrix4 = Matrix4.identity();
+
+  @override
+  Widget onSuccess(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AnimatedBuilder(
+            animation: viewModel.animationController,
+            builder: (context, child) {
+              return Container(
+                alignment: FractionalOffset.center,
+                height: viewModel.tweenAnimation.value,
+                width: viewModel.tweenAnimation.value,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    viewModel.boxConstraints = constraints;
+                    return const SizedBox.shrink();
+                  },
+                ),
+              );
+            },
+          ),
+          AnimatedBuilder(
+            animation: viewModel.rotationAnimationController,
+            builder: (context, child) {
+              return Container(
+                key: viewModel.key,
+                alignment: FractionalOffset.center,
+                transform: matrix4..rotateX(viewModel.tweenRotationAnimation.value),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 void main() {
-  final viewModel = _TestViewModel();
-
-  late BoxConstraints boxConstraints;
-
   testWidgets(
     'Ticker provider vm mixin',
     (tester) async {
-      final key = UniqueKey();
-      final matrix4 = Matrix4.identity();
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: StateBuilder<_TestViewModel>(
-              viewModel: viewModel,
-              onSuccess: (context) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AnimatedBuilder(
-                      animation: viewModel.animationController,
-                      builder: (context, child) {
-                        return Container(
-                          alignment: FractionalOffset.center,
-                          height: viewModel.tweenAnimation.value,
-                          width: viewModel.tweenAnimation.value,
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              boxConstraints = constraints;
-                              return const SizedBox.shrink();
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    AnimatedBuilder(
-                      animation: viewModel.rotationAnimationController,
-                      builder: (context, child) {
-                        return Container(
-                          key: key,
-                          alignment: FractionalOffset.center,
-                          transform: matrix4..rotateX(viewModel.tweenRotationAnimation.value),
-                        );
-                      },
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
+          home: _TestView(),
         ),
       );
 
       await tester.pumpAndSettle();
+      final boxConstraints = Locator.find<_TestViewModel>().boxConstraints;
       expect(boxConstraints.maxHeight, 100.0);
       expect(boxConstraints.maxWidth, 100.0);
-      final widget = tester.widget<Container>(find.byKey(key));
+      final widget = tester.widget<Container>(find.byKey(Locator.find<_TestViewModel>().key));
 
       expect(
         widget.transform,

@@ -1,19 +1,9 @@
 import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
-/// AN ABSTRACT [StatelessWidget] FOR OPTIONALLY REGISTERING VIEWMODEL OF ANY VIEW
-// abstract base class BaseView<T extends BaseViewModel> extends StatelessWidget {
-//   const BaseView({required this.viewModel, super.key});
-//
-//   /// [viewModel]
-//   final T viewModel;
-//
-//   /// [build] method of [StatelessWidget] but returns [StateBuilder] instead of [Widget]
-//   @override
-//   @protected
-//   StateBuilder build(BuildContext context);
-// }
+part 'base_view_mixin.dart';
 
+/// An abstract [StatefulWidget] that provides a base for all views in the application.
 abstract base class BaseView<T extends BaseViewModel> extends StatefulWidget {
   const BaseView({required this.viewModel, super.key});
 
@@ -33,13 +23,8 @@ abstract base class BaseView<T extends BaseViewModel> extends StatefulWidget {
   State<BaseView> createState() => BaseViewState<T>._();
 }
 
-class BaseViewState<T extends BaseViewModel> extends State<BaseView> {
+class BaseViewState<T extends BaseViewModel> extends State<BaseView> with BaseViewMixin<T> {
   BaseViewState._();
-
-  T get _viewModel => widget.viewModel as T;
-
-  /// [PageState] default icon size
-  static const double _defaultIconSize = 48;
 
   // ---------------------
   // BEGIN WIDGET LIFECYCLES
@@ -63,15 +48,9 @@ class BaseViewState<T extends BaseViewModel> extends State<BaseView> {
     _viewModel.onDispose();
     final vModel = Locator.tryFind<T>();
     if (vModel.hashCode == _viewModel.hashCode) {
-      final result = Locator.unregister<T>();
-      if (result) {
-        Logger.logMsg(msg: "'$T' Unregistered", color: LogColors.red);
-      } else {
-        Logger.logMsg(msg: "---ERROR--- '$T' is registered but a problem occurred while unregistering it", color: LogColors.red);
-      }
-    } else {
-      Logger.logMsg(msg: "Page disposed. No '$T' was registered", color: LogColors.white);
+      Locator.unregister<T>();
     }
+    Logger.logMsg(msg: '${widget.runtimeType} disposed', color: LogColors.white);
     super.dispose();
   }
 
@@ -87,57 +66,5 @@ class BaseViewState<T extends BaseViewModel> extends State<BaseView> {
         builder: _builder,
       ),
     );
-  }
-
-  Widget _builder(BuildContext context) {
-    return switch (_viewModel.pageState) {
-      PageState.success => widget.onSuccess(context),
-      PageState.loading => widget.onLoading(context) ??
-          (Dock.defaultOnLoadingWidgetBuilder != null
-              ? Dock.defaultOnLoadingWidgetBuilder!(context)
-              : Scaffold(
-                  appBar: AppBar(),
-                  body: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )),
-      PageState.empty => widget.onEmpty(context) ??
-          (Dock.defaultOnEmptyWidgetBuilder != null
-              ? Dock.defaultOnEmptyWidgetBuilder!(context)
-              : Scaffold(
-                  appBar: AppBar(),
-                  body: const Center(
-                    child: Icon(
-                      Icons.data_array,
-                      size: _defaultIconSize,
-                    ),
-                  ),
-                )),
-      PageState.error => widget.onError(context) ??
-          (Dock.defaultOnErrorWidgetBuilder != null
-              ? Dock.defaultOnErrorWidgetBuilder!(context)
-              : Scaffold(
-                  appBar: AppBar(),
-                  body: const Center(
-                    child: Icon(
-                      Icons.error_outline_rounded,
-                      size: _defaultIconSize,
-                      // color: AppConstants.appColors.yellowCommon,
-                    ),
-                  ),
-                )),
-      PageState.offline => widget.onOffline(context) ??
-          (Dock.defaultOnOfflineWidgetBuilder != null
-              ? Dock.defaultOnOfflineWidgetBuilder!(context)
-              : Scaffold(
-                  appBar: AppBar(),
-                  body: const Center(
-                    child: Icon(
-                      Icons.signal_wifi_connected_no_internet_4,
-                      size: _defaultIconSize,
-                    ),
-                  ),
-                )),
-    };
   }
 }

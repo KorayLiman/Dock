@@ -3,27 +3,10 @@ import 'package:dock_flutter_example/presentation/general/home_tab/children/home
 import 'package:flutter/material.dart';
 
 final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
-  HomeMainChildView({super.key})
-      : super(
-          viewModel: HomeMainChildViewModel(),
-        );
+  HomeMainChildView({super.key}) : super(viewModel: HomeMainChildViewModel());
 
   @override
-  StateBuilder build(BuildContext context) {
-    return StateBuilder<HomeMainChildViewModel>(
-      viewModel: viewModel,
-      onSuccess: (context) => HomeMainOnSuccessWidget._(viewModel: viewModel),
-    );
-  }
-}
-
-class HomeMainOnSuccessWidget extends StatelessWidget {
-  const HomeMainOnSuccessWidget._({required this.viewModel});
-
-  final HomeMainChildViewModel viewModel;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget onSuccess(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(

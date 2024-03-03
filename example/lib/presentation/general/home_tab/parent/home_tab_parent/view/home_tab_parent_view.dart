@@ -4,25 +4,10 @@ import 'package:dock_router/dock_router.dart';
 import 'package:flutter/material.dart';
 
 final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
-  HomeTabParentView({super.key})
-      : super(
-          viewModel: Locator.register(HomeTabParentViewModel()),
-        );
+  HomeTabParentView({super.key}) : super(viewModel: Locator.register(HomeTabParentViewModel()));
 
   @override
-  StateBuilder build(BuildContext context) {
-    return StateBuilder<HomeTabParentViewModel>(
-      viewModel: viewModel,
-      onSuccess: (context) => const HomeTabParentOnSuccessWidget._(),
-    );
-  }
-}
-
-class HomeTabParentOnSuccessWidget extends DockStatelessWidget<HomeTabParentViewModel> {
-  const HomeTabParentOnSuccessWidget._();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget onSuccess(BuildContext context) {
     return TabsBuilder(
       builder: (context, router, state) {
         return Scaffold(

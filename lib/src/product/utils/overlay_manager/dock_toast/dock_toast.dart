@@ -79,7 +79,7 @@ class DockToast extends StatelessWidget {
   double get _defaultBelowShadowRadius => 12;
 
   /// Dart record instance of toast position
-  ToastPositionRecord _toastPositionRecord(BuildContext context) => toastPosition == ToastPosition.bottom ? (top: null, bottom: 40, left: 10, right: 10) : (top: context.viewPadding.top, bottom: null, left: 10, right: 10);
+  ToastPositionRecord _toastPositionRecord(BuildContext context) => toastPosition == ToastPosition.bottom ? (top: null, bottom: 40, left: 10, right: 10) : (top: context.dependOn.viewPadding.top, bottom: null, left: 10, right: 10);
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +110,7 @@ class DockToast extends StatelessWidget {
                   ),
                 ),
                 child: Container(
-                  width: context.width,
+                  width: context.dependOn.width,
                   padding: _toastPadding,
                   decoration: BoxDecoration(
                     color: backgroundColor ?? _defaultToastColor,

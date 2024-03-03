@@ -10,21 +10,7 @@ final class HomeListChildView extends BaseView<HomeListChildViewModel> {
         );
 
   @override
-  StateBuilder build(BuildContext context) {
-    return StateBuilder<HomeListChildViewModel>(
-      viewModel: viewModel,
-      onSuccess: (context) => HomeListChildOnSuccessWidget._(viewModel: viewModel),
-    );
-  }
-}
-
-class HomeListChildOnSuccessWidget extends StatelessWidget {
-  const HomeListChildOnSuccessWidget._({required this.viewModel});
-
-  final HomeListChildViewModel viewModel;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget onSuccess(BuildContext context) {
     return Scaffold(
       appBar: const DefaultAppBar(
         title: 'Home List Child',

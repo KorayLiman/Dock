@@ -9,21 +9,7 @@ final class HomeSettingsChildView extends BaseView<HomeSettingsChildViewModel> {
         );
 
   @override
-  StateBuilder build(BuildContext context) {
-    return StateBuilder<HomeSettingsChildViewModel>(
-      viewModel: viewModel,
-      onSuccess: (context) => HomeSettingsChildOnSuccessWidget._(viewModel: viewModel),
-    );
-  }
-}
-
-class HomeSettingsChildOnSuccessWidget extends StatelessWidget {
-  const HomeSettingsChildOnSuccessWidget._({required this.viewModel});
-
-  final HomeSettingsChildViewModel viewModel;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget onSuccess(BuildContext context) {
     return Scaffold(
       body: ListView.separated(
         itemBuilder: (context, index) {
