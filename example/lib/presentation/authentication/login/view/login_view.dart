@@ -4,10 +4,10 @@ import 'package:dock_flutter_example/product/product.dart';
 import 'package:flutter/material.dart';
 
 final class LoginView extends BaseView<LoginViewModel> {
-  LoginView({super.key}) : super(viewModel: Locator.register(LoginViewModel()));
+  const LoginView({required super.viewModelCallback, super.key});
 
   @override
-  Widget onSuccess(BuildContext context) {
+  Widget onSuccess(BuildContext context, LoginViewModel viewModel) {
     return const Scaffold(
       appBar: DefaultAppBar(
         title: 'Login',

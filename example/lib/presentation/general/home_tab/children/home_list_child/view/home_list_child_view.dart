@@ -4,13 +4,10 @@ import 'package:dock_flutter_example/product/product.dart';
 import 'package:flutter/material.dart';
 
 final class HomeListChildView extends BaseView<HomeListChildViewModel> {
-  HomeListChildView({super.key})
-      : super(
-          viewModel: HomeListChildViewModel(),
-        );
+  const HomeListChildView({required super.viewModelCallback, super.key});
 
   @override
-  Widget onSuccess(BuildContext context) {
+  Widget onSuccess(BuildContext context, HomeListChildViewModel viewModel) {
     return Scaffold(
       appBar: const DefaultAppBar(
         title: 'Home List Child',

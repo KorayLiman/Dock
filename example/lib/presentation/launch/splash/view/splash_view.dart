@@ -4,10 +4,10 @@ import 'package:dock_flutter_example/product/product.dart';
 import 'package:flutter/material.dart';
 
 final class SplashView extends BaseView<SplashViewModel> {
-  SplashView({super.key}) : super(viewModel: Locator.register(SplashViewModel()));
+  const SplashView({required super.viewModelCallback, super.key});
 
   @override
-  Widget onSuccess(BuildContext context) {
+  Widget onSuccess(BuildContext context, SplashViewModel viewModel) {
     return Scaffold(
       appBar: const DefaultAppBar(
         title: 'Splash',

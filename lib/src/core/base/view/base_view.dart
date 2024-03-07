@@ -5,33 +5,35 @@ part 'base_view_mixin.dart';
 
 /// An abstract [StatefulWidget] that provides a base for all views in the application.
 abstract base class BaseView<T extends BaseViewModel> extends StatefulWidget {
-  const BaseView({required this.viewModel, super.key});
+  const BaseView({required this.viewModelCallback, super.key});
 
-  final T viewModel;
+  final T Function() viewModelCallback;
 
-  Widget onSuccess(BuildContext context);
+  Widget onSuccess(BuildContext context, T viewModel);
 
-  Widget? onLoading(BuildContext context) => null;
+  Widget? onLoading(BuildContext context, T viewModel) => null;
 
-  Widget? onEmpty(BuildContext context) => null;
+  Widget? onEmpty(BuildContext context, T viewModel) => null;
 
-  Widget? onError(BuildContext context) => null;
+  Widget? onError(BuildContext context, T viewModel) => null;
 
-  Widget? onOffline(BuildContext context) => null;
+  Widget? onOffline(BuildContext context, T viewModel) => null;
 
   @override
   State<BaseView> createState() => BaseViewState<T>._();
 }
 
-class BaseViewState<T extends BaseViewModel> extends State<BaseView> with BaseViewMixin<T> {
+final class BaseViewState<T extends BaseViewModel> extends State<BaseView> with BaseViewMixin<T> {
   BaseViewState._();
+
+  late final T viewModel;
 
   // ---------------------
   // BEGIN WIDGET LIFECYCLES
   // ---------------------
   @override
   void initState() {
-    _viewModel
+    viewModel = widget.viewModelCallback() as T
       ..rootContext = context
       ..onInit();
     super.initState();
@@ -39,15 +41,15 @@ class BaseViewState<T extends BaseViewModel> extends State<BaseView> with BaseVi
 
   @override
   void didChangeDependencies() {
-    _viewModel.onDependenciesChange();
+    viewModel.onDependenciesChange();
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _viewModel.onDispose();
+    viewModel.onDispose();
     final vModel = Locator.tryFind<T>();
-    if (vModel.hashCode == _viewModel.hashCode) {
+    if (vModel.hashCode == viewModel.hashCode) {
       Locator.unregister<T>();
     }
     Logger.logMsg(msg: '${widget.runtimeType} disposed', color: LogColors.white);
@@ -63,7 +65,7 @@ class BaseViewState<T extends BaseViewModel> extends State<BaseView> with BaseVi
     return GestureDetector(
       onTap: context.closeKeyboard,
       child: Observer(
-        builder: _builder,
+        builder: (observerContext) => _builder(observerContext, viewModel),
       ),
     );
   }

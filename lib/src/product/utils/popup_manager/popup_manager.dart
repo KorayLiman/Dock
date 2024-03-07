@@ -66,13 +66,12 @@ class PopupManager {
 }
 
 /// A [DialogRoute] for showing loader
-final class _LoaderRoute extends DialogRoute<Object> {
-  @visibleForTesting
+final class _LoaderRoute extends DialogRoute<void> {
   _LoaderRoute({
     required super.context,
     required super.builder,
+    required super.barrierDismissible,
     this.id,
-    super.barrierDismissible,
   });
 
   /// [id] of the [_LoaderRoute]

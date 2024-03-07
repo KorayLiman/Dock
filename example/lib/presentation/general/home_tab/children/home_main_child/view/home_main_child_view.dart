@@ -3,10 +3,10 @@ import 'package:dock_flutter_example/presentation/general/home_tab/children/home
 import 'package:flutter/material.dart';
 
 final class HomeMainChildView extends BaseView<HomeMainChildViewModel> {
-  HomeMainChildView({super.key}) : super(viewModel: HomeMainChildViewModel());
+  const HomeMainChildView({required super.viewModelCallback, super.key});
 
   @override
-  Widget onSuccess(BuildContext context) {
+  Widget onSuccess(BuildContext context, HomeMainChildViewModel viewModel) {
     return Scaffold(
       body: Center(
         child: Column(

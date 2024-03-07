@@ -34,12 +34,12 @@ final class _TestViewModel extends BaseViewModel with DockTickerProviderMixin {
 }
 
 final class _TestView extends BaseView<_TestViewModel> {
-  _TestView() : super(viewModel: Locator.register(_TestViewModel()));
+  _TestView() : super(viewModelCallback: () => Locator.register(_TestViewModel()));
 
   final matrix4 = Matrix4.identity();
 
   @override
-  Widget onSuccess(BuildContext context) {
+  Widget onSuccess(BuildContext context, _TestViewModel viewModel) {
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.min,

@@ -4,10 +4,10 @@ import 'package:dock_router/dock_router.dart';
 import 'package:flutter/material.dart';
 
 final class HomeTabParentView extends BaseView<HomeTabParentViewModel> {
-  HomeTabParentView({super.key}) : super(viewModel: Locator.register(HomeTabParentViewModel()));
+  const HomeTabParentView({required super.viewModelCallback, super.key});
 
   @override
-  Widget onSuccess(BuildContext context) {
+  Widget onSuccess(BuildContext context, HomeTabParentViewModel viewModel) {
     return TabsBuilder(
       builder: (context, router, state) {
         return Scaffold(

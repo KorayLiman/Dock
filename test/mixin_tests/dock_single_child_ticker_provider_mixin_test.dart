@@ -22,10 +22,10 @@ final class _TestViewModel extends BaseViewModel with DockSingleTickerProviderMi
 }
 
 final class _TestView extends BaseView<_TestViewModel> {
-  _TestView() : super(viewModel: Locator.register(_TestViewModel()));
+  _TestView() : super(viewModelCallback: () => Locator.register(_TestViewModel()));
 
   @override
-  Widget onSuccess(BuildContext context) {
+  Widget onSuccess(BuildContext context, _TestViewModel viewModel) {
     return Scaffold(
       body: AnimatedBuilder(
         animation: viewModel.animationController,

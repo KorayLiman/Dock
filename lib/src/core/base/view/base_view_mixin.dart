@@ -4,24 +4,22 @@ mixin BaseViewMixin<T extends BaseViewModel> on State<BaseView> {
   /// [PageState] default icon size
   static const double _defaultIconSize = 48;
 
-  T get _viewModel => widget.viewModel as T;
-
   /// Returns widget based on the current [PageState]
-  Widget _builder(BuildContext context) {
-    return switch (_viewModel.pageState) {
-      PageState.success => widget.onSuccess(context),
-      PageState.loading => widget.onLoading(context) ??
+  Widget _builder(BuildContext context, T viewModel) {
+    return switch (viewModel.pageState) {
+      PageState.success => widget.onSuccess(context, viewModel),
+      PageState.loading => widget.onLoading(context, viewModel) ??
           (Dock.defaultOnLoadingWidgetBuilder != null
-              ? Dock.defaultOnLoadingWidgetBuilder!(context)
+              ? Dock.defaultOnLoadingWidgetBuilder!(context, viewModel)
               : Scaffold(
                   appBar: AppBar(),
                   body: const Center(
                     child: CircularProgressIndicator(),
                   ),
                 )),
-      PageState.empty => widget.onEmpty(context) ??
+      PageState.empty => widget.onEmpty(context, viewModel) ??
           (Dock.defaultOnEmptyWidgetBuilder != null
-              ? Dock.defaultOnEmptyWidgetBuilder!(context)
+              ? Dock.defaultOnEmptyWidgetBuilder!(context, viewModel)
               : Scaffold(
                   appBar: AppBar(),
                   body: const Center(
@@ -31,9 +29,9 @@ mixin BaseViewMixin<T extends BaseViewModel> on State<BaseView> {
                     ),
                   ),
                 )),
-      PageState.error => widget.onError(context) ??
+      PageState.error => widget.onError(context, viewModel) ??
           (Dock.defaultOnErrorWidgetBuilder != null
-              ? Dock.defaultOnErrorWidgetBuilder!(context)
+              ? Dock.defaultOnErrorWidgetBuilder!(context, viewModel)
               : Scaffold(
                   appBar: AppBar(),
                   body: const Center(
@@ -44,9 +42,9 @@ mixin BaseViewMixin<T extends BaseViewModel> on State<BaseView> {
                     ),
                   ),
                 )),
-      PageState.offline => widget.onOffline(context) ??
+      PageState.offline => widget.onOffline(context, viewModel) ??
           (Dock.defaultOnOfflineWidgetBuilder != null
-              ? Dock.defaultOnOfflineWidgetBuilder!(context)
+              ? Dock.defaultOnOfflineWidgetBuilder!(context, viewModel)
               : Scaffold(
                   appBar: AppBar(),
                   body: const Center(

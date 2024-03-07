@@ -24,7 +24,7 @@ dependencies:
   dock_router:
     git:
       url: git@github.com:KorayLiman/Dock-Router.git
-      ref: main
+      ref: page-builder-experiment
 
 dev_dependencies:
   integration_test:

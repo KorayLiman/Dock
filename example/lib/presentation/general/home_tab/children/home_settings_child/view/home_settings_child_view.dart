@@ -3,13 +3,10 @@ import 'package:dock_flutter_example/presentation/general/home_tab/children/home
 import 'package:flutter/material.dart';
 
 final class HomeSettingsChildView extends BaseView<HomeSettingsChildViewModel> {
-  HomeSettingsChildView({super.key})
-      : super(
-          viewModel: HomeSettingsChildViewModel(),
-        );
+  const HomeSettingsChildView({required super.viewModelCallback, super.key});
 
   @override
-  Widget onSuccess(BuildContext context) {
+  Widget onSuccess(BuildContext context, HomeSettingsChildViewModel viewModel) {
     return Scaffold(
       body: ListView.separated(
         itemBuilder: (context, index) {
