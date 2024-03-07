@@ -1,4 +1,5 @@
 import 'package:dock_flutter/dock.dart';
+import 'package:dock_flutter/src/core/locator/register_strategy.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final class _TestViewModel extends BaseViewModel {}
@@ -12,12 +13,11 @@ void main() {
     test(
       'Dependency Injection Test 1',
       () async {
-        final locator = TestLocator;
-        final i1 = locator.register(_TestViewModel());
-
-        locator.find<_TestViewModel>();
+        final locator = TestLocator
+          ..register(_TestViewModel())
+          ..find<_TestViewModel>();
         expect(() => locator.register(_TestViewModel()), throwsA(isA<LocatorException>()));
-        locator.unregister(instance: i1);
+        locator.unregister<_TestViewModel>();
         expect(() => locator.find<_TestViewModel>(), throwsA(isA<LocatorException>()));
         expect(locator.tryFind<_TestViewModel>(), isNull);
         locator
@@ -25,8 +25,9 @@ void main() {
           ..unregister<_TestViewModel>();
         expect(() => locator.find<_TestViewModel>(), throwsA(isA<LocatorException>()));
         expect(locator.tryFind<_TestViewModel>(), isNull);
-        final i3 = locator.register(_TestViewModel());
-        locator.unregister<_TestViewModel>(instance: i3);
+        locator
+          ..register(_TestViewModel())
+          ..unregister<_TestViewModel>();
         expect(() => locator.find<_TestViewModel>(), throwsA(isA<LocatorException>()));
         expect(locator.tryFind<_TestViewModel>(), isNull);
       },
@@ -34,12 +35,11 @@ void main() {
     test(
       'Dependency Injection Test 2',
       () async {
-        final locator = TestLocator;
-        final i1 = locator.register<_TestViewModel>(_TestViewModel());
-
-        locator.find<_TestViewModel>();
+        final locator = TestLocator
+          ..register<_TestViewModel>(_TestViewModel())
+          ..find<_TestViewModel>();
         expect(() => locator.register<_TestViewModel>(_TestViewModel()), throwsA(isA<LocatorException>()));
-        locator.unregister(instance: i1);
+        locator.unregister<_TestViewModel>();
         expect(() => locator.find<_TestViewModel>(), throwsA(isA<LocatorException>()));
         expect(locator.tryFind<_TestViewModel>(), isNull);
         locator
@@ -65,8 +65,8 @@ void main() {
 
         expect(() => locator.registerLazy(_TestViewModel.new), throwsA(isA<LocatorException>()));
         expect(() => locator.register(_TestViewModel()), throwsA(isA<LocatorException>()));
-        final i2 = locator.find<_TestViewModel>();
-        locator.unregister(instance: i2);
+
+        locator.unregister<_TestViewModel>();
         expect(() => locator.find<_TestViewModel>(), throwsA(isA<LocatorException>()));
         expect(locator.tryFind<_TestViewModel>(), isNull);
 
@@ -74,8 +74,9 @@ void main() {
 
         expect(() => locator.registerLazy(_TestViewModel.new), throwsA(isA<LocatorException>()));
         expect(() => locator.register(_TestViewModel()), throwsA(isA<LocatorException>()));
-        final i3 = locator.find<_TestViewModel>();
-        locator.unregister<_TestViewModel>(instance: i3);
+        locator
+          ..find<_TestViewModel>()
+          ..unregister<_TestViewModel>();
         expect(() => locator.find<_TestViewModel>(), throwsA(isA<LocatorException>()));
         expect(locator.tryFind<_TestViewModel>(), isNull);
       },
@@ -133,69 +134,31 @@ void main() {
     test(
       'Dependency Injection Test 7',
       () async {
-        final locator = TestLocator
-          ..registerLazy<_TestViewModel>(_TestViewModel.new, keepAlive: true)
-          ..registerLazy<_TestViewModel2>(_TestViewModel2.new, keepAlive: true)
-          ..registerLazy<_TestViewModel3>(_TestViewModel3.new, keepAlive: true);
+        final locator = TestLocator..register(_TestViewModel());
+        expect(() => locator.register(_TestViewModel()), throwsA(isA<LocatorException>()));
+        locator.register(_TestViewModel(), strategy: RegisterStrategy.override);
+        expect(() => locator.find<_TestViewModel>(), returnsNormally);
         expect(locator.tryFind<_TestViewModel>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel2>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel3>(), isNotNull);
+        locator.register(_TestViewModel(), tag: 'one');
+        expect(
+          () {
+            locator
+              ..find<_TestViewModel>()
+              ..find<_TestViewModel>(tag: 'one');
+          },
+          returnsNormally,
+        );
+        locator.unregister<_TestViewModel>(tag: 'one');
+        expect(() => locator.find<_TestViewModel>(tag: 'one'), throwsA(isA<LocatorException>()));
+        expect(locator.tryFind<_TestViewModel>(), isNotNull);
+        locator.unregister<_TestViewModel>();
+        expect(() => locator.find<_TestViewModel>(), throwsA(isA<LocatorException>()));
 
-        locator.unregisterAll();
-        expect(locator.tryFind<_TestViewModel>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel2>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel3>(), isNotNull);
-      },
-    );
-    test(
-      'Dependency Injection Test 8',
-      () async {
-        final locator = TestLocator
-          ..registerLazy<_TestViewModel>(_TestViewModel.new, keepAlive: true)
-          ..registerLazy<_TestViewModel2>(_TestViewModel2.new, keepAlive: true)
-          ..registerLazy<_TestViewModel3>(_TestViewModel3.new, keepAlive: true);
-        expect(locator.tryFind<_TestViewModel>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel2>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel3>(), isNotNull);
-
-        locator.unregisterAll(force: true);
+        locator.register(_TestViewModel(), tag: 'one');
+        expect(() => locator.register(_TestViewModel(), tag: 'one'), throwsA(isA<LocatorException>()));
+        expect(() => locator.register(_TestViewModel(), tag: 'one', strategy: RegisterStrategy.override), returnsNormally);
+        expect(() => locator.tryFind<_TestViewModel>(tag: 'one'), isNotNull);
         expect(locator.tryFind<_TestViewModel>(), isNull);
-        expect(locator.tryFind<_TestViewModel2>(), isNull);
-        expect(locator.tryFind<_TestViewModel3>(), isNull);
-      },
-    );
-    test(
-      'Dependency Injection Test 9',
-      () async {
-        final locator = TestLocator
-          ..register<_TestViewModel>(_TestViewModel(), keepAlive: true)
-          ..register<_TestViewModel2>(_TestViewModel2(), keepAlive: true)
-          ..register<_TestViewModel3>(_TestViewModel3(), keepAlive: true);
-        expect(locator.tryFind<_TestViewModel>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel2>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel3>(), isNotNull);
-
-        locator.unregisterAll(force: true);
-        expect(locator.tryFind<_TestViewModel>(), isNull);
-        expect(locator.tryFind<_TestViewModel2>(), isNull);
-        expect(locator.tryFind<_TestViewModel3>(), isNull);
-      },
-    );
-    test(
-      'Dependency Injection Test 10',
-      () async {
-        final locator = TestLocator
-          ..register<_TestViewModel>(_TestViewModel(), keepAlive: true)
-          ..register<_TestViewModel2>(_TestViewModel2(), keepAlive: true)
-          ..register<_TestViewModel3>(_TestViewModel3(), keepAlive: true);
-        expect(locator.tryFind<_TestViewModel>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel2>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel3>(), isNotNull);
-
-        locator.unregisterAll();
-        expect(locator.tryFind<_TestViewModel>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel2>(), isNotNull);
-        expect(locator.tryFind<_TestViewModel3>(), isNotNull);
       },
     );
   });

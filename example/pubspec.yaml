@@ -16,7 +16,7 @@ dependencies:
     path: ../
 
   cupertino_icons: ^1.0.2
-  dio: ^5.4.0
+  dio: ^5.4.1
   envied: ^0.5.3
   json_serializable: ^6.7.1
   json_annotation: ^4.8.1
@@ -24,7 +24,7 @@ dependencies:
   dock_router:
     git:
       url: git@github.com:KorayLiman/Dock-Router.git
-      ref: main
+      ref: page-builder-experiment
 
 dev_dependencies:
   integration_test:

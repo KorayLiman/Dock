@@ -11,10 +11,10 @@ final class SplashViewModel extends BaseViewModel {
 
   void _registerDependencies() {
     Locator
-      ..registerLazy<SplashService>(() => const SplashService(), keepAlive: true)
-      ..registerLazy<LoginService>(() => const LoginService(), keepAlive: true)
-      ..registerLazy<PopupManager>(() => PopupManager(rootRouter.navigatorKey), keepAlive: true)
-      ..registerLazy<OverlayManager>(() => OverlayManager(rootRouter.navigatorKey), keepAlive: true);
+      ..registerLazy<SplashService>(() => const SplashService())
+      ..registerLazy<LoginService>(() => const LoginService())
+      ..registerLazy<PopupManager>(() => PopupManager(rootRouter.navigatorKey))
+      ..registerLazy<OverlayManager>(() => OverlayManager(rootRouter.navigatorKey));
   }
 
   Future<void> goToNextPage() async {

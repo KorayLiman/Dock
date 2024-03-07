@@ -19,17 +19,10 @@ final class _TestViewModel extends BaseViewModel {
 }
 
 final class _TestView extends BaseView<_TestViewModel> {
-  _TestView() : super(viewModel: Locator.register(_TestViewModel()));
+  _TestView() : super(viewModelCallback: () => Locator.register(_TestViewModel()));
 
   @override
-  StateBuilder build(BuildContext context) {
-    return StateBuilder(
-      viewModel: viewModel,
-      onSuccess: (context) => _onSuccess(context: context),
-    );
-  }
-
-  Widget _onSuccess({required BuildContext context}) {
+  Widget onSuccess(BuildContext context, _TestViewModel viewModel) {
     return const Scaffold();
   }
 }
@@ -52,17 +45,10 @@ final class _TestViewModel2 extends BaseViewModel {
 }
 
 final class _TestView2 extends BaseView<_TestViewModel2> {
-  _TestView2() : super(viewModel: Locator.register(_TestViewModel2()));
+  _TestView2() : super(viewModelCallback: () => Locator.register(_TestViewModel2()));
 
   @override
-  StateBuilder build(BuildContext context) {
-    return StateBuilder(
-      viewModel: viewModel,
-      onSuccess: (context) => _onSuccess(context: context),
-    );
-  }
-
-  Widget _onSuccess({required BuildContext context}) {
+  Widget onSuccess(BuildContext context, _TestViewModel2 viewModel) {
     return const Scaffold();
   }
 }
