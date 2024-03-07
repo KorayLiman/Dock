@@ -3,8 +3,6 @@ import 'package:dock_flutter/src/typedefs.dart';
 import 'package:flutter/material.dart';
 
 part '../../../product/state/primitive/docker/docker_stateless_element.dart';
-part '../../widget/default_appbar/default_appbar.dart';
-part '../../widget/state_builder/state_builder_mixin.dart';
 part '../mixins/base_viewmodel_mixin.dart';
 part '../mixins/base_viewmodel_state_mixin.dart';
 
@@ -19,10 +17,7 @@ enum PageState { success, loading, empty, error, offline }
 abstract base class BaseViewModel with _BaseViewModelMixin, _BaseViewModelStateMixin {
   /// Called when View is created
   @mustCallSuper
-  @protected
-  @visibleForTesting
   void onInit() {
-    _assertStateBuilderInitialized();
     Dock
       ..addPostFrameCallback(onPostFrame)
       ..scheduleFrameCallback(onNextFrame);
@@ -30,11 +25,7 @@ abstract base class BaseViewModel with _BaseViewModelMixin, _BaseViewModelStateM
 
   /// Called after onInit and when dependencies of this object change
   @mustCallSuper
-  @protected
-  @visibleForTesting
-  void onDependenciesChange() {
-    _assertStateBuilderInitialized();
-  }
+  void onDependenciesChange() {}
 
   /// Called at the end of the first frame of page render.
   ///
@@ -43,7 +34,7 @@ abstract base class BaseViewModel with _BaseViewModelMixin, _BaseViewModelStateM
   @protected
   @visibleForTesting
   void onPostFrame(Duration timeStamp) {
-    _assertStateBuilderInitialized();
+    assert(rootContext.mounted, 'You called onPostFrame() method on a View that is already disposed');
   }
 
   /// Called at the beginning of the second frame of page render
@@ -51,14 +42,10 @@ abstract base class BaseViewModel with _BaseViewModelMixin, _BaseViewModelStateM
   @protected
   @visibleForTesting
   void onNextFrame(Duration timeStamp) {
-    _assertStateBuilderInitialized();
+    assert(rootContext.mounted, 'You called onNextFrame() method on a View that is already disposed');
   }
 
   /// Called when view is getting disposed
   @mustCallSuper
-  @protected
-  @visibleForTesting
-  void onDispose() {
-    _assertStateBuilderInitialized();
-  }
+  void onDispose() {}
 }

@@ -60,26 +60,26 @@ class AutoSizedText extends LeafRenderObjectWidget {
   final TextHeightBehavior? textHeightBehavior;
 
   _TextConfiguration _textConfiguration(BuildContext context) {
-    final defaultTextStyle = context.defaultTextStyle;
+    final defaultTextStyle = context.dependOn.defaultTextStyle;
     var effectiveTextStyle = style;
     if (style == null || style!.inherit) {
       effectiveTextStyle = defaultTextStyle.style.merge(style);
     }
-    if (context.usingBoldText) {
+    if (context.dependOn.usingBoldText) {
       effectiveTextStyle = effectiveTextStyle!.merge(const TextStyle(fontWeight: FontWeight.bold));
     }
     if (effectiveTextStyle!.fontSize.isNull) {
       effectiveTextStyle = effectiveTextStyle.merge(const TextStyle(fontSize: _defaultFontSize));
     }
 
-    final _textScaler = textScaler ?? context.textScaler;
-    final _textDirection = textDirection ?? context.directionality;
+    final _textScaler = textScaler ?? context.dependOn.textScaler;
+    final _textDirection = textDirection ?? context.dependOn.directionality;
     final _textWidthBasis = textWidthBasis ?? defaultTextStyle.textWidthBasis;
     final _textHeightBehavior = textHeightBehavior ?? defaultTextStyle.textHeightBehavior ?? DefaultTextHeightBehavior.maybeOf(context);
     final _maxLines = maxLines ?? defaultTextStyle.maxLines;
     final _overflow = overflow ?? effectiveTextStyle.overflow ?? defaultTextStyle.overflow;
     final _textAlign = textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
-    final _locale = locale ?? context.maybeLocale;
+    final _locale = locale ?? context.dependOn.maybeLocale;
 
     return (
       style: effectiveTextStyle,

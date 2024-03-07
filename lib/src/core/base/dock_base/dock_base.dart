@@ -1,3 +1,4 @@
+import 'package:dock_flutter/src/typedefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -11,16 +12,16 @@ abstract base class DockBase {
   WidgetsBinding? testBindings;
 
   /// Default on loading widget builder
-  WidgetBuilder? defaultOnLoadingWidgetBuilder;
+  ViewStateCallback? defaultOnLoadingWidgetBuilder;
 
   /// Default on empty widget builder
-  WidgetBuilder? defaultOnEmptyWidgetBuilder;
+  ViewStateCallback? defaultOnEmptyWidgetBuilder;
 
   /// Default on error widget builder
-  WidgetBuilder? defaultOnErrorWidgetBuilder;
+  ViewStateCallback? defaultOnErrorWidgetBuilder;
 
   /// Default on offline widget builder
-  WidgetBuilder? defaultOnOfflineWidgetBuilder;
+  ViewStateCallback? defaultOnOfflineWidgetBuilder;
 
   SchedulerBinding get schedulerBinding => SchedulerBinding.instance;
 }

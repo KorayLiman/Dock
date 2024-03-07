@@ -1,16 +1,72 @@
-import 'package:dock_flutter/src/core/base/viewmodel/base_viewmodel.dart';
-import 'package:dock_flutter/src/core/widget/state_builder/state_builder.dart';
+import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
-/// AN ABSTRACT [StatelessWidget] FOR OPTIONALLY REGISTERING VIEWMODEL OF ANY VIEW
-abstract base class BaseView<T extends BaseViewModel> extends StatelessWidget {
-  const BaseView({required this.viewModel, super.key});
+part 'base_view_mixin.dart';
 
-  /// [viewModel]
-  final T viewModel;
+/// An abstract [StatefulWidget] that provides a base for all views in the application.
+abstract base class BaseView<T extends BaseViewModel> extends StatefulWidget {
+  const BaseView({required this.viewModelCallback, super.key});
 
-  /// [build] method of [StatelessWidget] but returns [StateBuilder] instead of [Widget]
+  final T Function() viewModelCallback;
+
+  Widget onSuccess(BuildContext context, T viewModel);
+
+  Widget? onLoading(BuildContext context, T viewModel) => null;
+
+  Widget? onEmpty(BuildContext context, T viewModel) => null;
+
+  Widget? onError(BuildContext context, T viewModel) => null;
+
+  Widget? onOffline(BuildContext context, T viewModel) => null;
+
   @override
-  @protected
-  StateBuilder build(BuildContext context);
+  State<BaseView> createState() => BaseViewState<T>._();
+}
+
+final class BaseViewState<T extends BaseViewModel> extends State<BaseView> with BaseViewMixin<T> {
+  BaseViewState._();
+
+  late final T viewModel;
+
+  // ---------------------
+  // BEGIN WIDGET LIFECYCLES
+  // ---------------------
+  @override
+  void initState() {
+    viewModel = widget.viewModelCallback() as T
+      ..rootContext = context
+      ..onInit();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    viewModel.onDependenciesChange();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    viewModel.onDispose();
+    final vModel = Locator.tryFind<T>();
+    if (vModel.hashCode == viewModel.hashCode) {
+      Locator.unregister<T>();
+    }
+    Logger.logMsg(msg: '${widget.runtimeType} disposed', color: LogColors.white);
+    super.dispose();
+  }
+
+  // ---------------------
+  // END WIDGET LIFECYCLES
+  // ---------------------
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: context.closeKeyboard,
+      child: Observer(
+        builder: (observerContext) => _builder(observerContext, viewModel),
+      ),
+    );
+  }
 }

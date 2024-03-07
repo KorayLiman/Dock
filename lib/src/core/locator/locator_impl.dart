@@ -5,108 +5,96 @@ class _LocatorImpl {
   /// Stored instances
   final _dependencyInstances = <String, _Instance>{};
 
-  /// Generates key from given [type]
-  String _getInstanceKey(Type type) {
-    return type.toString();
+  /// Generates key from given [type] and [tag]
+  String _getInstanceKey(Type type, String? tag) {
+    return '$type$tag';
   }
 
-  /// Registers given instance
-  T register<T extends Object>(T instance, {bool keepAlive = false}) {
-    Dock.throwConditionalException(
-      exception: LocatorException(message: 'Object of type $T is already registered'),
-      throwIf: isRegistered<T>(instance: instance),
-    );
-
-    final instanceToRegister = _Instance<T>(builder: () => instance, keepAlive: keepAlive);
-    instanceToRegister.instance = instanceToRegister.builder.call();
-    _dependencyInstances[_getInstanceKey(T)] = instanceToRegister;
-    return instance;
-  }
-
-  /// Registers given instance as new if already exists one.
+  /// Registers given [instance] with given [tag]
   ///
-  /// In other words: Replaces old instance or creates one.
-  T registerAsNew<T extends Object>(T instance, {bool keepAlive = false}) {
-    if (isRegistered<T>(instance: instance)) {
-      unregister<T>(instance: instance);
+  /// If instance of type [T] is already registered it will look at the [strategy]
+  /// If [strategy] is [RegisterStrategy.doNotOverride] it will throw an exception
+  /// Otherwise it will override the existing instance
+  T register<T extends Object>(T instance, {String? tag, RegisterStrategy strategy = RegisterStrategy.doNotOverride}) {
+    if (isRegistered<T>(tag: tag)) {
+      if (strategy == RegisterStrategy.override) {
+        unregister<T>(tag: tag);
+      } else {
+        throw LocatorException(message: 'Object of type $T is already registered');
+      }
     }
-
-    final instanceToRegister = _Instance<T>(builder: () => instance, keepAlive: keepAlive);
+    final instanceToRegister = _Instance<T>(builder: () => instance, tag: tag);
     instanceToRegister.instance = instanceToRegister.builder.call();
-    _dependencyInstances[_getInstanceKey(T)] = instanceToRegister;
+    _dependencyInstances[_getInstanceKey(T, tag)] = instanceToRegister;
+    Logger.logMsg(msg: 'Registered Object of type $T');
     return instance;
   }
 
-  /// Registers given instance to be created at first access
-  void registerLazy<T extends Object>(InstanceBuilder<T> builder, {bool keepAlive = false}) {
+  /// Registers a lazy instance with given [tag] to be created at first access
+  void registerLazy<T extends Object>(InstanceBuilder<T> builder, {String? tag}) {
     Dock.throwConditionalException(
       exception: LocatorException(message: 'Object of type $T is already registered'),
-      throwIf: isRegistered<T>(),
+      throwIf: isRegistered<T>(tag: tag),
     );
 
-    final instanceToRegister = _Instance<T>(builder: builder, keepAlive: keepAlive);
-    _dependencyInstances[_getInstanceKey(T)] = instanceToRegister;
+    final instanceToRegister = _Instance<T>(builder: builder, tag: tag);
+    _dependencyInstances[_getInstanceKey(T, tag)] = instanceToRegister;
+    Logger.logMsg(msg: 'Registered Lazy Object of type $T');
   }
 
-  /// Unregisters given instance or instance of type [T]
-  bool unregister<T extends Object>({T? instance, bool force = false}) {
-    if (isRegistered<T>(instance: instance)) {
-      final inst = _dependencyInstances[instance == null ? _getInstanceKey(T) : _getInstanceKey(instance.runtimeType)];
-      if (inst!.keepAlive && !force) return false;
-      _dependencyInstances.remove(instance == null ? _getInstanceKey(T) : _getInstanceKey(instance.runtimeType));
-      return true;
+  /// Unregisters given instance or instance of type [T] with given [tag]
+  void unregister<T extends Object>({String? tag}) {
+    if (isRegistered<T>(tag: tag)) {
+      _dependencyInstances.remove(_getInstanceKey(T, tag));
+      Logger.logMsg(msg: 'Unregistered Object of type $T');
+    } else {
+      throw LocatorException(message: 'Tried to unregister Object of type $T that is not registered');
     }
-    return false;
   }
 
   /// Unregisters all instances
-  void unregisterAll({bool force = false}) {
-    if (force) {
-      _dependencyInstances.clear();
-    } else {
-      _dependencyInstances.removeWhere((key, value) => !value.keepAlive);
-    }
+  void unregisterAll() {
+    _dependencyInstances.clear();
   }
 
-  /// Finds registered instance of Type [T]
+  /// Finds registered instance of Type [T] with given [tag]
   ///
   /// Throws if couldn't
-  T find<T extends Object>() {
+  T find<T extends Object>({String? tag}) {
     Dock.throwConditionalException(
       exception: LocatorException(message: 'Tried to find Object of type $T that is not registered'),
-      throwIf: !isRegistered<T>(),
+      throwIf: !isRegistered<T>(tag: tag),
     );
-    final instance = _dependencyInstances[_getInstanceKey(T)];
+    final instance = _dependencyInstances[_getInstanceKey(T, tag)];
     if (instance!.instance.isNull) {
       instance.instance = instance.builder.call();
     }
     return instance.instance! as T;
   }
 
-  /// Tries to find registered instance of Type [T]
+  /// Tries to find registered instance of Type [T] with given [tag]
   ///
   /// Returns null if couldn't
-  T? tryFind<T extends Object>() {
-    if (!isRegistered<T>()) return null;
-    final instance = _dependencyInstances[_getInstanceKey(T)];
+  T? tryFind<T extends Object>({String? tag}) {
+    if (!isRegistered<T>(tag: tag)) return null;
+    final instance = _dependencyInstances[_getInstanceKey(T, tag)];
     if (instance!.instance.isNull) {
       instance.instance = instance.builder.call();
     }
     return instance.instance! as T;
   }
 
-  /// Checks if given instance or instance of type [T] is registered
-  bool isRegistered<T extends Object>({T? instance}) {
-    final instanceKey = instance == null ? _getInstanceKey(T) : _getInstanceKey(instance.runtimeType);
-    return _dependencyInstances[instanceKey] != null;
+  /// Checks if given instance or instance of type [T] with given [tag] is registered
+  bool isRegistered<T extends Object>({String? tag}) {
+    return _dependencyInstances[_getInstanceKey(T, tag)] != null;
   }
 }
 
 /// Registered [_Instance] model
 class _Instance<T extends Object> {
-  _Instance({required this.builder, required this.keepAlive});
+  _Instance({required this.builder, this.tag});
 
-  final InstanceBuilder<T> builder;
-  final bool keepAlive;
   T? instance;
+  final InstanceBuilder<T> builder;
+  final String? tag;
 }

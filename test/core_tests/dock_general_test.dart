@@ -35,59 +35,71 @@ void main() {
       await tester.tap(find.text('pop'));
       await tester.pumpAndSettle();
       expect(Locator.tryFind<_TestViewModel3>(), isNull);
-      expect(() => _TestViewModel2().onInit(), throwsAssertionError);
 
       await tester.pumpWidget(
         MaterialApp(
           home: _TestView4(),
         ),
       );
-      expect(find.byKey(_TestView4._key), findsOneWidget);
+      expect(find.byKey(_TestViewModel4._key), findsOneWidget);
       final testViewModel4 = Locator.find<_TestViewModel4>()..setPageState(PageState.empty);
       await tester.pump();
-      expect(find.byKey(_TestView4._key1), findsOneWidget);
+      expect(find.byKey(_TestViewModel4._key1), findsOneWidget);
       testViewModel4.setPageState(PageState.error);
       await tester.pump();
-      expect(find.byKey(_TestView4._key2), findsOneWidget);
+      expect(find.byKey(_TestViewModel4._key2), findsOneWidget);
       testViewModel4.setPageState(PageState.offline);
       await tester.pump();
-      expect(find.byKey(_TestView4._key3), findsOneWidget);
+      expect(find.byKey(_TestViewModel4._key3), findsOneWidget);
     },
   );
 }
 
 final class _TestViewModel extends BaseViewModel {}
 
-final class _TestViewModel2 extends BaseViewModel {}
-
 final class _TestViewModel3 extends BaseViewModel {}
 
 final class _TestViewModel4 extends BaseViewModel {
+  static final _key = UniqueKey();
+  static final _key1 = UniqueKey();
+  static final _key2 = UniqueKey();
+  static final _key3 = UniqueKey();
+
   @override
   void onInit() {
+    Dock.defaultOnLoadingWidgetBuilder = (context, viewModel) => CircularProgressIndicator(
+          key: _key,
+        );
+    Dock.defaultOnEmptyWidgetBuilder = (context, viewModel) => CircularProgressIndicator(
+          key: _key1,
+        );
+    Dock.defaultOnErrorWidgetBuilder = (context, viewModel) => CircularProgressIndicator(
+          key: _key2,
+        );
+    Dock.defaultOnOfflineWidgetBuilder = (context, viewModel) => CircularProgressIndicator(
+          key: _key3,
+        );
     setPageState(PageState.loading);
     super.onInit();
   }
 }
 
 final class _TestView extends BaseView<_TestViewModel> {
-  _TestView() : super(viewModel: Locator.register(_TestViewModel()));
+  _TestView() : super(viewModelCallback: () => Locator.register(_TestViewModel()));
 
   @override
-  StateBuilder build(BuildContext context) {
-    return StateBuilder<_TestViewModel>(
-      viewModel: viewModel,
-      onSuccess: (context) => _onSuccess(context: context),
-      onEmpty: (context) => const Text('state: onEmpty'),
-      onLoading: (context) => const Text('state: onLoading'),
-      onOffline: (context) => const Text('state: onOffline'),
-      onError: (context) => const Text('state: onError'),
-    );
-  }
-
-  Widget _onSuccess({required BuildContext context}) {
+  Widget onSuccess(BuildContext context, _TestViewModel viewModel) {
     return const _Body();
   }
+
+  @override
+  Widget onEmpty(BuildContext context, _TestViewModel viewModel) => const Text('state: onEmpty');
+  @override
+  Widget onLoading(BuildContext context, _TestViewModel viewModel) => const Text('state: onLoading');
+  @override
+  Widget onOffline(BuildContext context, _TestViewModel viewModel) => const Text('state: onOffline');
+  @override
+  Widget onError(BuildContext context, _TestViewModel viewModel) => const Text('state: onError');
 }
 
 class _Body extends DockStatelessWidget<_TestViewModel> {
@@ -110,21 +122,10 @@ class _Body extends DockStatelessWidget<_TestViewModel> {
 }
 
 final class _TestView3 extends BaseView<_TestViewModel3> {
-  _TestView3() : super(viewModel: Locator.register(_TestViewModel3()));
+  _TestView3() : super(viewModelCallback: () => Locator.register(_TestViewModel3()));
 
   @override
-  StateBuilder build(BuildContext context) {
-    return StateBuilder<_TestViewModel3>(
-      viewModel: viewModel,
-      onSuccess: (context) => _onSuccess(context: context),
-      onEmpty: (context) => const Text('state: onEmpty'),
-      onLoading: (context) => const Text('state: onLoading'),
-      onOffline: (context) => const Text('state: onOffline'),
-      onError: (context) => const Text('state: onError'),
-    );
-  }
-
-  Widget _onSuccess({required BuildContext context}) {
+  Widget onSuccess(BuildContext context, _TestViewModel3 viewmodel) {
     return Scaffold(
       body: ElevatedButton(
         onPressed: () {
@@ -134,37 +135,22 @@ final class _TestView3 extends BaseView<_TestViewModel3> {
       ),
     );
   }
+
+  @override
+  Widget onEmpty(BuildContext context, _TestViewModel3 viewModel) => const Text('state: onEmpty');
+  @override
+  Widget onLoading(BuildContext context, _TestViewModel3 viewModel) => const Text('state: onLoading');
+  @override
+  Widget onOffline(BuildContext context, _TestViewModel3 viewModel) => const Text('state: onOffline');
+  @override
+  Widget onError(BuildContext context, _TestViewModel3 viewModel) => const Text('state: onError');
 }
 
 final class _TestView4 extends BaseView<_TestViewModel4> {
-  _TestView4() : super(viewModel: Locator.register(_TestViewModel4()));
-
-  static final _key = UniqueKey();
-  static final _key1 = UniqueKey();
-  static final _key2 = UniqueKey();
-  static final _key3 = UniqueKey();
+  _TestView4() : super(viewModelCallback: () => Locator.register(_TestViewModel4()));
 
   @override
-  StateBuilder build(BuildContext context) {
-    Dock.defaultOnLoadingWidgetBuilder = (context) => CircularProgressIndicator(
-          key: _key,
-        );
-    Dock.defaultOnEmptyWidgetBuilder = (context) => CircularProgressIndicator(
-          key: _key1,
-        );
-    Dock.defaultOnErrorWidgetBuilder = (context) => CircularProgressIndicator(
-          key: _key2,
-        );
-    Dock.defaultOnOfflineWidgetBuilder = (context) => CircularProgressIndicator(
-          key: _key3,
-        );
-    return StateBuilder<_TestViewModel4>(
-      viewModel: viewModel,
-      onSuccess: (context) => _onSuccess(context: context),
-    );
-  }
-
-  Widget _onSuccess({required BuildContext context}) {
+  Widget onSuccess(BuildContext context, _TestViewModel4 viewModel) {
     return const Scaffold();
   }
 }
