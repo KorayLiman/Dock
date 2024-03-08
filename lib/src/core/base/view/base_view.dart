@@ -1,7 +1,7 @@
 import 'package:dock_flutter/dock.dart';
 import 'package:flutter/material.dart';
 
-part 'base_view_mixin.dart';
+part 'base_view_state_mixin.dart';
 
 /// An abstract [StatefulWidget] that provides a base for all views in the application.
 abstract base class BaseView<T extends BaseViewModel> extends StatefulWidget {
@@ -23,7 +23,7 @@ abstract base class BaseView<T extends BaseViewModel> extends StatefulWidget {
   State<BaseView> createState() => BaseViewState<T>._();
 }
 
-final class BaseViewState<T extends BaseViewModel> extends State<BaseView> with BaseViewMixin<T> {
+final class BaseViewState<T extends BaseViewModel> extends State<BaseView> with BaseViewStateMixin<T> {
   BaseViewState._();
 
   late final T viewModel;
