@@ -1,6 +1,6 @@
 part of 'base_view.dart';
 
-mixin BaseViewMixin<T extends BaseViewModel> on State<BaseView> {
+mixin BaseViewStateMixin<T extends BaseViewModel> on State<BaseView> {
   /// [PageState] default icon size
   static const double _defaultIconSize = 48;
 
