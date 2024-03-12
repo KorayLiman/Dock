@@ -46,6 +46,12 @@ final class BaseViewState<T extends BaseViewModel> extends State<BaseView> with 
   }
 
   @override
+  void didUpdateWidget(covariant BaseView<T> oldWidget) {
+    viewModel.onViewConfigurationChange<T>(oldWidget);
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
     viewModel.onDispose();
     final vModel = Locator.tryFind<T>();

@@ -45,6 +45,11 @@ abstract base class BaseViewModel with _BaseViewModelMixin, _BaseViewModelStateM
     assert(rootContext.mounted, 'You called onNextFrame() method on a View that is already disposed');
   }
 
+  /// Called when configuration of the view is updated
+  ///
+  /// Same with didUpdateWidget
+  void onViewConfigurationChange<T extends BaseViewModel>(BaseView<T> oldView) {}
+
   /// Called when view is getting disposed
   @mustCallSuper
   void onDispose() {}
