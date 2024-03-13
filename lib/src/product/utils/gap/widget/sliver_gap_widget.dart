@@ -48,6 +48,9 @@ final class _SliverGapRenderBox extends RenderSliver {
 
   // ignore: use_setters_to_change_properties
   void reEvaluate({required double value}) {
+    if (this.value == value) return;
     this.value = value;
+    markNeedsLayout();
+    markNeedsSemanticsUpdate();
   }
 }

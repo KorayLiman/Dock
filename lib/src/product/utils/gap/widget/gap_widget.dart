@@ -71,7 +71,10 @@ final class _GapRenderBox extends RenderBox {
   }
 
   void reEvaluate({required double value, required AxisDirection? axisDirection}) {
+    if (value == this.value && axisDirection == this.axisDirection) return;
     this.value = value;
     this.axisDirection = axisDirection;
+    markNeedsLayout();
+    markNeedsSemanticsUpdate();
   }
 }
