@@ -147,6 +147,9 @@ class AutoSizedText extends LeafRenderObjectWidget {
       ..strutStyle = strutStyle
       ..maxLines = textConfig.maxLines
       ..ellipsis = textConfig.overflow == TextOverflow.ellipsis ? _kEllipsis : null;
+    renderObject
+      ..markNeedsLayout()
+      ..markNeedsSemanticsUpdate();
   }
 
   @override
